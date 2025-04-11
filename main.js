@@ -1,6 +1,9 @@
 let chartInstance = null;
 let lastParsedData = [];
 
+// ✅ Configurable threshold for switching to horizontal bar
+const HORIZONTAL_CHART_THRESHOLD = 6;
+
 document.getElementById("reset").addEventListener("click", () => {
   document.getElementById("upload").value = "";
   document.getElementById("output").innerHTML = "";
@@ -120,8 +123,23 @@ function renderChart(data) {
   const counts = Object.values(data);
   const total = counts.reduce((a, b) => a + b, 0);
   const typeChoice = document.getElementById("chart-type").value || "bar";
+  const useHorizontal = typeChoice === "bar" && labels.length > HORIZONTAL_CHART_THRESHOLD;
 
-  const chartConfig = {
+  if (chartInstance) chartInstance.destroy();
+
+  // Ensure chart title is always present (only once)
+  const titleEl = document.getElementById("chart-title");
+  if (!titleEl) {
+    const chartTitle = document.createElement("h3");
+    chartTitle.textContent = "Found Keyword Instances";
+    chartTitle.id = "chart-title";
+    chartTitle.style.marginTop = "1em";
+    chartTitle.style.marginBottom = "0.5em";
+    const canvas = document.getElementById("chart");
+    canvas.before(chartTitle);
+  }
+
+  chartInstance = new Chart(ctx, {
     type: typeChoice,
     data: {
       labels,
@@ -134,6 +152,7 @@ function renderChart(data) {
     },
     options: {
       responsive: true,
+      indexAxis: useHorizontal ? 'y' : 'x',
       plugins: {
         tooltip: {
           callbacks: {
@@ -149,13 +168,9 @@ function renderChart(data) {
           display: typeChoice === "pie"
         }
       },
-      indexAxis: (typeChoice === "bar" && labels.length > 6) ? "y" : "x",
       scales: typeChoice === "bar" ? { y: { beginAtZero: true } } : {}
     }
-  };
-
-  if (chartInstance) chartInstance.destroy();
-  chartInstance = new Chart(ctx, chartConfig);
+  });
 }
 
 document.getElementById("chart").addEventListener("click", () => {
@@ -175,8 +190,10 @@ document.getElementById("view-mode").addEventListener("change", () => {
 
 document.getElementById("download-pdf").addEventListener("click", () => {
   const outputEl = document.getElementById("output");
+
   const chartImage = new Image();
   chartImage.src = chartInstance.toBase64Image();
+  chartImage.style.width = "100%";
   chartImage.style.maxWidth = "6.5in";
   chartImage.style.display = "block";
   chartImage.style.marginTop = "1em";
