@@ -5,6 +5,7 @@ document.getElementById("reset").addEventListener("click", () => {
   document.getElementById("upload").value = "";
   document.getElementById("output").innerHTML = "";
   document.getElementById("chart").getContext("2d").clearRect(0, 0, 400, 200);
+  if (chartInstance) chartInstance.destroy();
   chartInstance = null;
   lastParsedData = [];
 });
@@ -18,8 +19,8 @@ document.getElementById("generate").addEventListener("click", () => {
     .split(/\r?\n/)
     .map(k => k.trim())
     .filter(k => k);
+  keywords.sort((a, b) => b.length - a.length); // match longest first
 
-  keywords.sort((a, b) => b.length - a.length);
   const files = document.getElementById("upload").files;
   if (!files.length) return alert("Please upload at least one .docx file.");
 
@@ -115,13 +116,22 @@ function renderOutput() {
 
 function renderChart(data) {
   const ctx = document.getElementById("chart").getContext("2d");
+  const wrapper = document.getElementById("chart-wrapper");
+  if (!wrapper) {
+    const chartTitle = document.createElement("h3");
+    chartTitle.textContent = "Found Keyword Instances";
+    chartTitle.style.marginBottom = "0.5em";
+    chartTitle.style.marginTop = "0.5em";
+    const canvas = document.getElementById("chart");
+    canvas.before(chartTitle);
+  }
+
   const labels = Object.keys(data);
   const counts = Object.values(data);
   const total = counts.reduce((a, b) => a + b, 0);
+  const chartType = document.getElementById("chart-type").value || "bar";
 
   if (chartInstance) chartInstance.destroy();
-
-  const chartType = document.getElementById("chart-type").value || "bar";
 
   chartInstance = new Chart(ctx, {
     type: chartType,
@@ -146,6 +156,9 @@ function renderChart(data) {
               return `${label}: ${count} (${percent}%)`;
             }
           }
+        },
+        legend: {
+          display: chartType === "pie"
         }
       },
       scales: chartType === "bar" ? { y: { beginAtZero: true } } : {}
@@ -164,21 +177,33 @@ document.getElementById("chart-type").addEventListener("change", () => {
   document.getElementById("generate").click();
 });
 
+document.getElementById("view-mode").addEventListener("change", () => {
+  renderOutput();
+});
+
 document.getElementById("download-pdf").addEventListener("click", () => {
-  const el = document.getElementById("output");
+  const outputEl = document.getElementById("output");
   const chartImage = new Image();
   chartImage.src = chartInstance.toBase64Image();
   chartImage.style.maxWidth = "6.5in";
   chartImage.style.display = "block";
+  chartImage.style.marginTop = "1em";
   chartImage.style.marginBottom = "1em";
 
-  const temp = el.cloneNode(true);
-  temp.prepend(chartImage);
+  const chartTitle = document.createElement("h3");
+  chartTitle.textContent = "Found Keyword Instances";
+  chartTitle.style.marginTop = "1em";
+  chartTitle.style.marginBottom = "0.5em";
+
+  const container = document.createElement("div");
+  container.innerHTML = outputEl.innerHTML;
+  container.appendChild(chartTitle);
+  container.appendChild(chartImage);
 
   html2pdf().set({
     margin: 0.5,
     filename: "Keyword_Summary_With_Chart.pdf",
     html2canvas: { scale: 2 },
     jsPDF: { unit: "in", format: "letter", orientation: "portrait" }
-  }).from(temp).save();
+  }).from(container).save();
 });
