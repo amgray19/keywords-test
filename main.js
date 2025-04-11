@@ -119,12 +119,10 @@ function renderChart(data) {
   const labels = Object.keys(data);
   const counts = Object.values(data);
   const total = counts.reduce((a, b) => a + b, 0);
-  const chartType = document.getElementById("chart-type").value || "bar";
+  const typeChoice = document.getElementById("chart-type").value || "bar";
 
-  if (chartInstance) chartInstance.destroy();
-
-  chartInstance = new Chart(ctx, {
-    type: chartType,
+  const chartConfig = {
+    type: typeChoice,
     data: {
       labels,
       datasets: [{
@@ -148,12 +146,16 @@ function renderChart(data) {
           }
         },
         legend: {
-          display: chartType === "pie"
+          display: typeChoice === "pie"
         }
       },
-      scales: chartType === "bar" ? { y: { beginAtZero: true } } : {}
+      indexAxis: (typeChoice === "bar" && labels.length > 6) ? "y" : "x",
+      scales: typeChoice === "bar" ? { y: { beginAtZero: true } } : {}
     }
-  });
+  };
+
+  if (chartInstance) chartInstance.destroy();
+  chartInstance = new Chart(ctx, chartConfig);
 }
 
 document.getElementById("chart").addEventListener("click", () => {
