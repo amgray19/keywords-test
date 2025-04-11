@@ -17,7 +17,7 @@ document.getElementById("generate").addEventListener("click", () => {
     .map(k => k.trim())
     .filter(k => k);
 
-  // Sort keywords by length (longest first) for better matching
+  // Sort by longest first
   keywords.sort((a, b) => b.length - a.length);
 
   const files = document.getElementById("upload").files;
@@ -40,14 +40,16 @@ document.getElementById("generate").addEventListener("click", () => {
       const results = [];
 
       paragraphs.forEach((text, idx) => {
-        let matchedAny = false;
-
         keywords.forEach(keyword => {
           const escaped = keyword.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-          const regex = new RegExp("(" + escaped + ")", "gi");
+
+          // Use word boundary for single words, loose match for phrases
+          const isPhrase = keyword.includes(" ");
+          const regex = isPhrase
+            ? new RegExp("(" + escaped + ")", "gi")
+            : new RegExp("\\b(" + escaped + ")\\b", "gi");
 
           if (regex.test(text)) {
-            matchedAny = true;
             allMatches[keyword] = (allMatches[keyword] || 0) + 1;
             const highlighted = text.replace(regex, '<span class="highlight">$1</span>');
             results.push(`Sentence ${idx + 1}: “${highlighted}”`);
@@ -111,7 +113,6 @@ document.getElementById("download-pdf").addEventListener("click", () => {
   chartImage.style.maxWidth = "6.5in";
   chartImage.style.display = "block";
   chartImage.style.marginBottom = "1em";
-
   el.prepend(chartImage);
 
   html2pdf().set({
