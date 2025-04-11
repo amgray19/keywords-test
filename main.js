@@ -19,7 +19,7 @@ document.getElementById("generate").addEventListener("click", () => {
     .split(/\r?\n/)
     .map(k => k.trim())
     .filter(k => k);
-  keywords.sort((a, b) => b.length - a.length); // match longest first
+  keywords.sort((a, b) => b.length - a.length);
 
   const files = document.getElementById("upload").files;
   if (!files.length) return alert("Please upload at least one .docx file.");
@@ -116,16 +116,6 @@ function renderOutput() {
 
 function renderChart(data) {
   const ctx = document.getElementById("chart").getContext("2d");
-  const wrapper = document.getElementById("chart-wrapper");
-  if (!wrapper) {
-    const chartTitle = document.createElement("h3");
-    chartTitle.textContent = "Found Keyword Instances";
-    chartTitle.style.marginBottom = "0.5em";
-    chartTitle.style.marginTop = "0.5em";
-    const canvas = document.getElementById("chart");
-    canvas.before(chartTitle);
-  }
-
   const labels = Object.keys(data);
   const counts = Object.values(data);
   const total = counts.reduce((a, b) => a + b, 0);
