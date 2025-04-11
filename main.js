@@ -17,8 +17,7 @@ document.getElementById("generate").addEventListener("click", () => {
     .map(k => k.trim())
     .filter(k => k);
 
-  // Sort by longest first
-  keywords.sort((a, b) => b.length - a.length);
+  keywords.sort((a, b) => b.length - a.length); // longest first
 
   const files = document.getElementById("upload").files;
   if (!files.length) return alert("Please upload at least one .docx file.");
@@ -42,8 +41,6 @@ document.getElementById("generate").addEventListener("click", () => {
       paragraphs.forEach((text, idx) => {
         keywords.forEach(keyword => {
           const escaped = keyword.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-
-          // Use word boundary for single words, loose match for phrases
           const isPhrase = keyword.includes(" ");
           const regex = isPhrase
             ? new RegExp("(" + escaped + ")", "gi")
