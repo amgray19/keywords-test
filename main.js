@@ -1,4 +1,3 @@
-
 let chartInstance = null;
 
 document.getElementById("reset").addEventListener("click", () => {
@@ -13,7 +12,14 @@ document.getElementById("generate").addEventListener("click", () => {
   output.innerHTML = "";
   const chartEl = document.getElementById("chart").getContext("2d");
 
-  const keywords = document.getElementById("keywords").value.split(/\r?\n/).map(k => k.trim()).filter(k => k);
+  const keywords = document.getElementById("keywords").value
+    .split(/\r?\n/)
+    .map(k => k.trim())
+    .filter(k => k);
+
+  // Sort keywords by length (longest first) for better matching
+  keywords.sort((a, b) => b.length - a.length);
+
   const files = document.getElementById("upload").files;
   if (!files.length) return alert("Please upload at least one .docx file.");
 
@@ -34,13 +40,16 @@ document.getElementById("generate").addEventListener("click", () => {
       const results = [];
 
       paragraphs.forEach((text, idx) => {
+        let matchedAny = false;
+
         keywords.forEach(keyword => {
-          const regex = keyword.includes(" ")
-            ? new RegExp("(" + keyword + ")", "gi")
-            : new RegExp("\b(" + keyword + ")\b", "gi");
+          const escaped = keyword.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+          const regex = new RegExp("(" + escaped + ")", "gi");
+
           if (regex.test(text)) {
+            matchedAny = true;
             allMatches[keyword] = (allMatches[keyword] || 0) + 1;
-            const highlighted = text.replace(regex, "<span class='highlight'>$1</span>");
+            const highlighted = text.replace(regex, '<span class="highlight">$1</span>');
             results.push(`Sentence ${idx + 1}: “${highlighted}”`);
           }
         });
@@ -53,20 +62,39 @@ document.getElementById("generate").addEventListener("click", () => {
       fullSummary += "</ul><div>" + results.join("<br>") + "</div></div>";
 
       const chartType = document.getElementById("chart-type").value || "bar";
+      const labels = Object.keys(allMatches);
+      const values = Object.values(allMatches);
+      const total = values.reduce((a, b) => a + b, 0);
+
+      const tooltipLabels = (ctx) => {
+        const label = ctx.label;
+        const count = ctx.raw;
+        const percent = ((count / total) * 100).toFixed(1);
+        return `${label}: ${count} (${percent}%)`;
+      };
+
       if (chartInstance) chartInstance.destroy();
       chartInstance = new Chart(chartEl, {
         type: chartType,
         data: {
-          labels: Object.keys(allMatches),
+          labels,
           datasets: [{
             label: "Keyword Matches",
-            data: Object.values(allMatches),
-            backgroundColor: "rgba(75,192,192,0.6)"
+            data: values,
+            backgroundColor: labels.map((_, i) =>
+              `hsl(${i * 360 / labels.length}, 70%, 60%)`)
           }]
         },
         options: {
           responsive: true,
-          scales: { y: { beginAtZero: true } }
+          plugins: {
+            tooltip: {
+              callbacks: {
+                label: tooltipLabels
+              }
+            }
+          },
+          scales: chartType === "bar" ? { y: { beginAtZero: true } } : {}
         }
       });
 
@@ -80,6 +108,10 @@ document.getElementById("download-pdf").addEventListener("click", () => {
   const el = document.getElementById("output");
   const chartImage = new Image();
   chartImage.src = chartInstance.toBase64Image();
+  chartImage.style.maxWidth = "6.5in";
+  chartImage.style.display = "block";
+  chartImage.style.marginBottom = "1em";
+
   el.prepend(chartImage);
 
   html2pdf().set({
@@ -95,4 +127,8 @@ document.getElementById("chart").addEventListener("click", () => {
   const chartImg = chartInstance.toBase64Image();
   const newWin = window.open("");
   newWin.document.write("<img src='" + chartImg + "' style='width:100%;'>");
+});
+
+document.getElementById("chart-type").addEventListener("change", () => {
+  document.getElementById("generate").click();
 });
