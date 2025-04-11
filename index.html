@@ -17,6 +17,8 @@
 
   <div style="display: flex; gap: 2em;">
     <div style="flex: 2;">
+      <img src="logo.png" alt="Logo" style="max-width: 200px; margin-bottom: 1em;" />
+
       <label for="upload"><strong>Upload Word (.docx) Files:</strong></label><br>
       <input type="file" id="upload" accept=".docx" multiple><br><br>
       <button id="generate">Generate Summary</button>
@@ -28,6 +30,7 @@
         <option value="pie">Pie</option>
       </select>
     </div>
+
     <div style="flex: 1;">
       <label for="keywords"><strong>Preloaded Keywords (edit or add more, one per line):</strong></label><br>
       <textarea id="keywords" rows="10" style="margin-top: 0.5em;"></textarea>
@@ -37,11 +40,12 @@
 
   <div id="output" style="margin-top: 2em;"></div>
 
-  <!-- Libraries -->
+  <!-- Load all scripts locally -->
   <script src="html2pdf.bundle.min.js"></script>
   <script src="pizzip.min.js"></script>
-  <script src="chart.js"></script>
+  <script src="chart.umd.js"></script>
   <script src="main.js"></script>
+
   <script>
     fetch('keywords.txt')
       .then(res => res.text())
