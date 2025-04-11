@@ -43,13 +43,7 @@
   </div>
 
   <div id="output" style="margin-top: 2em;"></div>
-
-  <!-- Local JS Libraries -->
-  <script src="html2pdf.bundle.min.js"></script>
-  <script src="pizzip.min.js"></script>
-  <script src="chart.umd.js"></script>
-  <script src="main.js"></script>
-
+  
   <script>
     fetch('keywords.txt')
       .then(res => res.text())
@@ -57,5 +51,13 @@
         document.getElementById('keywords').value = txt.trim();
       });
   </script>
+  
+  <!-- Local JS Libraries -->
+  <script src="html2pdf.bundle.min.js"></script>
+  <script src="pizzip.min.js"></script>
+  <script src="chart.umd.js"></script>
+  <script src="main.js"></script>
+
+
 </body>
 </html>
