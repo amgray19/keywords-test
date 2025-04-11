@@ -115,11 +115,6 @@
 
   <div id="output"></div>
 
-  <script src="main.js"></script>
-<script src="docx.umd.js"></script>
-  <script src="https://unpkg.com/mammoth/mammoth.browser.min.js"></script>
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   <script>
     fetch('keywords.txt')
       .then(response => response.text())
@@ -127,5 +122,19 @@
         document.getElementById('keywords').value = text.trim();
       });
   </script>
+  
+  <!-- PDF generator -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+  <!-- Word .docx parser -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pizzip/3.1.5/pizzip.min.js"></script>
+
+  <!-- Charting library -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- Your app logic (depends on all the above) -->
+  <script src="main.js"></script>
+
+ 
 </body>
 </html>
