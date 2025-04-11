@@ -9,38 +9,28 @@
     .highlight { font-weight: bold; color: red; background: yellow; }
     .file-section { margin-top: 2em; border-top: 1px solid #ccc; padding-top: 1em; }
     #chart { cursor: pointer; }
+    textarea { font-family: monospace; width: 100%; }
   </style>
 </head>
 <body>
   <h1>Federal Forbidden Keyword Search Tool</h1>
 
-  <div style="display: flex; gap: 2em; align-items: flex-start;">
+  <div style="display: flex; gap: 2em;">
     <div style="flex: 2;">
-      <h2>Instructions:</h2>
-      <ul>
-        <li>Edit the keyword list if needed.</li>
-        <li>Upload one or more Word <code>.docx</code> files.</li>
-        <li>Click “Generate Summary” to view matches.</li>
-        <li>Click “Download PDF” to export your results and chart.</li>
-      </ul>
-
-      <div style="margin-top: 1em;">
-        <input type="file" id="upload" accept=".docx" multiple>
-        <button id="generate">Generate Summary</button>
-        <button id="download-pdf">Download PDF</button>
-        <button id="reset">Reset</button>
-        <label for="chart-type" style="margin-left: 1em;">Chart Type:</label>
-        <select id="chart-type">
-          <option value="bar">Bar</option>
-          <option value="pie">Pie</option>
-        </select>
-      </div>
+      <label for="upload"><strong>Upload Word (.docx) Files:</strong></label><br>
+      <input type="file" id="upload" accept=".docx" multiple><br><br>
+      <button id="generate">Generate Summary</button>
+      <button id="download-pdf">Download PDF</button>
+      <button id="reset">Reset</button>
+      <label for="chart-type" style="margin-left: 1em;">Chart Type:</label>
+      <select id="chart-type">
+        <option value="bar">Bar</option>
+        <option value="pie">Pie</option>
+      </select>
     </div>
-
     <div style="flex: 1;">
       <label for="keywords"><strong>Preloaded Keywords (edit or add more, one per line):</strong></label><br>
-      <textarea id="keywords" rows="10" style="width: 100%; margin-top: 0.5em;"></textarea>
-
+      <textarea id="keywords" rows="10" style="margin-top: 0.5em;"></textarea>
       <canvas id="chart" width="400" height="200" style="margin-top: 1em;"></canvas>
     </div>
   </div>

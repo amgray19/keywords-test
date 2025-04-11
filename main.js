@@ -1,16 +1,17 @@
+
 let chartInstance = null;
 
 document.getElementById("reset").addEventListener("click", () => {
   document.getElementById("upload").value = "";
-  document.getElementById("output").innerHTML = '<canvas id="chart" width="600" height="200" style="margin-bottom: 2em;"></canvas>';
+  document.getElementById("output").innerHTML = "";
+  document.getElementById("chart").getContext("2d").clearRect(0, 0, 400, 200);
   chartInstance = null;
 });
 
 document.getElementById("generate").addEventListener("click", () => {
   const output = document.getElementById("output");
-  const chartEl = document.getElementById("chart");
-  output.innerHTML = '<canvas id="chart" width="600" height="200" style="margin-bottom: 2em;"></canvas>';
-  const chartCtx = document.getElementById("chart").getContext("2d");
+  output.innerHTML = "";
+  const chartEl = document.getElementById("chart").getContext("2d");
 
   const keywords = document.getElementById("keywords").value.split(/\r?\n/).map(k => k.trim()).filter(k => k);
   const files = document.getElementById("upload").files;
@@ -51,11 +52,10 @@ document.getElementById("generate").addEventListener("click", () => {
       });
       fullSummary += "</ul><div>" + results.join("<br>") + "</div></div>";
 
-      if (chartInstance) chartInstance.destroy();
-      const chartType = document.getElementById('chart-type').value || 'bar';
       const chartType = document.getElementById("chart-type").value || "bar";
-      chartInstance = new Chart(chartCtx, { type: chartType,
-        type: "bar",
+      if (chartInstance) chartInstance.destroy();
+      chartInstance = new Chart(chartEl, {
+        type: chartType,
         data: {
           labels: Object.keys(allMatches),
           datasets: [{
