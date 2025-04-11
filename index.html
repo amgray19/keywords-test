@@ -23,11 +23,19 @@
       <li>Click either “Download Word Summary" (currently disabled) or “Download PDF Summary” to save the results.</li>
       <li>Hit reset to upload a new set of files and start over.</li>
     </ul>
+  <div style="display: flex; gap: 2em;">
+    <div style="flex: 2;">
       <label for="upload"><strong>Upload Word (.docx) Files:</strong></label><br>
       <input type="file" id="upload" accept=".docx" multiple><br><br>
       <button id="generate">Generate Summary</button>
       <button id="download-pdf">Download PDF</button>
       <button id="reset">Reset</button>
+      <br><br>
+      <label for="view-mode"><strong>Group view:</strong></label>
+      <select id="view-mode">
+        <option value="file">By File</option>
+        <option value="keyword">By Keyword</option>
+      </select>
       <label for="chart-type" style="margin-left: 1em;">Chart Type:</label>
       <select id="chart-type">
         <option value="bar">Bar</option>
@@ -43,7 +51,13 @@
   </div>
 
   <div id="output" style="margin-top: 2em;"></div>
-  
+
+  <!-- Local JS Libraries -->
+  <script src="html2pdf.bundle.min.js"></script>
+  <script src="pizzip.min.js"></script>
+  <script src="chart.js"></script>
+  <script src="main.js"></script>
+
   <script>
     fetch('keywords.txt')
       .then(res => res.text())
@@ -51,13 +65,5 @@
         document.getElementById('keywords').value = txt.trim();
       });
   </script>
-  
-  <!-- Local JS Libraries -->
-  <script src="html2pdf.bundle.min.js"></script>
-  <script src="pizzip.min.js"></script>
-  <script src="chart.js"></script>
-  <script src="main.js"></script>
-
-
 </body>
 </html>
