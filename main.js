@@ -1,10 +1,12 @@
 let chartInstance = null;
+let lastParsedData = [];
 
 document.getElementById("reset").addEventListener("click", () => {
   document.getElementById("upload").value = "";
   document.getElementById("output").innerHTML = "";
   document.getElementById("chart").getContext("2d").clearRect(0, 0, 400, 200);
   chartInstance = null;
+  lastParsedData = [];
 });
 
 document.getElementById("generate").addEventListener("click", () => {
@@ -17,13 +19,12 @@ document.getElementById("generate").addEventListener("click", () => {
     .map(k => k.trim())
     .filter(k => k);
 
-  keywords.sort((a, b) => b.length - a.length); // longest first
-
+  keywords.sort((a, b) => b.length - a.length);
   const files = document.getElementById("upload").files;
   if (!files.length) return alert("Please upload at least one .docx file.");
 
   const allMatches = {};
-  let fullSummary = "";
+  lastParsedData = [];
 
   Array.from(files).forEach(file => {
     const reader = new FileReader();
@@ -36,6 +37,7 @@ document.getElementById("generate").addEventListener("click", () => {
         Array.from(p.getElementsByTagName("w:t")).map(t => t.textContent).join("")
       ).filter(Boolean);
 
+      const summary = {};
       const results = [];
 
       paragraphs.forEach((text, idx) => {
@@ -47,78 +49,109 @@ document.getElementById("generate").addEventListener("click", () => {
             : new RegExp("\\b(" + escaped + ")\\b", "gi");
 
           if (regex.test(text)) {
+            summary[keyword] = summary[keyword] || [];
+            summary[keyword].push(idx + 1);
             allMatches[keyword] = (allMatches[keyword] || 0) + 1;
-            const highlighted = text.replace(regex, '<span class="highlight">$1</span>');
-            results.push(`Sentence ${idx + 1}: “${highlighted}”`);
+            const highlighted = text.replace(regex, "<span class='highlight'>$1</span>");
+            results.push({ para: idx + 1, keyword, text: highlighted, raw: text, file: file.name });
           }
         });
       });
 
-      fullSummary += `<div class='file-section'><h2>Results for: ${file.name}</h2><ul>`;
-      Object.entries(allMatches).forEach(([k, v]) => {
-        fullSummary += `<li>${k} — ${v} match(es)</li>`;
-      });
-      fullSummary += "</ul><div>" + results.join("<br>") + "</div></div>";
-
-      const chartType = document.getElementById("chart-type").value || "bar";
-      const labels = Object.keys(allMatches);
-      const values = Object.values(allMatches);
-      const total = values.reduce((a, b) => a + b, 0);
-
-      const tooltipLabels = (ctx) => {
-        const label = ctx.label;
-        const count = ctx.raw;
-        const percent = ((count / total) * 100).toFixed(1);
-        return `${label}: ${count} (${percent}%)`;
-      };
-
-      if (chartInstance) chartInstance.destroy();
-      chartInstance = new Chart(chartEl, {
-        type: chartType,
-        data: {
-          labels,
-          datasets: [{
-            label: "Keyword Matches",
-            data: values,
-            backgroundColor: labels.map((_, i) =>
-              `hsl(${i * 360 / labels.length}, 70%, 60%)`)
-          }]
-        },
-        options: {
-          responsive: true,
-          plugins: {
-            tooltip: {
-              callbacks: {
-                label: tooltipLabels
-              }
-            }
-          },
-          scales: chartType === "bar" ? { y: { beginAtZero: true } } : {}
-        }
-      });
-
-      output.innerHTML += fullSummary;
+      lastParsedData.push({ filename: file.name, summary, results });
+      renderChart(allMatches);
+      renderOutput();
     };
     reader.readAsArrayBuffer(file);
   });
 });
 
-document.getElementById("download-pdf").addEventListener("click", () => {
-  const el = document.getElementById("output");
-  const chartImage = new Image();
-  chartImage.src = chartInstance.toBase64Image();
-  chartImage.style.maxWidth = "6.5in";
-  chartImage.style.display = "block";
-  chartImage.style.marginBottom = "1em";
-  el.prepend(chartImage);
+function renderOutput() {
+  const view = document.getElementById("view-mode").value;
+  const container = document.getElementById("output");
+  container.innerHTML = "";
 
-  html2pdf().set({
-    margin: 0.5,
-    filename: "Keyword_Summary_With_Chart.pdf",
-    html2canvas: { scale: 2 },
-    jsPDF: { unit: "in", format: "letter", orientation: "portrait" }
-  }).from(el).save();
-});
+  if (view === "file") {
+    lastParsedData.forEach(file => {
+      const section = document.createElement("div");
+      section.className = "file-section";
+      section.innerHTML = `<h2>Results for: ${file.filename}</h2>`;
+
+      let summaryHTML = "<div class='summary'><h3>Summary</h3><ul>";
+      Object.entries(file.summary).forEach(([k, v]) => {
+        summaryHTML += `<li>${k} — ${v.length} match(es) (Sentences ${[...new Set(v)].join(", ")})</li>`;
+      });
+      summaryHTML += "</ul></div>";
+
+      let resultsHTML = "<div class='results'><h3>Matched Sentences</h3>";
+      file.results.forEach(entry => {
+        resultsHTML += `<div class="result-sentence">Sentence ${entry.para}: “${entry.text}”</div>`;
+      });
+      resultsHTML += "</div>";
+
+      section.innerHTML += summaryHTML + resultsHTML;
+      container.appendChild(section);
+    });
+  } else {
+    const grouped = {};
+    lastParsedData.forEach(file => {
+      file.results.forEach(entry => {
+        grouped[entry.keyword] = grouped[entry.keyword] || [];
+        grouped[entry.keyword].push(entry);
+      });
+    });
+
+    Object.entries(grouped).forEach(([keyword, entries]) => {
+      const section = document.createElement("div");
+      section.className = "file-section";
+      section.innerHTML = `<h2>Keyword: ${keyword}</h2>`;
+      entries.forEach(r => {
+        section.innerHTML += `<div class="result-sentence">${r.file} — Sentence ${r.para}: “${r.text}”</div>`;
+      });
+      container.appendChild(section);
+    });
+  }
+}
+
+function renderChart(data) {
+  const ctx = document.getElementById("chart").getContext("2d");
+  const labels = Object.keys(data);
+  const counts = Object.values(data);
+  const total = counts.reduce((a, b) => a + b, 0);
+
+  if (chartInstance) chartInstance.destroy();
+
+  const chartType = document.getElementById("chart-type").value || "bar";
+
+  chartInstance = new Chart(ctx, {
+    type: chartType,
+    data: {
+      labels,
+      datasets: [{
+        label: "Keyword Matches",
+        data: counts,
+        backgroundColor: labels.map((_, i) =>
+          `hsl(${i * 360 / labels.length}, 70%, 60%)`)
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        tooltip: {
+          callbacks: {
+            label: ctx => {
+              const label = ctx.label;
+              const count = ctx.raw;
+              const percent = ((count / total) * 100).toFixed(1);
+              return `${label}: ${count} (${percent}%)`;
+            }
+          }
+        }
+      },
+      scales: chartType === "bar" ? { y: { beginAtZero: true } } : {}
+    }
+  });
+}
 
 document.getElementById("chart").addEventListener("click", () => {
   if (!chartInstance) return;
@@ -129,4 +162,23 @@ document.getElementById("chart").addEventListener("click", () => {
 
 document.getElementById("chart-type").addEventListener("change", () => {
   document.getElementById("generate").click();
+});
+
+document.getElementById("download-pdf").addEventListener("click", () => {
+  const el = document.getElementById("output");
+  const chartImage = new Image();
+  chartImage.src = chartInstance.toBase64Image();
+  chartImage.style.maxWidth = "6.5in";
+  chartImage.style.display = "block";
+  chartImage.style.marginBottom = "1em";
+
+  const temp = el.cloneNode(true);
+  temp.prepend(chartImage);
+
+  html2pdf().set({
+    margin: 0.5,
+    filename: "Keyword_Summary_With_Chart.pdf",
+    html2canvas: { scale: 2 },
+    jsPDF: { unit: "in", format: "letter", orientation: "portrait" }
+  }).from(temp).save();
 });
