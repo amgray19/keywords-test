@@ -79,23 +79,37 @@ function renderOutput() {
     lastParsedData.forEach(file => {
       const section = document.createElement("div");
       section.className = "file-section";
-      section.innerHTML = `<h2>Results for: ${file.filename}</h2>`;
 
-      let summaryHTML = "<div class='summary'><h3>Summary</h3><ul>";
-      Object.entries(file.summary).forEach(([k, v]) => {
-        summaryHTML += `<li>${k} — ${v.length} match(es) (Sentences ${[...new Set(v)].join(", ")})</li>`;
-      });
-      summaryHTML += "</ul></div>";
+      const header = document.createElement("h2");
+      header.textContent = `Results for: ${file.filename}`;
+      header.style.borderBottom = "1px solid #ccc";
+      header.style.paddingBottom = "5px";
+      header.style.marginBottom = "10px";
+      section.appendChild(header);
 
-      let resultsHTML = "<div class='results'><h3>Matched Sentences</h3>";
+      const summaryBox = document.createElement("div");
+      summaryBox.className = "summary";
+      summaryBox.innerHTML = `<h3>Summary</h3><ul style="list-style: disc; margin-left: 1.2em;">${
+        Object.entries(file.summary).map(([k, v]) =>
+          `<li><strong>${k}</strong>: ${v.length} match(es) at sentence(s) ${[...new Set(v)].join(", ")}</li>`).join("")
+      }</ul>`;
+      section.appendChild(summaryBox);
+
+      const resultsBox = document.createElement("div");
+      resultsBox.className = "results";
+      resultsBox.innerHTML = "<h3>Matched Sentences</h3>";
       file.results.forEach(entry => {
-        resultsHTML += `<div class="result-sentence">Sentence ${entry.para}: “${entry.text}”</div>`;
+        const div = document.createElement("div");
+        div.className = "result-sentence";
+        div.style.marginBottom = "0.5em";
+        div.innerHTML = `<span style="color: #555;">Sentence ${entry.para}:</span> “${entry.text}”`;
+        resultsBox.appendChild(div);
       });
-      resultsHTML += "</div>";
+      section.appendChild(resultsBox);
 
-      section.innerHTML += summaryHTML + resultsHTML;
       container.appendChild(section);
     });
+
   } else {
     const grouped = {};
     lastParsedData.forEach(file => {
@@ -108,9 +122,9 @@ function renderOutput() {
     Object.entries(grouped).forEach(([keyword, entries]) => {
       const section = document.createElement("div");
       section.className = "file-section";
-      section.innerHTML = `<h2>Keyword: ${keyword}</h2>`;
+      section.innerHTML = `<h2 style="border-bottom: 1px solid #ccc; padding-bottom: 5px; margin-bottom: 10px;">Keyword: ${keyword}</h2>`;
       entries.forEach(r => {
-        section.innerHTML += `<div class="result-sentence">${r.file} — Sentence ${r.para}: “${r.text}”</div>`;
+        section.innerHTML += `<div class="result-sentence" style="margin-bottom: 0.5em;"><span style="color: #555;">${r.file} — Sentence ${r.para}:</span> “${r.text}”</div>`;
       });
       container.appendChild(section);
     });
