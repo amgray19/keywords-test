@@ -1,13 +1,3 @@
-// Enhanced version — supports keyword suggestions from keywords.js
-
-// Load keyword suggestions
-let keywordSuggestions = {};
-if (typeof keywordsWithSuggestions !== 'undefined') {
-  keywordsWithSuggestions.forEach(entry => {
-    keywordSuggestions[entry.term.toLowerCase()] = entry.suggestions;
-  });
-}
-
 let chartInstance = null;
 let lastParsedData = [];
 
@@ -113,6 +103,14 @@ function renderOutput() {
         div.className = "result-sentence";
         div.style.marginBottom = "0.5em";
         div.innerHTML = `<span style="color: #555;">Sentence ${entry.para}:</span> “${entry.text}”`;
+
+        const keyword = entry.keyword.toLowerCase();
+        const alt = keywordSuggestions[keyword];
+        if (alt && alt.length) {
+          const suggestionText = `<span style="font-weight:bold; color:blue; margin-left:0.5em;">(Suggested: ${alt.join(", ")})</span>`;
+          div.innerHTML += " " + suggestionText;
+        }
+
         resultsBox.appendChild(div);
       });
       section.appendChild(resultsBox);
@@ -240,26 +238,3 @@ document.getElementById("download-pdf").addEventListener("click", () => {
     jsPDF: { unit: "in", format: "letter", orientation: "portrait" }
   }).from(container).save();
 });
-
-
-// Helper function to show alternatives
-function formatSuggestions(term) {
-  const suggestions = keywordSuggestions[term.toLowerCase()];
-  if (!suggestions || !suggestions.length) return "";
-  return " ↪ Suggested: " + suggestions.join(", ");
-}
-
-// Patch rendering logic (simplified hook example — customize based on your existing rendering logic)
-const originalOutput = document.getElementById("output");
-if (originalOutput) {
-  const observer = new MutationObserver(() => {
-    document.querySelectorAll(".highlight").forEach(el => {
-      const keyword = el.textContent.trim().toLowerCase();
-      const altText = formatSuggestions(keyword);
-      if (altText && !el.title) {
-        el.title = altText;
-      }
-    });
-  });
-  observer.observe(originalOutput, { childList: true, subtree: true });
-}
