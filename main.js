@@ -1,4 +1,4 @@
-// Enhanced version — supports keyword suggestions from keywords.js
+// Enhanced version — shows suggestions directly beneath each match
 
 // Load keyword suggestions
 let keywordSuggestions = {};
@@ -242,22 +242,31 @@ document.getElementById("download-pdf").addEventListener("click", () => {
 });
 
 
-// Helper function to show alternatives
-function formatSuggestions(term) {
+// Helper function to return HTML for suggestions
+function formatSuggestionsElement(term) {
   const suggestions = keywordSuggestions[term.toLowerCase()];
   if (!suggestions || !suggestions.length) return "";
-  return " ↪ Suggested: " + suggestions.join(", ");
+  const div = document.createElement('div');
+  div.className = 'suggestion-line';
+  div.textContent = "↪ Suggested: " + suggestions.join(", ");
+  div.style.fontSize = '0.9em';
+  div.style.marginTop = '0.25em';
+  div.style.color = '#444';
+  return div;
 }
 
-// Patch rendering logic (simplified hook example — customize based on your existing rendering logic)
+// Observe and patch DOM for alternatives
 const originalOutput = document.getElementById("output");
 if (originalOutput) {
   const observer = new MutationObserver(() => {
     document.querySelectorAll(".highlight").forEach(el => {
       const keyword = el.textContent.trim().toLowerCase();
-      const altText = formatSuggestions(keyword);
-      if (altText && !el.title) {
-        el.title = altText;
+      if (!el.dataset.suggestionAdded) {
+        const suggestion = formatSuggestionsElement(keyword);
+        if (suggestion) {
+          el.insertAdjacentElement('afterend', suggestion);
+          el.dataset.suggestionAdded = "true";
+        }
       }
     });
   });
