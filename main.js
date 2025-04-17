@@ -279,3 +279,51 @@ if (outputEl) {
   });
   observer.observe(outputEl, { childList: true, subtree: true });
 }
+
+
+// === INLINE SUGGESTIONS FOR MATCHED SENTENCES ONLY ===
+
+// Load keyword suggestions
+let keywordSuggestions = {};
+if (typeof keywordsWithSuggestions !== 'undefined') {
+  keywordsWithSuggestions.forEach(entry => {
+    keywordSuggestions[entry.term.toLowerCase()] = entry.suggestions;
+  });
+}
+
+// Helper: create styled suggestion span
+function createSuggestionSpan(term) {
+  const suggestions = keywordSuggestions[term.toLowerCase()];
+  if (!suggestions || !suggestions.length) return null;
+  const span = document.createElement('span');
+  span.className = 'suggestion-inline';
+  span.style.fontWeight = 'bold';
+  span.style.color = 'blue';
+  span.style.marginLeft = '0.5em';
+  span.textContent = "(Suggested: " + suggestions.join(", ") + ")";
+  return span;
+}
+
+// Attach suggestions directly after matched .highlight spans
+const outputEl = document.getElementById("output");
+if (outputEl) {
+  const observer = new MutationObserver(() => {
+    document.querySelectorAll("#output .highlight").forEach(highlightEl => {
+      if (highlightEl.dataset.suggestionAppended === "true") return;
+
+      const keyword = highlightEl.textContent.trim().toLowerCase();
+      const suggestionSpan = createSuggestionSpan(keyword);
+      if (suggestionSpan) {
+        // Append after the sentence-ending punctuation if possible
+        const parent = highlightEl.closest("p, li");
+        if (parent && !parent.dataset.suggestionAppended) {
+          parent.appendChild(suggestionSpan);
+          parent.dataset.suggestionAppended = "true";
+        }
+      }
+
+      highlightEl.dataset.suggestionAppended = "true";
+    });
+  });
+  observer.observe(outputEl, { childList: true, subtree: true });
+}
