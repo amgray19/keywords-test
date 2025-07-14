@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Security-Policy"
+        content="
+          default-src 'self';
+          script-src 'self' https://cdn.jsdelivr.net https://unpkg.com;
+          style-src 'self' 'unsafe-inline';
+          img-src 'self' data:;
+          connect-src 'self';
+          font-src 'self' https://fonts.googleapis.com;
+          object-src 'none';
+          base-uri 'self';
+          form-action 'self';
+        ">
+  <title>Keyword Search Tool</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div style="font-size: 0.9em; color: gray; text-align: right;">Version: v2.0</div>
+
+  <div class="flex-row">
+    <div style="flex: 2;">
+      <h1>Keyword Search</h1>
+      <h2>Instructions:</h2>
+      <ul>
+        <li>Upload or paste your keyword list (one term per line).</li>
+        <li>If you don't have a list, you can <a href="keywords.txt" download>download a sample keywords.txt</a>.</li>
+        <li>Upload one or more Word <code>.docx</code> files.</li>
+        <li>Click “Generate Summary” to process them.</li>
+        <li>Click “Print or Save Summary” to export the results.</li>
+      </ul>
+
+      <label for="keywordUpload"><strong>Upload Keyword List (.txt):</strong></label>
+      <input type="file" id="keywordUpload" accept=".txt" />
+      <br><br>
+      <label for="keywordsPaste"><strong>Or paste keywords (one per line):</strong></label>
+      <textarea id="keywordsPaste" rows="8" placeholder="Enter keywords here..."></textarea>
+
+      <br><br>
+      <label for="upload"><strong>Upload Word (.docx) Files:</strong></label>
+      <input type="file" id="upload" accept=".docx" multiple />
+
+      <div class="controls">
+        <button id="generate">Generate Summary</button>
+        <button id="download-pdf">Print or Save Summary</button>
+        <button id="reset">Reset</button>
+        <button id="toggle-theme">Toggle Dark/Light Mode</button>
+
+        <div class="dropdown-row">
+          <div class="dropdown-group">
+            <label for="chartType">Chart Type</label>
+            <select id="chartType">
+              <option value="bar">Bar Chart</option>
+              <option value="pie">Pie Chart</option>
+            </select>
+          </div>
+          <div class="dropdown-group">
+            <label for="filterKeyword">Filter by Keyword</label>
+            <select id="filterKeyword">
+              <option value="">(Show All)</option>
+            </select>
+          </div>
+          <div class="dropdown-group">
+            <label for="viewMode">Group Results</label>
+            <select id="viewMode">
+              <option value="file">By File</option>
+              <option value="keyword">By Keyword</option>
+            </select>
+          </div>
+          <div id="scrollPrompt" style="display:none; font-weight:bold; text-align:center; margin: 1em auto; width: 100%;"></div>
+        </div>
+      </div>
+    </div>
+
+    <div style="flex: 1; min-width: 260px;">
+      <canvas id="chart" width="400" height="400"></canvas>
+    </div>
+  </div>
+
+  <div id="output" style="margin-top: 2em;"></div>
+
+  <script src="main.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+  <script src="https://unpkg.com/mammoth/mammoth.browser.min.js"></script>
+</body>
+</html>
