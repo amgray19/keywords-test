@@ -1,14 +1,14 @@
-const CACHE_NAME = 'ffkst-v1';
+const CACHE_NAME = 'ffkst-v2';
 const URLS_TO_CACHE = [
   '/',
   '/index.html',
   '/main.js',
+  '/style.css',
   '/keywords.txt',
-  '/logo-light.png',
-  '/logo-dark.png',
-  'https://cdn.jsdelivr.net/npm/chart.js',
-  'https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels',
-  'https://unpkg.com/mammoth/mammoth.browser.min.js'
+  '/keywords.json',
+  '/lib/chart.js',
+  '/lib/chartjs-plugin-datalabels.js',
+  '/lib/mammoth.browser.min.js'
 ];
 
 self.addEventListener('install', event => {
