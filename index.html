@@ -5,11 +5,11 @@
   <meta http-equiv="Content-Security-Policy"
         content="
           default-src 'self';
-          script-src 'self' https://cdn.jsdelivr.net https://unpkg.com;
+          script-src 'self';
           style-src 'self' 'unsafe-inline';
           img-src 'self' data:;
           connect-src 'self';
-          font-src 'self' https://fonts.googleapis.com;
+          font-src 'self';
           object-src 'none';
           base-uri 'self';
           form-action 'self';
@@ -260,7 +260,7 @@
     <!-- Left Column: Form -->
     <div class="section">
         <h1>Keyword Search Tool</h1>
-        <p>This web application scans <code>.docx</code> and <code>.doc</code> files for specified keywords and generates a summary report with visual charts of keyword frequencies. A default keyword list is pre-loaded, but you can upload your own or paste a custom list.</p>
+        <p>This web application scans <code>.docx</code> files for specified keywords and generates a summary report with visual charts of keyword frequencies. A default keyword list is pre-loaded, but you can upload your own or paste a custom list.</p>
       <section id="readme-section">
         <details>
           <summary>📘 About This Tool (Click to Expand)</summary>
@@ -290,7 +290,7 @@
             <ol>
               <li>Upload a <code>.txt</code> file of keywords (or paste keywords into the textarea).</li>
               <li>If you don't have a list, <a href="./keywords.txt">download the sample keywords.txt</a>.</li>
-              <li>Upload one or more <code>.docx</code> or <code>.doc</code> files.</li>
+              <li>Upload one or more <code>.docx</code> files.</li>
               <li>Click <strong>Generate Summary</strong>.</li>
               <li>Review results and charts.</li>
               <li>Use <strong>Print or Save Summary</strong> to export a report.</li>
@@ -313,8 +313,8 @@
 
         <fieldset class="controls">
           <legend><strong>2. Document Upload</strong></legend>
-          <label for="upload">Upload Word (.docx, .doc) File(s)</label>
-          <input type="file" id="upload" accept=".docx,.doc" multiple />
+          <label for="upload">Upload Word (.docx) File(s)</label>
+          <input type="file" id="upload" accept=".docx" multiple />
         </fieldset>
 
         <fieldset class="controls" style="grid-column: span 2;">
