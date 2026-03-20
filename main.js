@@ -138,7 +138,7 @@ window.addEventListener("DOMContentLoaded", () => {
         
         const files = document.getElementById("upload").files;
         if (!files.length) {
-            alert("Please upload at least one .docx file.");
+            alert("Please upload at least one .docx or .doc file.");
             return;
         }
         
