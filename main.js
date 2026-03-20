@@ -24,6 +24,23 @@ window.addEventListener("DOMContentLoaded", () => {
     const viewToggle = document.getElementById("viewModeToggle");
     const viewHidden = document.getElementById("viewMode");
     const chartTypeToggle = document.getElementById("chartTypeToggle");
+    const docUploadInput = document.getElementById("upload");
+
+    // Warn immediately when a .doc file is selected
+    docUploadInput.addEventListener("change", () => {
+        const docFiles = Array.from(docUploadInput.files).filter(
+            f => f.name.toLowerCase().endsWith(".doc") && !f.name.toLowerCase().endsWith(".docx")
+        );
+        if (docFiles.length) {
+            const names = docFiles.map(f => f.name).join("\n  ");
+            alert(
+                "Legacy .doc format is not supported:\n\n  " + names + "\n\n" +
+                "Please re-save as .docx in Word:\n" +
+                "File \u2192 Save As \u2192 Word Document (.docx)"
+            );
+            docUploadInput.value = "";
+        }
+    });
     
     // Theme setup
     const saved = localStorage.getItem("theme") || "light";
@@ -138,7 +155,18 @@ window.addEventListener("DOMContentLoaded", () => {
         
         const files = document.getElementById("upload").files;
         if (!files.length) {
-            alert("Please upload at least one .docx or .doc file.");
+            alert("Please upload at least one .docx file.");
+            return;
+        }
+
+        const docFiles = Array.from(files).filter(f => f.name.toLowerCase().endsWith(".doc") && !f.name.toLowerCase().endsWith(".docx"));
+        if (docFiles.length) {
+            const names = docFiles.map(f => f.name).join("\n  ");
+            alert(
+                "Legacy .doc format is not supported:\n\n  " + names + "\n\n" +
+                "Please re-save as .docx in Word:\n" +
+                "File \u2192 Save As \u2192 Word Document (.docx)"
+            );
             return;
         }
         
