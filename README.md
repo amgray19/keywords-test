@@ -1,6 +1,6 @@
 # Keyword Search Tool
 
-This web application scans `.docx` and `.doc` files for specified keywords and generates a summary report with visual charts of keyword frequencies.  
+This web application scans `.docx` files for specified keywords and generates a summary report with visual charts of keyword frequencies.  
 A default keyword list is pre-loaded, but you can upload your own or paste a custom list.
 
 ---
@@ -34,7 +34,7 @@ A default keyword list is pre-loaded, but you can upload your own or paste a cus
 
 1. Upload a `.txt` file of keywords (or paste keywords into the textarea).
 2. If you don't have a list, [download the sample keywords.txt](./keywords.txt).
-3. Upload one or more `.docx` or `.doc` files.
+3. Upload one or more `.docx` files. (Legacy `.doc` files are not supported — re-save as `.docx` in Word via File → Save As → Word Document.)
 4. Click **Generate Summary**.
 5. Review results, view charts, and see alternative keyword suggestions.
 6. Use **Print or Save Summary** to export a report.
