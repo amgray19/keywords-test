@@ -6,7 +6,8 @@
 // vendored mammoth.js (.docx) and pdf.js (.pdf), and every result is rendered
 // from memory. No network request carries document content.
 //
-// Scanning core ported from FedInt, 2026-08-05.
+// Scanning core ported from FedInt, 2026-08-05. Charts are Apache ECharts,
+// themed from the same CSS tokens as the page.
 
 let keywordSuggestions = {};
 let keywordSuggestionsLoaded = fetch('keywords.json')
@@ -112,48 +113,182 @@ function scanText(filename, text, keywordList) {
   return { filename, summary, results, sentences: sentences.length };
 }
 
+// Match totals across every document scanned, which is what the chart plots.
+function keywordTotals(parsed) {
+  const counts = {};
+  parsed.forEach(file => {
+    Object.entries(file.summary).forEach(([keyword, hits]) => {
+      counts[keyword] = (counts[keyword] || 0) + hits.length;
+    });
+  });
+  return counts;
+}
+
+// ---- chart theming ---------------------------------------------------------
+const tok = name => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+const isDark = () => document.documentElement.getAttribute("data-theme") === "dark";
+
+// Bars are one measure, so they are one colour. Colouring each bar differently
+// implies a distinction that is not in the data, and interpolating navy → amber
+// for the ramp ran the middle of the series through desaturated brown. The most
+// frequent term takes the accent; everything else is navy.
+const BAR = { lead: "#E08A1E", rest: "#2C5DA8" };
+
+// A pie genuinely needs categorical colour, since the slice IS the category.
+// Chosen for distinguishability rather than generated, led by the two brand
+// colours, and checked to stay legible on both themes.
+const CATEGORICAL = ["#2C5DA8", "#E08A1E", "#3E9B5F", "#B3383B", "#7E57C2", "#12879B",
+                     "#C2185B", "#8D6E22", "#5C7CBA", "#D06467", "#4E9A8F", "#9A6FB0"];
+
+function chartOption(counts, type, forPrint = false) {
+  const entries = Object.entries(counts).sort((x, y) => y[1] - x[1] || x[0].localeCompare(y[0]));
+  const labels = entries.map(e => e[0]);
+  const values = entries.map(e => e[1]);
+  const total = values.reduce((a, b) => a + b, 0);
+
+  const ink = forPrint ? "#0B0E16" : tok("--ink");
+  const dim = forPrint ? "#4A4F5E" : tok("--ink-dim");
+  const line = forPrint ? "#D8DCE7" : tok("--line");
+  const font = "'Hanken Grotesk', sans-serif";
+  const pct = v => `${((v / total) * 100).toFixed(1)}%`;
+
+  const base = {
+    animation: !forPrint,
+    textStyle: { fontFamily: font, color: ink },
+    tooltip: {
+      trigger: type === "pie" ? "item" : "axis",
+      backgroundColor: forPrint ? "#FFFFFF" : (isDark() ? "#121727" : "#FFFFFF"),
+      borderColor: line,
+      textStyle: { color: ink, fontFamily: font },
+      formatter: p => {
+        const d = Array.isArray(p) ? p[0] : p;
+        return `${d.name}<br/><strong>${d.value}</strong> match${d.value === 1 ? "" : "es"} (${pct(d.value)})`;
+      },
+    },
+  };
+
+  if (type === "pie") {
+    return {
+      ...base,
+      legend: { bottom: 0, textStyle: { color: dim, fontFamily: font }, type: "scroll" },
+      series: [{
+        type: "pie",
+        radius: ["42%", "70%"],
+        center: ["50%", "45%"],
+        itemStyle: { borderColor: forPrint ? "#FFFFFF" : tok("--bg-card"), borderWidth: 2 },
+        label: { color: ink, fontFamily: font, formatter: "{b}\n{c}" },
+        data: labels.map((name, i) => ({ name, value: values[i],
+                                         itemStyle: { color: CATEGORICAL[i % CATEGORICAL.length] } })),
+      }],
+    };
+  }
+
+  // Horizontal bars once the labels stop fitting across the top. Vertical bars
+  // with 30 rotated keyword labels are unreadable, which is what the previous
+  // chart did past six terms.
+  const horizontal = labels.length > 6;
+  const cat = { type: "category", data: horizontal ? labels.slice().reverse() : labels,
+                axisLabel: { color: dim, fontFamily: font },
+                axisLine: { lineStyle: { color: line } }, axisTick: { show: false } };
+  const val = { type: "value", axisLabel: { color: dim, fontFamily: font },
+                splitLine: { lineStyle: { color: line } }, minInterval: 1 };
+  // The leader is whichever bar carries the highest count, which after the sort
+  // is the first entry — the last one once the horizontal axis is reversed.
+  const ordered = horizontal ? values.slice().reverse() : values;
+  const leadAt = horizontal ? ordered.length - 1 : 0;
+  const data = ordered.map((v, i) => ({
+    value: v,
+    itemStyle: { color: i === leadAt ? BAR.lead : BAR.rest,
+                 borderRadius: horizontal ? [0, 4, 4, 0] : [4, 4, 0, 0] },
+  }));
+
+  return {
+    ...base,
+    grid: { left: 8, right: 26, top: 16, bottom: 8, containLabel: true },
+    xAxis: horizontal ? val : cat,
+    yAxis: horizontal ? cat : val,
+    series: [{
+      type: "bar",
+      data,
+      barMaxWidth: 26,
+      label: { show: true, position: horizontal ? "right" : "top",
+               color: dim, fontFamily: font, formatter: "{c}" },
+    }],
+  };
+}
+
+// Height grows with the number of bars so labels never collide, capped so the
+// card stays a card.
+const chartHeight = n => (n > 6 ? Math.min(760, Math.max(260, n * 26 + 60)) : 340);
+
+// ECharts to a PNG data URI, for the PDF and Word reports. Rendered off-screen
+// in print colours. `animation: false` is not optional — with it on, the export
+// captures the first frame of the entrance animation, which is an empty grid.
+function chartPNG(counts, type, w, h) {
+  const box = document.createElement("div");
+  box.style.cssText = `position:absolute;left:-10000px;top:0;width:${w}px;height:${h}px`;
+  document.body.appendChild(box);
+  const c = echarts.init(box, null, { renderer: "canvas" });
+  try {
+    c.setOption(chartOption(counts, type, true), true);
+    return c.getDataURL({ pixelRatio: 2, backgroundColor: "#FFFFFF" });
+  } finally {
+    c.dispose();
+    box.remove();
+  }
+}
+
 window.addEventListener("DOMContentLoaded", () => {
-    const keywordTextarea = document.getElementById("keywordsPaste");
-    const keywordUploadInput = document.getElementById("keywordUpload");
-    const keywordSourceIndicator = document.getElementById("keywordSourceIndicator");
-    const reloadKeywordsBtn = document.getElementById("reloadKeywords");
-    const toggleTheme = document.getElementById("toggle-theme");
-    const viewToggle = document.getElementById("viewModeToggle");
-    const viewHidden = document.getElementById("viewMode");
-    const chartTypeToggle = document.getElementById("chartTypeToggle");
-    const docUploadInput = document.getElementById("upload");
+    const $ = id => document.getElementById(id);
+    const keywordTextarea = $("keywordsPaste");
+    const keywordUploadInput = $("keywordUpload");
+    const keywordSourceIndicator = $("keywordSourceIndicator");
+    const docUploadInput = $("upload");
+
+    // ---- theme --------------------------------------------------------------
+    function applyTheme(mode) {
+        document.documentElement.setAttribute("data-theme", mode);
+        try { localStorage.setItem("theme", mode); } catch (e) { /* private mode */ }
+        document.querySelectorAll("[data-theme-set]").forEach(b =>
+            b.classList.toggle("is-active", b.dataset.themeSet === mode));
+        if (chartInstance) renderChart();
+    }
+    document.querySelectorAll("[data-theme-set]").forEach(b =>
+        b.addEventListener("click", () => applyTheme(b.dataset.themeSet)));
+    applyTheme(document.documentElement.getAttribute("data-theme") || "light");
+
+    // ---- segmented controls -------------------------------------------------
+    // One handler for both groups: click sets the active button within its own
+    // .seg and runs the callback.
+    function wireSeg(attr, onPick) {
+        document.querySelectorAll(`[${attr}]`).forEach(btn => {
+            btn.addEventListener("click", () => {
+                btn.parentElement.querySelectorAll(".seg-btn")
+                   .forEach(b => b.classList.toggle("is-active", b === btn));
+                onPick(btn.getAttribute(attr));
+            });
+        });
+    }
+    wireSeg("data-view", v => { $("viewMode").value = v; renderOutput(); });
+    wireSeg("data-chart", t => { currentChartType = t; renderChart(); });
 
     // Warn immediately when a legacy .doc is selected. .docx, .pdf and plain
     // text all work; the pre-2007 binary .doc format does not.
     docUploadInput.addEventListener("change", () => {
         const docFiles = Array.from(docUploadInput.files).filter(
-            f => f.name.toLowerCase().endsWith(".doc") && !f.name.toLowerCase().endsWith(".docx")
-        );
+            f => f.name.toLowerCase().endsWith(".doc") && !f.name.toLowerCase().endsWith(".docx"));
         if (docFiles.length) {
-            const names = docFiles.map(f => f.name).join("\n  ");
             alert(
-                "Legacy .doc format is not supported:\n\n  " + names + "\n\n" +
-                "Please re-save as .docx in Word:\n" +
-                "File → Save As → Word Document (.docx)"
+                "Legacy .doc format is not supported:\n\n  " +
+                docFiles.map(f => f.name).join("\n  ") + "\n\n" +
+                "Please re-save as .docx in Word:\nFile → Save As → Word Document (.docx)"
             );
             docUploadInput.value = "";
         }
     });
 
-    // Theme setup
-    const saved = localStorage.getItem("theme") || "light";
-    document.body.classList.add(`${saved}-mode`);
-    toggleTheme.checked = saved === "dark";
-
-    // View toggle sync
-    if (viewToggle && viewHidden) {
-        viewToggle.checked = viewHidden.value === "keyword";
-        viewHidden.value = viewToggle.checked ? "keyword" : "file";
-    }
-
     loadDefaultKeywordList();
-
-    reloadKeywordsBtn?.addEventListener("click", loadDefaultKeywordList);
+    $("reloadKeywords").addEventListener("click", loadDefaultKeywordList);
 
     function loadDefaultKeywordList() {
         fetch('keywords.txt')
@@ -162,10 +297,10 @@ window.addEventListener("DOMContentLoaded", () => {
             keywordTextarea.value = text.trim();
             keywordUploadInput.value = "";
             const n = text.trim().split(/\r?\n/).filter(Boolean).length;
-            keywordSourceIndicator.textContent = `Using default keyword list (${n} terms).`;
+            keywordSourceIndicator.textContent = `Using the default list — ${n} terms.`;
         })
         .catch(err => {
-            keywordSourceIndicator.textContent = "⚠️ Failed to load default keyword list.";
+            keywordSourceIndicator.textContent = "Could not load the default keyword list.";
             console.error("Default keyword list failed to load:", err);
         });
     }
@@ -176,60 +311,40 @@ window.addEventListener("DOMContentLoaded", () => {
         let text = "";
         try { text = await readOne(file); }
         catch (err) {
-            keywordSourceIndicator.textContent = `⚠️ Could not read ${file.name}.`;
+            keywordSourceIndicator.textContent = `Could not read ${file.name}.`;
             console.error("Keyword file failed to read:", err);
             return;
         }
         keywordTextarea.value = text.trim();
-        keywordSourceIndicator.textContent = `Using uploaded keyword file: ${file.name}`;
+        keywordSourceIndicator.textContent = `Using uploaded list: ${file.name}`;
     });
 
-    toggleTheme.addEventListener("change", (e) => {
-        const isDark = e.target.checked;
-        const newMode = isDark ? "dark" : "light";
-        localStorage.setItem("theme", newMode);
-        document.body.classList.remove("dark-mode", "light-mode");
-        document.body.classList.add(`${newMode}-mode`);
-        renderChart(currentChartType);
-        renderOutput();
-    });
+    // The filter never re-rendered on change: picking a keyword did nothing
+    // until some other control happened to fire renderOutput.
+    $("filterKeyword").addEventListener("change", renderOutput);
 
-    chartTypeToggle.addEventListener("change", () => {
-        currentChartType = chartTypeToggle.checked ? "pie" : "bar";
-        renderChart(currentChartType, false);
-        renderOutput();
-    });
-
-    viewToggle.addEventListener("change", (e) => {
-        viewHidden.value = e.target.checked ? "keyword" : "file";
-        renderOutput();
-    });
-
-    // The filter dropdown never re-rendered on change: picking a keyword did
-    // nothing until some other control fired renderOutput.
-    document.getElementById("filterKeyword").addEventListener("change", renderOutput);
-
-    document.getElementById("reset").addEventListener("click", () => {
-        document.getElementById("upload").value = "";
+    $("reset").addEventListener("click", () => {
+        docUploadInput.value = "";
         keywordUploadInput.value = "";
         keywordTextarea.value = "";
-        document.getElementById("output").innerHTML = "";
-        document.getElementById("chart").style.display = "none";
-        document.getElementById("scrollPrompt").style.display = "none";
-        if (chartInstance) chartInstance.destroy();
-        chartInstance = null;
+        $("output").innerHTML = "";
+        $("chartCard").hidden = true;
+        $("scrollPrompt").style.display = "none";
+        if (chartInstance) { chartInstance.dispose(); chartInstance = null; }
         lastParsedData = [];
-        document.getElementById("filterKeyword").value = "";
-        viewHidden.value = "file";
-        viewToggle.checked = false;
+        updateFilterOptions([]);
+        $("viewMode").value = "file";
+        document.querySelectorAll("[data-view]").forEach(b =>
+            b.classList.toggle("is-active", b.dataset.view === "file"));
+        loadDefaultKeywordList();
     });
 
-    document.getElementById("generate").addEventListener("click", async () => {
+    $("generate").addEventListener("click", async () => {
         await keywordSuggestionsLoaded;
 
-        const generateBtn = document.getElementById("generate");
-        const output = document.getElementById("output");
-        const prompt = document.getElementById("scrollPrompt");
+        const generateBtn = $("generate");
+        const output = $("output");
+        const status = $("scrollPrompt");
 
         const keywordUpload = keywordUploadInput.files[0];
         let keywordText = "";
@@ -241,14 +356,13 @@ window.addEventListener("DOMContentLoaded", () => {
         }
 
         const keywordList = [...new Set(
-            keywordText.split(/\r?\n/).map(k => k.trim()).filter(Boolean)
-        )];
+            keywordText.split(/\r?\n/).map(k => k.trim()).filter(Boolean))];
         if (!keywordList.length) {
-            alert("Please provide at least one keyword (upload a file or paste).");
+            alert("Please provide at least one keyword (upload a file or paste a list).");
             return;
         }
 
-        const files = Array.from(document.getElementById("upload").files);
+        const files = Array.from(docUploadInput.files);
         if (!files.length) {
             alert("Please upload at least one document (.docx, .pdf, or .txt).");
             return;
@@ -260,8 +374,7 @@ window.addEventListener("DOMContentLoaded", () => {
             alert(
                 "Legacy .doc format is not supported:\n\n  " +
                 legacyDoc.map(f => f.name).join("\n  ") + "\n\n" +
-                "Please re-save as .docx in Word:\n" +
-                "File → Save As → Word Document (.docx)"
+                "Please re-save as .docx in Word:\nFile → Save As → Word Document (.docx)"
             );
             return;
         }
@@ -271,8 +384,8 @@ window.addEventListener("DOMContentLoaded", () => {
         // documents the chart and the summary raced each other and a partial
         // scan could be displayed as though it were the whole submission.
         output.innerHTML = "";
-        prompt.style.display = "block";
-        prompt.textContent = `Scanning ${files.length} ${files.length === 1 ? "file" : "files"}…`;
+        status.style.display = "block";
+        status.textContent = `Scanning ${files.length} ${files.length === 1 ? "file" : "files"}…`;
         generateBtn.disabled = true;
         lastParsedData = [];
 
@@ -295,9 +408,9 @@ window.addEventListener("DOMContentLoaded", () => {
         ].filter(Boolean);
 
         if (!lastParsedData.length) {
-            prompt.style.display = "none";
+            status.style.display = "none";
             output.innerHTML = `<div class="scan-problem">${escapeHTML(problems.join(" ") || "Nothing to scan.")}</div>`;
-            renderChart(currentChartType, false);
+            $("chartCard").hidden = true;
             updateFilterOptions([]);
             return;
         }
@@ -306,8 +419,11 @@ window.addEventListener("DOMContentLoaded", () => {
         lastParsedData.forEach(f => Object.keys(f.summary).forEach(k => allKeywords.add(k)));
         updateFilterOptions([...allKeywords].sort());
 
-        prompt.textContent = "▼▼▼ Scroll Down for Summary Results ▼▼▼";
-        renderChart(currentChartType, false);
+        const totalHits = Object.values(keywordTotals(lastParsedData)).reduce((a, b) => a + b, 0);
+        status.textContent = `${totalHits} match${totalHits === 1 ? "" : "es"} across ` +
+            `${lastParsedData.length} ${lastParsedData.length === 1 ? "document" : "documents"}.`;
+
+        renderChart();
         renderOutput();
         if (problems.length) {
             output.insertAdjacentHTML("afterbegin",
@@ -315,38 +431,69 @@ window.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    document.getElementById("download-pdf").addEventListener("click", () => {
-        if (!lastParsedData.length) {
-            alert("Run a scan first — there is nothing to print yet.");
-            return;
-        }
-        renderChart(currentChartType, true, () => {
-            const chartCanvas = document.getElementById("chart");
-            const chartImg = chartCanvas.toDataURL("image/png");
-            const scanned = lastParsedData.map(f => f.filename).join(", ");
+    // ---- exports ------------------------------------------------------------
+    function reportData() {
+        const counts = keywordTotals(lastParsedData);
+        return {
+            counts,
+            docs: lastParsedData.map(f => f.filename),
+            parsed: lastParsedData,
+            png: Object.keys(counts).length
+                ? chartPNG(counts, currentChartType, 760, currentChartType === "pie" ? 480
+                                                       : chartHeight(Object.keys(counts).length))
+                : null,
+        };
+    }
 
-            const printWindow = window.open("", "_blank", "width=900,height=1000");
-            const doc = printWindow.document;
-            doc.write("<html><head><title>Keyword Summary</title><style>");
-            doc.write("body { font-family: Arial; padding: 2em; color: #000; background: #fff; }");
-            doc.write("img { width: 80%; max-width: 600px; display: block; margin: 2em auto 1em auto; }");
-            doc.write(".highlight { background: yellow; font-weight: bold; color: red; }");
-            doc.write(".scan-meta { color: #444; font-size: 0.9em; }");
-            doc.write("</style></head><body>");
-            doc.write("<h1>Keyword Summary Report</h1>");
-            doc.write(`<p class="scan-meta">${escapeHTML(scanned)} — scanned ${escapeHTML(new Date().toLocaleDateString())}</p>`);
-            doc.write(`<img src="${chartImg}" alt="Chart">`);
-            doc.write(document.getElementById("output").innerHTML);
-            doc.write("</body></html>");
-            doc.close();
-            printWindow.onload = () => printWindow.print();
-        });
+    $("download-pdf").addEventListener("click", () => {
+        if (!lastParsedData.length) { alert("Run a scan first — there is nothing to export yet."); return; }
+        const { png, docs } = reportData();
+        const win = window.open("", "_blank", "width=900,height=1000");
+        const d = win.document;
+        d.write(`<!DOCTYPE html><html><head><title>Keyword Summary</title><style>
+          @page { margin: 0.5in; }
+          body { font-family: Georgia, "Times New Roman", serif; color: #0B0E16; margin: 0;
+                 font-size: 10.5pt; line-height: 1.45; }
+          h1 { font-size: 17pt; margin: 0 0 2pt; }
+          h2 { font-size: 12pt; margin: 14pt 0 4pt; border-bottom: 1px solid #D8DCE7; padding-bottom: 2pt; }
+          .meta { color: #4A4F5E; font-size: 9pt; margin: 0 0 10pt; }
+          /* The chart used to run 80% of the page width and pushed the findings
+             onto a second sheet on its own. Half-width keeps it legible and
+             leaves the top of page one for the summary that matters. */
+          img { width: 3.4in; display: block; margin: 6pt 0 10pt; }
+          ul { margin: 4pt 0 0; padding-left: 16pt; }
+          li { margin-bottom: 2pt; page-break-inside: avoid; }
+          .term { font-weight: bold; }
+          .highlight { background: #FCE3B8; font-weight: bold; }
+          .alts { color: #1E40AF; font-style: italic; }
+          .sentence { color: #33384A; }
+          .file-section { page-break-inside: auto; }
+        </style></head><body>
+          <h1>Keyword Summary Report</h1>
+          <p class="meta">${escapeHTML(docs.join(", "))} — ${escapeHTML(new Date().toLocaleDateString())}</p>
+          ${png ? `<img src="${png}" alt="Match frequency by keyword">` : ""}
+          ${$("output").innerHTML}
+        </body></html>`);
+        d.close();
+        win.onload = () => win.print();
+    });
+
+    $("download-docx").addEventListener("click", () => {
+        if (!lastParsedData.length) { alert("Run a scan first — there is nothing to export yet."); return; }
+        const { png, parsed } = reportData();
+        try {
+            exportDocx({ parsed, png, filter: $("filterKeyword").value,
+                         suggestions: keywordSuggestions });
+        } catch (err) {
+            console.error("Word export failed:", err);
+            alert("Could not build the Word file. The PDF export still works.");
+        }
     });
 
     function updateFilterOptions(keywordList) {
-      const select = document.getElementById("filterKeyword");
+      const select = $("filterKeyword");
       const previous = select.value;
-      select.innerHTML = `<option value="">(Show All Keywords)</option>`;
+      select.innerHTML = `<option value="">(Show all)</option>`;
       keywordList.forEach(k => {
         const option = document.createElement("option");
         option.value = k;
@@ -356,210 +503,112 @@ window.addEventListener("DOMContentLoaded", () => {
       select.value = keywordList.includes(previous) ? previous : "";
     }
 
-    function renderChart(type, forceLightMode = false, onComplete = null) {
-        const chartCanvas = document.getElementById("chart");
-        if (!lastParsedData.length) {
-            chartCanvas.style.display = "none";
-            if (chartInstance) { chartInstance.destroy(); chartInstance = null; }
+    function renderChart() {
+        const card = $("chartCard"), el = $("chart");
+        const counts = keywordTotals(lastParsedData);
+        const n = Object.keys(counts).length;
+        if (!n) {
+            card.hidden = true;
+            if (chartInstance) { chartInstance.dispose(); chartInstance = null; }
             return;
         }
-
-        // Counts are summed across every document scanned, so the chart shows
-        // the vocabulary of the submission as a whole rather than of one file.
-        const keywordCounts = {};
-        lastParsedData.forEach(file => {
-            Object.entries(file.summary).forEach(([keyword, pages]) => {
-                keywordCounts[keyword] = (keywordCounts[keyword] || 0) + pages.length;
-            });
-        });
-
-        const entries = Object.entries(keywordCounts).sort(([a], [b]) => a.localeCompare(b));
-        const keywords = entries.map(([k]) => k);
-        const counts = entries.map(([, v]) => v);
-        const total = counts.reduce((a, b) => a + b, 0);
-
-        if (chartInstance) { chartInstance.destroy(); chartInstance = null; }
-        if (!keywords.length) {
-            chartCanvas.style.display = "none";
-            if (typeof onComplete === "function") onComplete();
-            return;
-        }
-
-        const ctx = chartCanvas.getContext("2d");
-        chartCanvas.style.display = "block";
-        chartCanvas.style.backgroundColor = document.body.classList.contains("dark-mode") ? "#000" : "#fff";
-        chartCanvas.style.border = "1px solid #ccc";
-        chartCanvas.height = 500;
-
-        const actualType = type === "bar" && keywords.length > 6 ? "bar" : type;
-        const indexAxis = actualType === "bar" && keywords.length > 6 ? "y" : "x";
-        const isDark = forceLightMode ? false : document.body.classList.contains("dark-mode");
-
-        const backgroundColor = keywords.map((_, i) =>
-                                             isDark
-                                             ? `hsl(${(360 * i / keywords.length)}, 100%, 35%)`
-                                             : `hsl(${(360 * i / keywords.length)}, 80%, 75%)`
-                                             );
-        const borderColor = isDark ? "#fff" : "#000";
-
-        Chart.register(ChartDataLabels);
-
-        chartInstance = new Chart(ctx, {
-            type: actualType,
-            data: {
-                labels: keywords,
-                datasets: [{
-                    label: "Keyword Matches",
-                    data: counts,
-                    backgroundColor,
-                    borderColor,
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                radius: "70%",
-                indexAxis,
-                responsive: false,
-                maintainAspectRatio: false,
-                animation: {
-                    onComplete: () => { if (typeof onComplete === "function") onComplete(); }
-                },
-                layout: {
-                    padding: {
-                        top: actualType === "pie" ? 30 : 20,
-                        bottom: actualType === "pie" ? 30 : 10
-                    }
-                },
-                scales: actualType === "pie" ? {} : {
-                    x: {
-                        ticks: { color: isDark ? "#fff" : "#000" },
-                        grid: { color: isDark ? "#444" : "#ccc" }
-                    },
-                    y: {
-                        ticks: { color: isDark ? "#fff" : "#000" },
-                        grid: { color: isDark ? "#444" : "#ccc" }
-                    }
-                },
-                plugins: {
-                    legend: {
-                        display: actualType === "pie",
-                        position: "bottom",
-                        labels: {
-                            color: isDark ? "#fff" : "#000",
-                            padding: 10,
-                            boxHeight: 12,
-                            boxWidth: 12
-                        }
-                    },
-                    tooltip: {
-                        callbacks: {
-                            label: ctx => {
-                                const count = ctx.raw;
-                                const percent = ((count / total) * 100).toFixed(1);
-                                return `${ctx.label}: ${count} match(es) (${percent}%)`;
-                            }
-                        }
-                    },
-                    datalabels: {
-                        color: isDark ? "#fff" : "#000",
-                        anchor: "center",
-                        align: "center",
-                        font: { weight: "bold" },
-                        formatter: (value, ctx) => {
-                            const sum = ctx.chart.data.datasets[0].data.reduce((a, b) => a + b, 0);
-                            const percent = (value / sum) * 100;
-                            return `${value} (${percent.toFixed(1)}%)`;
-                        }
-                    }
-                }
-            },
-            plugins: [ChartDataLabels]
-        });
+        card.hidden = false;
+        el.style.height = `${currentChartType === "pie" ? 420 : chartHeight(n)}px`;
+        // Disposed rather than reused: theme changes rewrite every colour in
+        // the option, and setOption merges rather than replaces.
+        if (chartInstance) chartInstance.dispose();
+        chartInstance = echarts.init(el);
+        chartInstance.setOption(chartOption(counts, currentChartType), true);
     }
+    window.addEventListener("resize", () => chartInstance && chartInstance.resize());
 
     function renderOutput() {
-        const output = document.getElementById("output");
+        const output = $("output");
         output.innerHTML = "";
 
-        const filterSelect = document.getElementById("filterKeyword");
-        const filter = filterSelect ? filterSelect.value : "";
-        const viewMode = document.getElementById("viewMode").value;
+        const filter = $("filterKeyword").value;
+        const viewMode = $("viewMode").value;
 
         const flagged = lastParsedData.reduce((n, f) => n + Object.keys(f.summary).length, 0);
         if (lastParsedData.length && !flagged) {
-            output.innerHTML = `<div class="scan-clean">No keywords found in ` +
-                `${escapeHTML(lastParsedData.map(f => f.filename).join(", "))}. Clean draft.</div>`;
+            output.innerHTML = `<div class="scan-clean"><strong>Clean draft.</strong> No keywords ` +
+                `found in ${escapeHTML(lastParsedData.map(f => f.filename).join(", "))}.</div>`;
             return;
         }
 
         if (viewMode === "file") {
             lastParsedData.forEach(file => {
                 const section = document.createElement("div");
-                section.classList.add("file-section");
-                section.innerHTML = `<h2>Results for: ${escapeHTML(file.filename)}</h2>`;
-                const summaryData = Object.entries(file.summary).filter(([k]) => !filter || k === filter);
-                const resultData = file.results.filter(entry => !filter || entry.keyword === filter);
+                section.className = "file-section";
+                section.innerHTML = `<h2>${escapeHTML(file.filename)}</h2>`;
+                const summaryData = Object.entries(file.summary)
+                    .filter(([k]) => !filter || k === filter)
+                    .sort((a, b) => b[1].length - a[1].length || a[0].localeCompare(b[0]));
+                const resultData = file.results.filter(e => !filter || e.keyword === filter);
                 section.innerHTML += renderSummary(file.filename, summaryData, resultData);
                 output.appendChild(section);
             });
-        } else if (viewMode === "keyword") {
+        } else {
             const combined = {};
             lastParsedData.forEach(file => {
                 file.results.forEach(entry => {
                     if (!filter || entry.keyword === filter) {
-                        if (!combined[entry.keyword]) combined[entry.keyword] = [];
-                        combined[entry.keyword].push({ ...entry, filename: file.filename });
+                        (combined[entry.keyword] = combined[entry.keyword] || [])
+                            .push({ ...entry, filename: file.filename });
                     }
                 });
             });
-
-            Object.keys(combined).sort().forEach(keyword => {
-                const section = document.createElement("div");
-                section.classList.add("file-section");
-                section.innerHTML = `<h2>Results for Keyword: ${escapeHTML(keyword)}</h2>`;
-                section.innerHTML += renderResults(combined[keyword], lastParsedData.length > 1);
-                output.appendChild(section);
-            });
+            Object.keys(combined)
+                .sort((a, b) => combined[b].length - combined[a].length || a.localeCompare(b))
+                .forEach(keyword => {
+                    const section = document.createElement("div");
+                    section.className = "file-section";
+                    section.innerHTML = `<h2>${escapeHTML(keyword)}</h2>` +
+                        renderHits(keyword, combined[keyword], lastParsedData.length > 1);
+                    output.appendChild(section);
+                });
         }
     }
 
-    function suggestionsHTML(keyword) {
+    function altsHTML(keyword) {
         const suggestions = keywordSuggestions[keyword.toLowerCase()] || [];
-        const label = "margin-left: 1.5em; font-style: italic; font-weight: bold; color: #3b8ed9;";
         if (!suggestions.length) {
-            return `<div class="suggested-alternatives" style="${label}">` +
-                   `No suggested alternatives for "<strong>${escapeHTML(keyword)}</strong>."</div>`;
+            return `<p class="alts-none">No suggested alternative — this term is flagged for review, not for replacement.</p>`;
         }
-        return `<div style="${label} margin-top: 0.5em;">Suggested alternatives for ` +
-               `"<strong>${escapeHTML(keyword)}</strong>":</div>` +
-               `<ol style="margin-left: 3em; margin-top: 0.25em; margin-bottom: 0.5em; color: #3b8ed9; font-style: italic;">` +
-               suggestions.map(s => `<li>"${escapeHTML(s)}"</li>`).join("") + `</ol>`;
+        return `<p class="alts"><span class="alts-label">Consider</span>` +
+               suggestions.map(s => `<span class="alt">${escapeHTML(s)}</span>`).join(", ") + `</p>`;
     }
+
+    const sentenceHTML = (raw, keyword, filename) =>
+        `<p class="sentence">${highlightTerm(raw, keyword)}` +
+        (filename ? `<span class="sentence-doc">${escapeHTML(filename)}</span>` : "") + `</p>`;
 
     function renderSummary(filename, summaryData, resultData) {
-        if (!summaryData.length) {
-            return `<div class='summary'><h3>Summary for ${escapeHTML(filename)}</h3><p>No results found.</p></div>`;
-        }
-        let html = `<div class='summary'><h3>Summary for ${escapeHTML(filename)}</h3><ul>`;
-        summaryData.forEach(([keyword, pages]) => {
-            const unique = [...new Set(pages)];
-            html += `<li><strong>"${escapeHTML(keyword)}"</strong> — ${pages.length} match(es) ` +
-                    `(Sentence${unique.length > 1 ? "s" : ""} ${unique.join(", ")})`;
+        if (!summaryData.length) return `<p class="alts-none">No results in this file.</p>`;
+        return `<div class="summary"><ul>` + summaryData.map(([keyword, hits]) => {
+            const matches = resultData.filter(r => r.keyword.toLowerCase() === keyword.toLowerCase());
+            const alts = keywordSuggestions[keyword.toLowerCase()] || [];
+            return `<li class="term-hit${alts.length ? "" : " no-alt"}">
+                <span class="term-hit-head">
+                  <span class="term-name">${escapeHTML(keyword)}</span>
+                  <span class="term-count">${hits.length} match${hits.length === 1 ? "" : "es"} ·
+                    sentence${[...new Set(hits)].length === 1 ? "" : "s"} ${[...new Set(hits)].join(", ")}</span>
+                </span>
+                ${matches.map(m => sentenceHTML(m.raw, m.keyword)).join("")}
+                ${altsHTML(keyword)}
+            </li>`;
+        }).join("") + `</ul></div>`;
+    }
 
-            const allMatches = resultData.filter(r => r.keyword.toLowerCase() === keyword.toLowerCase());
-            if (allMatches.length) {
-                html += `<div style="margin-left: 1.5em; margin-top: 0.3em;">Results:</div><ul style="margin-left: 2.5em;">`;
-                allMatches.forEach(match => {
-                    html += `<li style="margin-bottom: 0.3em;">“${highlightTerm(match.raw, match.keyword)}”</li>`;
-                });
-                html += `</ul>`;
-            }
-
-            html += suggestionsHTML(keyword);
-            html += `</li>`;
-        });
-        html += "</ul></div>";
-        return html;
+    function renderHits(keyword, hits, showFilenames) {
+        const alts = keywordSuggestions[keyword.toLowerCase()] || [];
+        return `<div class="results"><ul><li class="term-hit${alts.length ? "" : " no-alt"}">
+            <span class="term-hit-head">
+              <span class="term-count">${hits.length} match${hits.length === 1 ? "" : "es"}</span>
+            </span>
+            ${hits.map(h => sentenceHTML(h.raw, h.keyword, showFilenames ? h.filename : "")).join("")}
+            ${altsHTML(keyword)}
+        </li></ul></div>`;
     }
 
     // ---- tabs ---------------------------------------------------------------
@@ -570,49 +619,51 @@ window.addEventListener("DOMContentLoaded", () => {
 
     const TABS = [["tab-scan", "view-scan"], ["tab-terms", "view-terms"]];
     TABS.forEach(([tabId, viewId]) => {
-        document.getElementById(tabId).addEventListener("click", () => {
+        $(tabId).addEventListener("click", () => {
             TABS.forEach(([t, v]) => {
                 const on = t === tabId;
-                document.getElementById(t).setAttribute("aria-selected", String(on));
-                document.getElementById(v).hidden = !on;
+                $(t).setAttribute("aria-selected", String(on));
+                $(v).hidden = !on;
             });
             location.hash = viewId === "view-terms" ? "terms" : "scan";
             if (viewId === "view-terms") loadTerms();
+            // ECharts sizes to a container that was display:none while hidden,
+            // so a chart laid out on the terms tab comes back 0px wide.
+            else if (chartInstance) chartInstance.resize();
         });
     });
-    if (location.hash === "#terms") document.getElementById("tab-terms").click();
+    if (location.hash === "#terms") $("tab-terms").click();
 
     // ---- Terms to Use -------------------------------------------------------
     // Vocabulary agencies are rewarding. Fetched on first view rather than at
     // load, so someone who only ever scans a document never pays for it.
     async function loadTerms() {
         if (termsData) return;
-        const list = document.getElementById("termsList");
+        const list = $("termsList");
         try {
-            const res = await fetch("terms-to-use.json");
-            termsData = await res.json();
+            termsData = await (await fetch("terms-to-use.json")).json();
         } catch (err) {
             console.error("terms-to-use.json failed to load:", err);
             list.innerHTML = `<div class="scan-problem">Could not load the terms list.</div>`;
             return;
         }
         const clusters = [...new Set(termsData.map(t => t.cluster).filter(Boolean))].sort();
-        const select = document.getElementById("termsCluster");
+        const select = $("termsCluster");
         clusters.forEach(c => {
             const opt = document.createElement("option");
             opt.value = c; opt.textContent = c;
             select.appendChild(opt);
         });
         ["termsFilter", "termsCluster", "termsSort"].forEach(id =>
-            document.getElementById(id).addEventListener("input", renderTerms));
+            $(id).addEventListener("input", renderTerms));
         renderTerms();
     }
 
     function renderTerms() {
-        const list = document.getElementById("termsList");
-        const needle = document.getElementById("termsFilter").value.trim().toLowerCase();
-        const cluster = document.getElementById("termsCluster").value;
-        const sort = document.getElementById("termsSort").value;
+        const list = $("termsList");
+        const needle = $("termsFilter").value.trim().toLowerCase();
+        const cluster = $("termsCluster").value;
+        const sort = $("termsSort").value;
 
         let rows = termsData.filter(t =>
             (!cluster || t.cluster === cluster) &&
@@ -629,8 +680,7 @@ window.addEventListener("DOMContentLoaded", () => {
           :                       (a, b) => a.cluster.localeCompare(b.cluster) ||
                                             a.term.localeCompare(b.term));
 
-        document.getElementById("termsCount").textContent =
-            `${rows.length} of ${termsData.length} terms`;
+        $("termsCount").textContent = `${rows.length} of ${termsData.length} terms`;
 
         if (!rows.length) {
             list.innerHTML = `<div class="scan-clean">Nothing matches that filter.</div>`;
@@ -640,7 +690,7 @@ window.addEventListener("DOMContentLoaded", () => {
         list.innerHTML = rows.map(t => {
             const mentions = (t.mentions === null || t.mentions === undefined)
                 ? "not yet tracked"
-                : `${t.mentions} ${t.mentions === 1 ? "mention" : "mentions"} in the federal corpus`;
+                : `${t.mentions} mention${t.mentions === 1 ? "" : "s"}`;
             return `<div class="term-card">
                 <h3><span>${escapeHTML(t.term)}</span>` +
                 (t.cluster ? `<span class="term-cluster">${escapeHTML(t.cluster)}</span>` : "") +
@@ -648,20 +698,5 @@ window.addEventListener("DOMContentLoaded", () => {
                 <p class="term-why">${escapeHTML(t.why)}</p>
             </div>`;
         }).join("");
-    }
-
-    function renderResults(resultData, showFilenames) {
-        if (!resultData.length) return "";
-        let html = "<div class='results'><h3>Matched Sentences</h3><ul>";
-        resultData.forEach(entry => {
-            html += `<li><strong>Sentence ${entry.page}:</strong> “${highlightTerm(entry.raw, entry.keyword)}”`;
-            if (showFilenames && entry.filename) {
-                html += ` <span class="sentence-doc">${escapeHTML(entry.filename)}</span>`;
-            }
-            html += suggestionsHTML(entry.keyword);
-            html += `</li>`;
-        });
-        html += "</ul></div>";
-        return html;
     }
 });

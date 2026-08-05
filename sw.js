@@ -6,17 +6,18 @@
 // Paths are relative to the worker's scope. They used to be absolute ('/'),
 // which resolves to the domain root — wrong on a project page served from a
 // subdirectory, so cache.addAll() would 404 and the install would reject.
-const CACHE_NAME = 'ffkst-v3';
+const CACHE_NAME = 'ffkst-v4';
 const URLS_TO_CACHE = [
   './',
   './index.html',
   './main.js',
+  './theme-init.js',
+  './docx-export.js',
   './style.css',
   './keywords.txt',
   './keywords.json',
   './terms-to-use.json',
-  './lib/chart.js',
-  './lib/chartjs-plugin-datalabels.js',
+  './lib/echarts.min.js',
   './lib/mammoth.browser.min.js',
   './lib/pdf.min.js',
   './lib/pdf.worker.min.js'
