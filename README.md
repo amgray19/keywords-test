@@ -15,8 +15,9 @@ Nothing is uploaded. Files are parsed in the browser and every result is rendere
 - Scans several documents as one submission, so vocabulary repeating across a package is visible
 - 734-term default list, or upload/paste your own
 - Download a sample [keywords.txt](./keywords.txt) for testing
-- Bar and pie chart visualization with Chart.js
-- A **Terms to Use** tab of vocabulary federal agencies are currently rewarding
+- Bar and pie chart of match frequency (Apache ECharts)
+- A **Terms to use** tab of vocabulary federal agencies are currently rewarding
+- Export a report as PDF or Word (.docx)
 - Dark/light mode toggle
 - Strict Content Security Policy, and document text is escaped before display
 
@@ -38,11 +39,11 @@ Nothing is uploaded. Files are parsed in the browser and every result is rendere
 
 1. Upload a `.txt` file of keywords (or paste keywords into the textarea).
 2. If you don't have a list, [download the sample keywords.txt](./keywords.txt).
-3. Upload one or more `.docx`, `.pdf`, or `.txt` files. (Legacy `.doc` is not supported — re-save as
+3. Upload one or more `.docx`, `.pdf`, or `.txt` files. (Legacy `.doc` is not supported, re-save as
    `.docx` in Word via File → Save As → Word Document.)
 4. Click **Generate Summary**.
 5. Review results, view charts, and see alternative keyword suggestions.
-6. Use **Print or Save Summary** to export a report.
+6. Use **Export PDF** or **Export Word** to produce a report.
 
 ---
 
@@ -53,10 +54,10 @@ Three files drive the tool, all regenerable:
 | File | What it is |
 |---|---|
 | `keywords.txt` | The default scan list, one term per line. |
-| `keywords.json` | `[{term, suggestions[]}]` — the alternatives offered when a term is found. |
-| `terms-to-use.json` | The **Terms to Use** tab: curated vocabulary agencies are rewarding. |
+| `keywords.json` | `[{term, suggestions[]}]`, the alternatives offered when a term is found. |
+| `terms-to-use.json` | The **Terms to use** tab: curated vocabulary agencies are rewarding. |
 
-`terms-to-use.json` is built from [FedInt](https://fedint.leftwardlabs.com)'s curated artifacts:
+`terms-to-use.json` is built from the upstream curated artifacts:
 
 ```bash
 python3 build-terms.py ../FedInt/dashboard
@@ -74,7 +75,7 @@ was removed and why.
 ```bash
 git clone https://github.com/amgray19/keywords-test.git
 cd keywords-test
-node test.js          # scanning core: escaping, word matching, sentence splitting, shipped data
+node test.js          # scanning core: escaping, matching, sentence splitting, shipped data
 python3 -m http.server 8912
 ```
 

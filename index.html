@@ -22,10 +22,10 @@
 <body>
 
 <header class="topbar">
-  <p class="brand">Keyword <span class="brand-mark">Search</span> Tool</p>
+  <p class="brand">keyword<span class="brand-dim">/</span>scan</p>
   <nav class="nav-links" role="tablist" aria-label="Sections">
-    <button class="nav-link" id="tab-scan" role="tab" aria-selected="true" aria-controls="view-scan">Scan Documents</button>
-    <button class="nav-link" id="tab-terms" role="tab" aria-selected="false" aria-controls="view-terms">Terms to Use</button>
+    <button class="nav-link" id="tab-scan" role="tab" aria-selected="true" aria-controls="view-scan">Scan</button>
+    <button class="nav-link" id="tab-terms" role="tab" aria-selected="false" aria-controls="view-terms">Terms to use</button>
   </nav>
   <div class="seg" role="group" aria-label="Display mode">
     <button class="seg-btn" id="theme-light" data-theme-set="light">Light</button>
@@ -42,8 +42,8 @@
     <h1>Find the words that put funding at risk</h1>
     <p class="lede">Scans Word, PDF, and plain-text documents for contested vocabulary and reports
       every sentence a term appears in, with alternatives where a sensible one exists. A default
-      list drawn from federal funding language is loaded; paste your own to scan for anything else.
-      Nothing is uploaded — every file is read in this browser.</p>
+      list drawn from federal funding language is loaded. Paste your own to scan for anything else.
+      Nothing is uploaded: every file is read in this browser.</p>
   </div>
 
   <details class="about">
@@ -51,18 +51,18 @@
     <div class="about-content">
       <h3>Features</h3>
       <ul>
-        <li>Fully client-side processing — no file ever leaves your computer</li>
+        <li>Fully client-side processing. No file ever leaves your computer.</li>
         <li>Reads Word (<code>.docx</code>), PDF, and plain text</li>
         <li>Scans several documents as one submission, so vocabulary repeating across a package is visible</li>
         <li>Download a sample <a href="./keywords.txt">keywords.txt</a> for testing</li>
         <li>Bar and pie chart of match frequency</li>
-        <li>A <strong>Terms to Use</strong> tab of vocabulary federal agencies are rewarding</li>
+        <li>A <strong>Terms to use</strong> tab of vocabulary federal agencies are rewarding</li>
         <li>Export a report as PDF or Word</li>
       </ul>
 
       <h3>Security</h3>
       <ul>
-        <li>Uploaded files are processed in your browser; no content is sent to any server.</li>
+        <li>Uploaded files are processed in your browser. No content is sent to any server.</li>
         <li>Text extracted from a document is escaped before it reaches the page, so a file
             carrying markup cannot execute anything.</li>
         <li>A strict Content Security Policy blocks injected and third-party scripts.</li>
@@ -70,11 +70,11 @@
 
       <h3>Usage</h3>
       <ol>
-        <li>Keep the default keyword list, or paste/upload your own.</li>
+        <li>Keep the default keyword list, or paste and upload your own.</li>
         <li>Upload one or more <code>.docx</code>, <code>.pdf</code>, or <code>.txt</code> files.
-            Legacy <code>.doc</code> is not supported — re-save as <code>.docx</code> in Word via
-            File → Save As → Word Document.</li>
-        <li>Click <strong>Generate Summary</strong>.</li>
+            Legacy <code>.doc</code> is not supported. Re-save as <code>.docx</code> in Word via
+            File, Save As, Word Document.</li>
+        <li>Click <strong>Generate summary</strong>.</li>
         <li>Review the findings and chart, then export a report.</li>
       </ol>
     </div>
@@ -82,17 +82,17 @@
 
   <div class="setup-grid">
     <div class="card">
-      <h2>1 · Keyword list</h2>
+      <h2><span class="card-index">01</span> Keyword list</h2>
       <label class="field-label" for="keywordUpload">Upload a list (.txt, .docx, .pdf)</label>
       <input type="file" id="keywordUpload" accept=".txt,.md,.docx,.pdf" />
       <label class="field-label" for="keywordsPaste" style="margin-top:14px">Or paste and edit</label>
-      <textarea id="keywordsPaste" placeholder="One keyword or phrase per line…"></textarea>
+      <textarea id="keywordsPaste" placeholder="One keyword or phrase per line"></textarea>
       <p class="hint" id="keywordSourceIndicator"></p>
-      <button class="btn btn-ghost" id="reloadKeywords" type="button">Reload default list</button>
+      <button class="btn" id="reloadKeywords" type="button">Reload default list</button>
     </div>
 
     <div class="card">
-      <h2>2 · Documents</h2>
+      <h2><span class="card-index">02</span> Documents</h2>
       <label class="field-label" for="upload">Upload one or more documents</label>
       <input type="file" id="upload" accept=".docx,.pdf,.txt,.md" multiple />
       <p class="hint">Several files scan as one submission: the chart totals every document
@@ -100,12 +100,12 @@
     </div>
 
     <div class="card card-actions">
-      <h2>3 · Run and review</h2>
+      <h2><span class="card-index">03</span> Run and review</h2>
       <div class="action-row">
         <button class="btn btn-primary" id="generate" type="button">Generate summary</button>
-        <button class="btn btn-ghost" id="download-pdf" type="button">Export PDF</button>
-        <button class="btn btn-ghost" id="download-docx" type="button">Export Word</button>
-        <button class="btn btn-ghost" id="reset" type="button">Reset</button>
+        <button class="btn" id="download-pdf" type="button">Export PDF</button>
+        <button class="btn" id="download-docx" type="button">Export Word</button>
+        <button class="btn" id="reset" type="button">Reset</button>
       </div>
       <div class="display-row">
         <div class="display-group">
@@ -155,7 +155,7 @@
   <div class="terms-controls">
     <div class="display-group">
       <label class="field-label" for="termsFilter">Search</label>
-      <input type="search" id="termsFilter" placeholder="Filter terms…" />
+      <input type="search" id="termsFilter" placeholder="Filter terms" />
     </div>
     <div class="display-group">
       <label class="field-label" for="termsCluster">Theme</label>
@@ -174,10 +174,11 @@
 
   <div class="terms-list" id="termsList"></div>
 
-  <p class="terms-note">Mention counts come from the most recent harvest of federal documents and
-    indicate how established a term already is, not how fast it is growing. A term with few
-    mentions is newer language, not weaker language. Verify against the primary source before
-    building an argument on any single term.</p>
+  <p class="terms-note">Where a term shows a mention count, that count comes from the most recent
+    harvest of federal documents and indicates how established the term already is, not how fast it
+    is growing. Terms without a count are not tracked in that harvest, which is not the same as
+    appearing zero times. Verify against the primary source before building an argument on any
+    single term.</p>
 </section>
 
 </main>

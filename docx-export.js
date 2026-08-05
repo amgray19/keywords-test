@@ -4,7 +4,7 @@
 // compression, so no deflate implementation is needed) plus four small XML
 // files and the chart PNG. Word opens store-only archives without complaint.
 //
-// The alternative — serving HTML as application/msword — produces a file Word
+// The alternative, serving HTML as application/msword, produces a file Word
 // renders but that is not a .docx, warns on open in current versions, and
 // cannot carry an embedded image reliably. This is a real one.
 
@@ -149,7 +149,7 @@
     const body = [];
 
     body.push(para(run("Keyword Summary Report", { bold: true, size: 18 })));
-    body.push(para(run(`${parsed.map(f => f.filename).join(", ")} — ${new Date().toLocaleDateString()}`,
+    body.push(para(run(`${parsed.map(f => f.filename).join(", ")}, ${new Date().toLocaleDateString()}`,
                        { size: 9, color: "4A4F5E" }), { spaceAfter: 160 }));
 
     if (png) {
@@ -199,7 +199,7 @@
           alts.length
             ? run("Consider: ", { size: 9, bold: true, color: "4A4F5E" }) +
               run(alts.join(", "), { size: 9, italic: true, color: "1E40AF" })
-            : run("No suggested alternative — flagged for review, not replacement.",
+            : run("No suggested alternative. Flagged for review, not replacement.",
                   { size: 9, italic: true, color: "4A4F5E" }),
           { indent: 240, spaceAfter: 80 }));
       }

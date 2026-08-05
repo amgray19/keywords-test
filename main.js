@@ -37,7 +37,7 @@ function escapeHTML(s) {
 
 // A phrase matches as a substring, so "environmental justice" is still found
 // inside "environmental justices". A single token is anchored to word
-// boundaries so "equity" does not match "Equitycorp" — but only on the edges
+// boundaries so "equity" does not match "Equitycorp", but only on the edges
 // that are word characters. \b between two non-word characters never matches,
 // so anchoring a term like "c++" unconditionally made it unfindable no matter
 // how many times it appeared.
@@ -132,13 +132,14 @@ const isDark = () => document.documentElement.getAttribute("data-theme") === "da
 // implies a distinction that is not in the data, and interpolating navy → amber
 // for the ramp ran the middle of the series through desaturated brown. The most
 // frequent term takes the accent; everything else is navy.
-const BAR = { lead: "#E08A1E", rest: "#2C5DA8" };
+const BAR = { leadLight: "#0891B2", restLight: "#94A3B8",
+              leadDark:  "#22D3EE", restDark:  "#475569" };
 
 // A pie genuinely needs categorical colour, since the slice IS the category.
 // Chosen for distinguishability rather than generated, led by the two brand
 // colours, and checked to stay legible on both themes.
-const CATEGORICAL = ["#2C5DA8", "#E08A1E", "#3E9B5F", "#B3383B", "#7E57C2", "#12879B",
-                     "#C2185B", "#8D6E22", "#5C7CBA", "#D06467", "#4E9A8F", "#9A6FB0"];
+const CATEGORICAL = ["#0891B2", "#7C3AED", "#059669", "#D97706", "#DB2777", "#0284C7",
+                     "#65A30D", "#DC2626", "#4F46E5", "#0D9488", "#C026D3", "#EA580C"];
 
 function chartOption(counts, type, forPrint = false) {
   const entries = Object.entries(counts).sort((x, y) => y[1] - x[1] || x[0].localeCompare(y[0]));
@@ -146,10 +147,10 @@ function chartOption(counts, type, forPrint = false) {
   const values = entries.map(e => e[1]);
   const total = values.reduce((a, b) => a + b, 0);
 
-  const ink = forPrint ? "#0B0E16" : tok("--ink");
-  const dim = forPrint ? "#4A4F5E" : tok("--ink-dim");
-  const line = forPrint ? "#D8DCE7" : tok("--line");
-  const font = "'Hanken Grotesk', sans-serif";
+  const ink = forPrint ? "#10141A" : tok("--ink");
+  const dim = forPrint ? "#5A6472" : tok("--ink-dim");
+  const line = forPrint ? "#DDE2E8" : tok("--line");
+  const font = "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace";
   const pct = v => `${((v / total) * 100).toFixed(1)}%`;
 
   const base = {
@@ -157,7 +158,7 @@ function chartOption(counts, type, forPrint = false) {
     textStyle: { fontFamily: font, color: ink },
     tooltip: {
       trigger: type === "pie" ? "item" : "axis",
-      backgroundColor: forPrint ? "#FFFFFF" : (isDark() ? "#121727" : "#FFFFFF"),
+      backgroundColor: forPrint ? "#FFFFFF" : (isDark() ? "#141920" : "#FFFFFF"),
       borderColor: line,
       textStyle: { color: ink, fontFamily: font },
       formatter: p => {
@@ -193,12 +194,15 @@ function chartOption(counts, type, forPrint = false) {
   const val = { type: "value", axisLabel: { color: dim, fontFamily: font },
                 splitLine: { lineStyle: { color: line } }, minInterval: 1 };
   // The leader is whichever bar carries the highest count, which after the sort
-  // is the first entry — the last one once the horizontal axis is reversed.
+  // is the first entry, the last one once the horizontal axis is reversed.
   const ordered = horizontal ? values.slice().reverse() : values;
   const leadAt = horizontal ? ordered.length - 1 : 0;
+  const dark = forPrint ? false : isDark();
+  const lead = dark ? BAR.leadDark : BAR.leadLight;
+  const rest = dark ? BAR.restDark : BAR.restLight;
   const data = ordered.map((v, i) => ({
     value: v,
-    itemStyle: { color: i === leadAt ? BAR.lead : BAR.rest,
+    itemStyle: { color: i === leadAt ? lead : rest,
                  borderRadius: horizontal ? [0, 4, 4, 0] : [4, 4, 0, 0] },
   }));
 
@@ -222,7 +226,7 @@ function chartOption(counts, type, forPrint = false) {
 const chartHeight = n => (n > 6 ? Math.min(760, Math.max(260, n * 26 + 60)) : 340);
 
 // ECharts to a PNG data URI, for the PDF and Word reports. Rendered off-screen
-// in print colours. `animation: false` is not optional — with it on, the export
+// in print colours. `animation: false` is not optional, with it on, the export
 // captures the first frame of the entrance animation, which is an empty grid.
 function chartPNG(counts, type, w, h) {
   const box = document.createElement("div");
@@ -281,7 +285,7 @@ window.addEventListener("DOMContentLoaded", () => {
             alert(
                 "Legacy .doc format is not supported:\n\n  " +
                 docFiles.map(f => f.name).join("\n  ") + "\n\n" +
-                "Please re-save as .docx in Word:\nFile → Save As → Word Document (.docx)"
+                "Please re-save as .docx in Word:\nFile, Save As, Word Document (.docx)"
             );
             docUploadInput.value = "";
         }
@@ -297,7 +301,7 @@ window.addEventListener("DOMContentLoaded", () => {
             keywordTextarea.value = text.trim();
             keywordUploadInput.value = "";
             const n = text.trim().split(/\r?\n/).filter(Boolean).length;
-            keywordSourceIndicator.textContent = `Using the default list — ${n} terms.`;
+            keywordSourceIndicator.textContent = `Using the default list: ${n} terms.`;
         })
         .catch(err => {
             keywordSourceIndicator.textContent = "Could not load the default keyword list.";
@@ -374,7 +378,7 @@ window.addEventListener("DOMContentLoaded", () => {
             alert(
                 "Legacy .doc format is not supported:\n\n  " +
                 legacyDoc.map(f => f.name).join("\n  ") + "\n\n" +
-                "Please re-save as .docx in Word:\nFile → Save As → Word Document (.docx)"
+                "Please re-save as .docx in Word:\nFile, Save As, Word Document (.docx)"
             );
             return;
         }
@@ -446,7 +450,7 @@ window.addEventListener("DOMContentLoaded", () => {
     }
 
     $("download-pdf").addEventListener("click", () => {
-        if (!lastParsedData.length) { alert("Run a scan first — there is nothing to export yet."); return; }
+        if (!lastParsedData.length) { alert("Run a scan first. There is nothing to export yet."); return; }
         const { png, docs } = reportData();
         const win = window.open("", "_blank", "width=900,height=1000");
         const d = win.document;
@@ -470,7 +474,7 @@ window.addEventListener("DOMContentLoaded", () => {
           .file-section { page-break-inside: auto; }
         </style></head><body>
           <h1>Keyword Summary Report</h1>
-          <p class="meta">${escapeHTML(docs.join(", "))} — ${escapeHTML(new Date().toLocaleDateString())}</p>
+          <p class="meta">${escapeHTML(docs.join(", "))}, scanned ${escapeHTML(new Date().toLocaleDateString())}</p>
           ${png ? `<img src="${png}" alt="Match frequency by keyword">` : ""}
           ${$("output").innerHTML}
         </body></html>`);
@@ -479,7 +483,7 @@ window.addEventListener("DOMContentLoaded", () => {
     });
 
     $("download-docx").addEventListener("click", () => {
-        if (!lastParsedData.length) { alert("Run a scan first — there is nothing to export yet."); return; }
+        if (!lastParsedData.length) { alert("Run a scan first. There is nothing to export yet."); return; }
         const { png, parsed } = reportData();
         try {
             exportDocx({ parsed, png, filter: $("filterKeyword").value,
@@ -573,9 +577,12 @@ window.addEventListener("DOMContentLoaded", () => {
     function altsHTML(keyword) {
         const suggestions = keywordSuggestions[keyword.toLowerCase()] || [];
         if (!suggestions.length) {
-            return `<p class="alts-none">No suggested alternative — this term is flagged for review, not for replacement.</p>`;
+            return `<p class="alts-none">No suggested alternative. This term is flagged for review, not for replacement.</p>`;
         }
-        return `<p class="alts"><span class="alts-label">Consider</span>` +
+        // The colon and the space are literal, not a CSS margin. The label gets
+        // copied along with the text into an email or a Word file, where a
+        // margin does not exist and the words run together.
+        return `<p class="alts"><span class="alts-label">Consider:</span> ` +
                suggestions.map(s => `<span class="alt">${escapeHTML(s)}</span>`).join(", ") + `</p>`;
     }
 
@@ -688,13 +695,15 @@ window.addEventListener("DOMContentLoaded", () => {
         }
 
         list.innerHTML = rows.map(t => {
-            const mentions = (t.mentions === null || t.mentions === undefined)
-                ? "not yet tracked"
-                : `${t.mentions} mention${t.mentions === 1 ? "" : "s"}`;
+            // No count means the term is not in the tracked set, which is not
+            // the same as appearing zero times. Printing a phrase there read as
+            // a score of zero, so the badge is simply absent instead.
+            const counted = t.mentions !== null && t.mentions !== undefined;
             return `<div class="term-card">
                 <h3><span>${escapeHTML(t.term)}</span>` +
                 (t.cluster ? `<span class="term-cluster">${escapeHTML(t.cluster)}</span>` : "") +
-                `<span class="term-mentions">${escapeHTML(mentions)}</span></h3>
+                (counted ? `<span class="term-mentions">${t.mentions} mention${t.mentions === 1 ? "" : "s"}</span>` : "") +
+                `</h3>
                 <p class="term-why">${escapeHTML(t.why)}</p>
             </div>`;
         }).join("");

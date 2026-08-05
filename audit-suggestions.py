@@ -138,16 +138,16 @@ def main() -> int:
         if not rows:
             continue
         lines += [f"### {category} ({len(rows)})", ""]
-        lines += [f"- **{t}** — was `{', '.join(s)}`. {why}" for t, s, _, why in sorted(rows)]
+        lines += [f"- **{t}**, was `{', '.join(s)}`. {why}" for t, s, _, why in sorted(rows)]
         lines.append("")
 
     lines += ["## Kept as a deliberate call", "",
               "Political, and kept anyway: these are the swaps the tool exists to make. "
               "Each one has a primary source behind it in FedInt.", ""]
-    lines += [f"- **{t}** — `{', '.join(by_term[t]['suggestions'])}`"
+    lines += [f"- **{t}**, `{', '.join(by_term[t]['suggestions'])}`"
               for t in KEPT_ON_PURPOSE if by_term.get(t, {}).get("suggestions")]
     lines += ["", "## Kept as ordinary rephrasing", ""]
-    lines += [f"- **{k['term']}** — `{', '.join(k['suggestions'])}`"
+    lines += [f"- **{k['term']}**, `{', '.join(k['suggestions'])}`"
               for k in sorted(kept, key=lambda x: x["term"].lower())
               if k["term"] not in KEPT_ON_PURPOSE]
     lines.append("")

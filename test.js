@@ -9,7 +9,7 @@ const fs = require("fs");
 
 const src = fs.readFileSync(`${__dirname}/main.js`, "utf8");
 const pure = src.split('window.addEventListener("DOMContentLoaded"')[0];
-assert(pure.length > 500, "split failed — did the DOMContentLoaded line change?");
+assert(pure.length > 500, "split failed, did the DOMContentLoaded line change?");
 
 // The top of the file kicks off a fetch for the suggestions.
 global.fetch = () => Promise.resolve({ json: () => Promise.resolve([]) });
@@ -68,7 +68,7 @@ assert(!JSON.stringify(terms).includes("evidence"),
 
 const kw = JSON.parse(fs.readFileSync(`${__dirname}/keywords.json`, "utf8"));
 assert(kw.every(k => typeof k.term === "string" && Array.isArray(k.suggestions)),
-  "keywords.json must stay [{term, suggestions[]}] — the shape FedInt exports");
+  "keywords.json must stay [{term, suggestions[]}], the shape FedInt exports");
 
 // The two files must name the same terms. keywords.txt is what actually gets
 // scanned and keywords.json is what supplies alternatives, so a term in one and
@@ -91,4 +91,4 @@ const BOILERPLATE = ["comment period", "data collection", "notice intent", "suns
 const leaked = BOILERPLATE.filter(t => known.has(t));
 assert.deepStrictEqual(leaked, [], "Federal Register boilerplate is back in the keyword list");
 
-console.log(`ok — scanning core, ${terms.length} terms to use, ${kw.length} keywords`);
+console.log(`ok, scanning core, ${terms.length} terms to use, ${kw.length} keywords`);

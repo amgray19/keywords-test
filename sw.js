@@ -4,7 +4,7 @@
 // The file is kept correct so that registering it is a one-line change.
 //
 // Paths are relative to the worker's scope. They used to be absolute ('/'),
-// which resolves to the domain root — wrong on a project page served from a
+// which resolves to the domain root, wrong on a project page served from a
 // subdirectory, so cache.addAll() would 404 and the install would reject.
 const CACHE_NAME = 'ffkst-v4';
 const URLS_TO_CACHE = [
