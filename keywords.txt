@@ -29,6 +29,7 @@ assigned male at birth
 background inclusivity
 barrier
 barriers
+basic research
 bi cultural
 bias toward
 bias towards
@@ -171,6 +172,8 @@ discriminated
 discrimination
 discriminatory
 discriminatory equity ideology
+disparate impact
+disparate-impact liability
 diverse background
 diverse backgrounds
 diverse communities
@@ -348,6 +351,7 @@ historical racism
 historically
 historically male
 historically racist
+historically received
 historically white
 identity
 identity-based programs
@@ -449,6 +453,7 @@ LGBT
 LGBTQ
 LGBTQ+
 LGBTQIA
+life sciences
 male dominant
 male dominated
 marginalization
@@ -517,6 +522,7 @@ pregnant people
 pregnant person
 prejudice
 prejudices
+prestige
 primarily male
 primarily white
 privilege
@@ -557,6 +563,7 @@ racial justice
 racial minorities
 racial minority
 racial oppression
+racial preferences
 racial prejudice
 racial prejudices
 racial segregation

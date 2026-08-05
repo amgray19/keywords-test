@@ -70,4 +70,25 @@ const kw = JSON.parse(fs.readFileSync(`${__dirname}/keywords.json`, "utf8"));
 assert(kw.every(k => typeof k.term === "string" && Array.isArray(k.suggestions)),
   "keywords.json must stay [{term, suggestions[]}] — the shape FedInt exports");
 
+// The two files must name the same terms. keywords.txt is what actually gets
+// scanned and keywords.json is what supplies alternatives, so a term in one and
+// not the other is either never looked for or found with nothing to offer. Seven
+// curated terms, disparate impact among them, were missing from the scan list
+// exactly this way.
+const listed = new Set(fs.readFileSync(`${__dirname}/keywords.txt`, "utf8")
+  .split("\n").map(s => s.trim()).filter(Boolean));
+const known = new Set(kw.map(k => k.term));
+const unscanned = [...known].filter(t => !listed.has(t));
+const unknown = [...listed].filter(t => !known.has(t));
+assert.deepStrictEqual(unscanned, [], "terms in keywords.json that the default scan never looks for");
+assert.deepStrictEqual(unknown, [], "terms in keywords.txt with no keywords.json entry");
+
+// Federal Register boilerplate leaks out of the statistics engine and reads as
+// contested vocabulary when it reaches a scan. Flagging "data collection" in a
+// grant proposal is noise that costs the tool its credibility.
+const BOILERPLATE = ["comment period", "data collection", "notice intent", "sunshine act",
+                     "impact statement", "patent patent", "advisory council", "notice filing"];
+const leaked = BOILERPLATE.filter(t => known.has(t));
+assert.deepStrictEqual(leaked, [], "Federal Register boilerplate is back in the keyword list");
+
 console.log(`ok — scanning core, ${terms.length} terms to use, ${kw.length} keywords`);
