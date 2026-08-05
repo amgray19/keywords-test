@@ -1,199 +1,3212 @@
 [
-    {"term": "accessible", "suggestions": ["available", "obtainable"]},
-    {"term": "activism", "suggestions": ["public engagement", "advocacy work"]},
-    {"term": "activists", "suggestions": ["advocates", "campaigners"]},
-    {"term": "advocacy", "suggestions": ["support", "promotion"]},
-    {"term": "advocate", "suggestions": ["supporter", "representative"]},
-    {"term": "advocates", "suggestions": ["supporters", "representatives"]},
-    {"term": "affirming care", "suggestions": ["personalized care", "respectful care"]},
-    {"term": "all-inclusive", "suggestions": ["comprehensive", "complete"]},
-    {"term": "allyship", "suggestions": ["partnership", "mutual support"]},
-    {"term": "anti-racism", "suggestions": ["fair treatment initiatives"]},
-    {"term": "antiracist", "suggestions": ["fair-minded", "equitable approach"]},
-    {"term": "assigned at birth", "suggestions": ["documented at birth"]},
-    {"term": "assigned female at birth", "suggestions": ["documented female at birth"]},
-    {"term": "assigned male at birth", "suggestions": ["documented male at birth"]},
-    {"term": "at risk", "suggestions": ["vulnerable", "exposed"]},
-    {"term": "barrier", "suggestions": ["obstacle", "hurdle"]},
-    {"term": "barriers", "suggestions": ["obstacles", "hurdles"]},
-    {"term": "belong", "suggestions": ["fit in", "be included"]},
-    {"term": "bias", "suggestions": ["preference", "leaning"]},
-    {"term": "biased", "suggestions": ["partial", "unbalanced"]},
-    {"term": "biased toward", "suggestions": ["favoring", "leaning toward"]},
-    {"term": "biases", "suggestions": ["preferences", "tendencies"]},
-    {"term": "biases towards", "suggestions": ["preferences", "inclinations"]},
-    {"term": "biologically female", "suggestions": ["female at birth"]},
-    {"term": "biologically male", "suggestions": ["male at birth"]},
-    {"term": "BIPOC", "suggestions": ["smaller groups", "ethnic communities"]},
-    {"term": "Black", "suggestions": ["African American", "person of African descent"]},
-    {"term": "breastfeed people", "suggestions": ["nursing individuals"]},
-    {"term": "breastfeed person", "suggestions": ["nursing individual"]},
-    {"term": "chestfeed people", "suggestions": ["nursing individuals"]},
-    {"term": "chestfeed person", "suggestions": ["nursing individual"]},
-    {"term": "clean energy", "suggestions": ["renewable power", "green technology"]},
-    {"term": "climate crisis", "suggestions": ["environmental challenge"]},
-    {"term": "climate science", "suggestions": ["environmental research"]},
-    {"term": "commercial sex worker", "suggestions": ["sex worker"]},
-    {"term": "community diversity", "suggestions": ["range of backgrounds"]},
-    {"term": "community equity", "suggestions": ["fairness in the community"]},
-    {"term": "confirmation bias", "suggestions": ["selective perception"]},
-    {"term": "cultural competence", "suggestions": ["cultural awareness"]},
-    {"term": "cultural differences", "suggestions": ["cross-cultural variations"]},
-    {"term": "cultural heritage", "suggestions": ["traditions", "background"]},
-    {"term": "cultural sensitivity", "suggestions": ["respect for traditions"]},
-    {"term": "culturally appropriate", "suggestions": ["contextually suitable"]},
-    {"term": "culturally responsive", "suggestions": ["adaptable to context"]},
-    {"term": "DEI", "suggestions": ["workforce development", "organizational improvement"]},
-    {"term": "DEIA", "suggestions": ["workforce development strategy"]},
-    {"term": "DEIAB", "suggestions": ["workforce growth planning"]},
-    {"term": "DEIJ", "suggestions": ["organizational strategy for fairness"]},
-    {"term": "disabilities", "suggestions": ["health conditions", "impairments"]},
-    {"term": "disability", "suggestions": ["impairment", "condition"]},
-    {"term": "discriminated", "suggestions": ["treated unfairly"]},
-    {"term": "discrimination", "suggestions": ["unfair treatment"]},
-    {"term": "discriminatory", "suggestions": ["unjust", "biased"]},
-    {"term": "disparity", "suggestions": ["imbalance", "gap"]},
-    {"term": "diverse", "suggestions": ["varied", "different"]},
-    {"term": "diverse backgrounds", "suggestions": ["varied experiences"]},
-    {"term": "diverse communities", "suggestions": ["varied groups"]},
-    {"term": "diverse community", "suggestions": ["varied group"]},
-    {"term": "diverse group", "suggestions": ["mixed group"]},
-    {"term": "diverse groups", "suggestions": ["mixed groups"]},
-    {"term": "diversified", "suggestions": ["varied", "expanded"]},
-    {"term": "diversify", "suggestions": ["broaden", "expand"]},
-    {"term": "diversifying", "suggestions": ["broadening", "expanding"]},
-    {"term": "diversity", "suggestions": ["variety", "range of perspectives"]},
-    {"term": "enhance the diversity", "suggestions": ["increase variety"]},
-    {"term": "enhancing diversity", "suggestions": ["expanding variety"]},
-    {"term": "environmental quality", "suggestions": ["ecological health"]},
-    {"term": "equal opportunity", "suggestions": ["fair consideration"]},
-    {"term": "equality", "suggestions": ["fairness", "even treatment"]},
-    {"term": "equitable", "suggestions": ["fair", "balanced"]},
-    {"term": "equitableness", "suggestions": ["fairness"]},
-    {"term": "equity", "suggestions": ["fairness", "justice"]},
-    {"term": "ethnicity", "suggestions": ["heritage", "background"]},
-    {"term": "excluded", "suggestions": ["left out", "omitted"]},
-    {"term": "exclusion", "suggestions": ["omission", "removal"]},
-    {"term": "expression", "suggestions": ["communication", "articulation"]},
-    {"term": "female", "suggestions": ["woman", "woman-identifying"]},
-    {"term": "females", "suggestions": ["women"]},
-    {"term": "feminism", "suggestions": ["women's rights advocacy"]},
-    {"term": "fostering inclusivity", "suggestions": ["building connection"]},
-    {"term": "GBV", "suggestions": ["violence based on sex"]},
-    {"term": "gender", "suggestions": ["sex", "classification"]},
-    {"term": "gender based", "suggestions": ["sex-based"]},
-    {"term": "gender based violence", "suggestions": ["violence based on sex"]},
-    {"term": "gender diversity", "suggestions": ["range of sex identities"]},
-    {"term": "gender identity", "suggestions": ["self-identified sex"]},
-    {"term": "gender ideology", "suggestions": ["views on sex roles"]},
-    {"term": "gender-affirming care", "suggestions": ["personalized care", "supportive care"]},
-    {"term": "genders", "suggestions": ["sexes"]},
-    {"term": "Gulf of Mexico", "suggestions": ["Gulf region"]},
-    {"term": "hate speech", "suggestions": ["offensive language"]},
-    {"term": "health disparity", "suggestions": ["health gap"]},
-    {"term": "health equity", "suggestions": ["fair access to healthcare"]},
-    {"term": "hispanic minority", "suggestions": ["Spanish-speaking group"]},
-    {"term": "historically", "suggestions": ["traditionally"]},
-    {"term": "identity", "suggestions": ["self-concept"]},
-    {"term": "immigrants", "suggestions": ["migrants"]},
-    {"term": "implicit bias", "suggestions": ["unconscious preference"]},
-    {"term": "implicit biases", "suggestions": ["unconscious preferences"]},
-    {"term": "inclusion", "suggestions": ["participation"]},
-    {"term": "inclusive", "suggestions": ["welcoming"]},
-    {"term": "inclusive leadership", "suggestions": ["collaborative leadership"]},
-    {"term": "inclusiveness", "suggestions": ["openness"]},
-    {"term": "inclusivity", "suggestions": ["acceptance"]},
-    {"term": "increase diversity", "suggestions": ["broaden variety"]},
-    {"term": "increase the diversity", "suggestions": ["expand variety"]},
-    {"term": "indigenous community", "suggestions": ["native population"]},
-    {"term": "inequalities", "suggestions": ["imbalances", "gaps"]},
-    {"term": "inequality", "suggestions": ["imbalance", "gap"]},
-    {"term": "inequitable", "suggestions": ["unfair"]},
-    {"term": "inequities", "suggestions": ["unfairness", "gaps"]},
-    {"term": "inequity", "suggestions": ["unfairness", "imbalance"]},
-    {"term": "injustice", "suggestions": ["unfairness"]},
-    {"term": "institutional", "suggestions": ["organizational", "system-level"]},
-    {"term": "intersectional", "suggestions": ["overlapping factors"]},
-    {"term": "intersectionality", "suggestions": ["overlapping challenges"]},
-    {"term": "key groups", "suggestions": ["priority groups"]},
-    {"term": "key people", "suggestions": ["important individuals"]},
-    {"term": "key populations", "suggestions": ["priority populations"]},
-    {"term": "Latinx", "suggestions": ["Spanish-speaking group", "Latino/Latina"]},
-    {"term": "LGBT", "suggestions": ["sexual smaller groups"]},
-    {"term": "LGBTQ", "suggestions": ["sexual and sex smaller groups"]},
-    {"term": "marginalize", "suggestions": ["push aside", "overlook"]},
-    {"term": "marginalized", "suggestions": ["overlooked", "disregarded"]},
-    {"term": "men who have sex with men", "suggestions": ["same-sex partners"]},
-    {"term": "mental health", "suggestions": ["emotional well-being", "psychological health"]},
-    {"term": "minorities", "suggestions": ["smaller groups"]},
-    {"term": "minority", "suggestions": ["smaller group", "less common group"]},
-    {"term": "most risk", "suggestions": ["highest vulnerability"]},
-    {"term": "MSM", "suggestions": ["male same-sex partners"]},
-    {"term": "multicultural", "suggestions": ["cross-cultural"]},
-    {"term": "Mx", "suggestions": ["sex-neutral title"]},
-    {"term": "Native American", "suggestions": ["Native person"]},
-    {"term": "non-binary", "suggestions": ["sex-neutral", "sex non-specific"]},
-    {"term": "nonbinary", "suggestions": ["sex-neutral", "sex non-specific"]},
-    {"term": "oppression", "suggestions": ["control", "domination"]},
-    {"term": "oppressive", "suggestions": ["controlling", "harsh"]},
-    {"term": "orientation", "suggestions": ["preference", "direction"]},
-    {"term": "people uterus", "suggestions": ["individuals with a uterus"]},
-    {"term": "people-centered care", "suggestions": ["patient-focused care"]},
-    {"term": "person-centered", "suggestions": ["individual-focused"]},
-    {"term": "person-centered care", "suggestions": ["individual-focused care"]},
-    {"term": "polarization", "suggestions": ["division", "partisan split"]},
-    {"term": "political", "suggestions": ["government-related", "policy-related"]},
-    {"term": "pollution", "suggestions": ["contamination"]},
-    {"term": "pregnant people", "suggestions": ["pregnant women"]},
-    {"term": "pregnant person", "suggestions": ["pregnant woman"]},
-    {"term": "pregnant persons", "suggestions": ["pregnant women"]},
-    {"term": "prejudice", "suggestions": ["bias", "preconception"]},
-    {"term": "privilege", "suggestions": ["advantage"]},
-    {"term": "privileges", "suggestions": ["advantages"]},
-    {"term": "promote diversity", "suggestions": ["encourage variety"]},
-    {"term": "promoting diversity", "suggestions": ["expanding variety"]},
-    {"term": "pronoun", "suggestions": ["word for reference"]},
-    {"term": "pronouns", "suggestions": ["reference words"]},
-    {"term": "prostitute", "suggestions": ["sex worker"]},
-    {"term": "race", "suggestions": ["ethnic background", "heritage"]},
-    {"term": "race and ethnicity", "suggestions": ["background and heritage"]},
-    {"term": "racial", "suggestions": ["ethnic", "heritage-based"]},
-    {"term": "racial diversity", "suggestions": ["variety of ethnic backgrounds"]},
-    {"term": "racial identity", "suggestions": ["ethnic background"]},
-    {"term": "racial inequality", "suggestions": ["ethnic gaps"]},
-    {"term": "racial justice", "suggestions": ["fair treatment"]},
-    {"term": "racially", "suggestions": ["ethnically"]},
-    {"term": "racism", "suggestions": ["ethnic prejudice", "bias based on heritage"]},
-    {"term": "segregation", "suggestions": ["separation"]},
-    {"term": "sense of belonging", "suggestions": ["connection", "acceptance"]},
-    {"term": "sex", "suggestions": ["biological category"]},
-    {"term": "sexual preferences", "suggestions": ["sexual interests"]},
-    {"term": "sexuality", "suggestions": ["sexual orientation"]},
-    {"term": "social justice", "suggestions": ["fairness in society"]},
-    {"term": "sociocultural", "suggestions": ["social and cultural"]},
-    {"term": "socioeconomic", "suggestions": ["economic and social"]},
-    {"term": "status", "suggestions": ["position", "standing"]},
-    {"term": "stereotype", "suggestions": ["generalization"]},
-    {"term": "stereotypes", "suggestions": ["generalizations"]},
-    {"term": "systemic", "suggestions": ["structural"]},
-    {"term": "systemically", "suggestions": ["structurally"]},
-    {"term": "they/them", "suggestions": ["sex-neutral pronouns"]},
-    {"term": "trans", "suggestions": ["transgender"]},
-    {"term": "transgender", "suggestions": ["sex non-conforming"]},
-    {"term": "transsexual", "suggestions": ["sex reassigned"]},
-    {"term": "trauma", "suggestions": ["emotional injury", "shock"]},
-    {"term": "traumatic", "suggestions": ["distressing", "shocking"]},
-    {"term": "tribal", "suggestions": ["community-based"]},
-    {"term": "unconscious bias", "suggestions": ["implicit preference"]},
-    {"term": "underappreciated", "suggestions": ["overlooked"]},
-    {"term": "underprivileged", "suggestions": ["disadvantaged"]},
-    {"term": "underrepresentation", "suggestions": ["low participation"]},
-    {"term": "underrepresented", "suggestions": ["low participation"]},
-    {"term": "underserved", "suggestions": ["lacking access"]},
-    {"term": "undervalued", "suggestions": ["underrecognized"]},
-    {"term": "victim", "suggestions": ["affected person"]},
-    {"term": "victims", "suggestions": ["affected people"]},
-    {"term": "vulnerable populations", "suggestions": ["at-risk groups"]},
-    {"term": "women", "suggestions": ["females"]},
-    {"term": "women and underrepresented", "suggestions": ["females and less common"]}
+  {
+    "term": "activism",
+    "suggestions": [
+      "public engagement",
+      "advocacy work"
+    ]
+  },
+  {
+    "term": "activist",
+    "suggestions": []
+  },
+  {
+    "term": "activists",
+    "suggestions": [
+      "advocates",
+      "campaigners"
+    ]
+  },
+  {
+    "term": "advance diversity",
+    "suggestions": []
+  },
+  {
+    "term": "advance inclusivity",
+    "suggestions": []
+  },
+  {
+    "term": "advance the diversity",
+    "suggestions": []
+  },
+  {
+    "term": "advancing diversity",
+    "suggestions": []
+  },
+  {
+    "term": "advancing equity",
+    "suggestions": []
+  },
+  {
+    "term": "advancing inclusive",
+    "suggestions": []
+  },
+  {
+    "term": "advocacy",
+    "suggestions": [
+      "support",
+      "promotion"
+    ]
+  },
+  {
+    "term": "advocate",
+    "suggestions": [
+      "supporter",
+      "representative"
+    ]
+  },
+  {
+    "term": "advocates",
+    "suggestions": [
+      "supporters",
+      "representatives"
+    ]
+  },
+  {
+    "term": "affirmative action",
+    "suggestions": []
+  },
+  {
+    "term": "alliance for diversity",
+    "suggestions": []
+  },
+  {
+    "term": "ally",
+    "suggestions": []
+  },
+  {
+    "term": "allyship",
+    "suggestions": []
+  },
+  {
+    "term": "anti black",
+    "suggestions": []
+  },
+  {
+    "term": "anti black racism",
+    "suggestions": []
+  },
+  {
+    "term": "anti racism",
+    "suggestions": []
+  },
+  {
+    "term": "anti racist",
+    "suggestions": []
+  },
+  {
+    "term": "anti white",
+    "suggestions": []
+  },
+  {
+    "term": "antiblack",
+    "suggestions": []
+  },
+  {
+    "term": "antiblack racism",
+    "suggestions": []
+  },
+  {
+    "term": "antiracism",
+    "suggestions": []
+  },
+  {
+    "term": "antiracist",
+    "suggestions": []
+  },
+  {
+    "term": "antiwhite",
+    "suggestions": []
+  },
+  {
+    "term": "assigned female at birth",
+    "suggestions": []
+  },
+  {
+    "term": "assigned male at birth",
+    "suggestions": []
+  },
+  {
+    "term": "background inclusivity",
+    "suggestions": []
+  },
+  {
+    "term": "barrier",
+    "suggestions": [
+      "obstacle",
+      "hurdle"
+    ]
+  },
+  {
+    "term": "barriers",
+    "suggestions": [
+      "obstacles",
+      "hurdles"
+    ]
+  },
+  {
+    "term": "bi cultural",
+    "suggestions": []
+  },
+  {
+    "term": "bias toward",
+    "suggestions": []
+  },
+  {
+    "term": "bias towards",
+    "suggestions": []
+  },
+  {
+    "term": "biased",
+    "suggestions": [
+      "partial",
+      "unbalanced"
+    ]
+  },
+  {
+    "term": "biased toward",
+    "suggestions": [
+      "favoring",
+      "leaning toward"
+    ]
+  },
+  {
+    "term": "biased towards",
+    "suggestions": []
+  },
+  {
+    "term": "biases",
+    "suggestions": []
+  },
+  {
+    "term": "biases toward",
+    "suggestions": []
+  },
+  {
+    "term": "biases towards",
+    "suggestions": []
+  },
+  {
+    "term": "bicultural",
+    "suggestions": []
+  },
+  {
+    "term": "bigot",
+    "suggestions": []
+  },
+  {
+    "term": "bigotry",
+    "suggestions": []
+  },
+  {
+    "term": "biologically female",
+    "suggestions": []
+  },
+  {
+    "term": "biologically male",
+    "suggestions": []
+  },
+  {
+    "term": "BIPOC",
+    "suggestions": []
+  },
+  {
+    "term": "BIPOCX",
+    "suggestions": []
+  },
+  {
+    "term": "black and latinx",
+    "suggestions": []
+  },
+  {
+    "term": "black communities",
+    "suggestions": []
+  },
+  {
+    "term": "black community",
+    "suggestions": []
+  },
+  {
+    "term": "black cultural",
+    "suggestions": []
+  },
+  {
+    "term": "black culture",
+    "suggestions": []
+  },
+  {
+    "term": "black cultures",
+    "suggestions": []
+  },
+  {
+    "term": "black female",
+    "suggestions": []
+  },
+  {
+    "term": "black females",
+    "suggestions": []
+  },
+  {
+    "term": "black indigenous and latinx",
+    "suggestions": []
+  },
+  {
+    "term": "black indigenous and other",
+    "suggestions": []
+  },
+  {
+    "term": "black indigenous latinx",
+    "suggestions": []
+  },
+  {
+    "term": "black indigenous other",
+    "suggestions": []
+  },
+  {
+    "term": "black individual",
+    "suggestions": []
+  },
+  {
+    "term": "black individuals",
+    "suggestions": []
+  },
+  {
+    "term": "black intellectualism",
+    "suggestions": []
+  },
+  {
+    "term": "black lives matter",
+    "suggestions": []
+  },
+  {
+    "term": "black male",
+    "suggestions": []
+  },
+  {
+    "term": "black males",
+    "suggestions": []
+  },
+  {
+    "term": "black men",
+    "suggestions": []
+  },
+  {
+    "term": "black minorities",
+    "suggestions": []
+  },
+  {
+    "term": "black minority",
+    "suggestions": []
+  },
+  {
+    "term": "black people",
+    "suggestions": []
+  },
+  {
+    "term": "black person",
+    "suggestions": []
+  },
+  {
+    "term": "black thought",
+    "suggestions": []
+  },
+  {
+    "term": "black voices",
+    "suggestions": []
+  },
+  {
+    "term": "black women",
+    "suggestions": []
+  },
+  {
+    "term": "blackness",
+    "suggestions": []
+  },
+  {
+    "term": "broaden diversity",
+    "suggestions": []
+  },
+  {
+    "term": "broaden the diversity",
+    "suggestions": []
+  },
+  {
+    "term": "Chief Diversity Officer",
+    "suggestions": []
+  },
+  {
+    "term": "cisgender",
+    "suggestions": []
+  },
+  {
+    "term": "cisnormative",
+    "suggestions": []
+  },
+  {
+    "term": "cisnormativity",
+    "suggestions": []
+  },
+  {
+    "term": "clean energy",
+    "suggestions": [
+      "renewable power",
+      "green technology"
+    ]
+  },
+  {
+    "term": "climate action",
+    "suggestions": []
+  },
+  {
+    "term": "climate change",
+    "suggestions": []
+  },
+  {
+    "term": "climate conscious",
+    "suggestions": []
+  },
+  {
+    "term": "climate consciousness",
+    "suggestions": []
+  },
+  {
+    "term": "climate equality",
+    "suggestions": []
+  },
+  {
+    "term": "climate equity",
+    "suggestions": []
+  },
+  {
+    "term": "climate injustice",
+    "suggestions": []
+  },
+  {
+    "term": "climate injustices",
+    "suggestions": []
+  },
+  {
+    "term": "climate justice",
+    "suggestions": []
+  },
+  {
+    "term": "climate justices",
+    "suggestions": []
+  },
+  {
+    "term": "climate research",
+    "suggestions": []
+  },
+  {
+    "term": "colored communities",
+    "suggestions": []
+  },
+  {
+    "term": "colored community",
+    "suggestions": []
+  },
+  {
+    "term": "colored female",
+    "suggestions": []
+  },
+  {
+    "term": "colored females",
+    "suggestions": []
+  },
+  {
+    "term": "colored individual",
+    "suggestions": []
+  },
+  {
+    "term": "colored individuals",
+    "suggestions": []
+  },
+  {
+    "term": "colored male",
+    "suggestions": []
+  },
+  {
+    "term": "colored males",
+    "suggestions": []
+  },
+  {
+    "term": "colored men",
+    "suggestions": []
+  },
+  {
+    "term": "colored minorities",
+    "suggestions": []
+  },
+  {
+    "term": "colored minority",
+    "suggestions": []
+  },
+  {
+    "term": "colored people",
+    "suggestions": []
+  },
+  {
+    "term": "colored person",
+    "suggestions": []
+  },
+  {
+    "term": "colored voices",
+    "suggestions": []
+  },
+  {
+    "term": "colored women",
+    "suggestions": []
+  },
+  {
+    "term": "commitment to diversity",
+    "suggestions": []
+  },
+  {
+    "term": "community diversity",
+    "suggestions": [
+      "range of backgrounds"
+    ]
+  },
+  {
+    "term": "community equity",
+    "suggestions": [
+      "fairness in the community"
+    ]
+  },
+  {
+    "term": "community inclusivity",
+    "suggestions": []
+  },
+  {
+    "term": "critical race theory",
+    "suggestions": []
+  },
+  {
+    "term": "cultural activism",
+    "suggestions": []
+  },
+  {
+    "term": "cultural activist",
+    "suggestions": []
+  },
+  {
+    "term": "cultural activists",
+    "suggestions": []
+  },
+  {
+    "term": "cultural advocacy",
+    "suggestions": []
+  },
+  {
+    "term": "cultural advocate",
+    "suggestions": []
+  },
+  {
+    "term": "cultural and ethnic",
+    "suggestions": []
+  },
+  {
+    "term": "cultural and racial",
+    "suggestions": []
+  },
+  {
+    "term": "cultural appropriation",
+    "suggestions": []
+  },
+  {
+    "term": "cultural appropriations",
+    "suggestions": []
+  },
+  {
+    "term": "cultural bias",
+    "suggestions": []
+  },
+  {
+    "term": "cultural competency",
+    "suggestions": []
+  },
+  {
+    "term": "cultural connections",
+    "suggestions": []
+  },
+  {
+    "term": "cultural differences",
+    "suggestions": [
+      "cross-cultural variations"
+    ]
+  },
+  {
+    "term": "cultural heritage",
+    "suggestions": [
+      "traditions",
+      "background"
+    ]
+  },
+  {
+    "term": "cultural humility",
+    "suggestions": []
+  },
+  {
+    "term": "cultural inequalities",
+    "suggestions": []
+  },
+  {
+    "term": "cultural inequality",
+    "suggestions": []
+  },
+  {
+    "term": "cultural inequities",
+    "suggestions": []
+  },
+  {
+    "term": "cultural inequity",
+    "suggestions": []
+  },
+  {
+    "term": "cultural injustice",
+    "suggestions": []
+  },
+  {
+    "term": "cultural injustices",
+    "suggestions": []
+  },
+  {
+    "term": "cultural justice",
+    "suggestions": []
+  },
+  {
+    "term": "cultural relevance",
+    "suggestions": []
+  },
+  {
+    "term": "cultural segregation",
+    "suggestions": []
+  },
+  {
+    "term": "culturally attuned",
+    "suggestions": []
+  },
+  {
+    "term": "culturally biased",
+    "suggestions": []
+  },
+  {
+    "term": "culturally relevant",
+    "suggestions": []
+  },
+  {
+    "term": "culturally responsive",
+    "suggestions": [
+      "adaptable to context"
+    ]
+  },
+  {
+    "term": "culturally sensitive",
+    "suggestions": []
+  },
+  {
+    "term": "culturally sustainable",
+    "suggestions": []
+  },
+  {
+    "term": "culturally sustaining",
+    "suggestions": []
+  },
+  {
+    "term": "culture and ethnicity",
+    "suggestions": []
+  },
+  {
+    "term": "culture and race",
+    "suggestions": []
+  },
+  {
+    "term": "cultures and ethnicities",
+    "suggestions": []
+  },
+  {
+    "term": "cultures and races",
+    "suggestions": []
+  },
+  {
+    "term": "de colonization",
+    "suggestions": []
+  },
+  {
+    "term": "de colonize",
+    "suggestions": []
+  },
+  {
+    "term": "de colonized",
+    "suggestions": []
+  },
+  {
+    "term": "de colonizing",
+    "suggestions": []
+  },
+  {
+    "term": "de segregate",
+    "suggestions": []
+  },
+  {
+    "term": "de segregated",
+    "suggestions": []
+  },
+  {
+    "term": "de segregates",
+    "suggestions": []
+  },
+  {
+    "term": "de segregation",
+    "suggestions": []
+  },
+  {
+    "term": "decolonization",
+    "suggestions": []
+  },
+  {
+    "term": "decolonize",
+    "suggestions": []
+  },
+  {
+    "term": "decolonized",
+    "suggestions": []
+  },
+  {
+    "term": "decolonizing",
+    "suggestions": []
+  },
+  {
+    "term": "DEI",
+    "suggestions": [
+      "workforce development",
+      "organizational improvement"
+    ]
+  },
+  {
+    "term": "DEIA",
+    "suggestions": [
+      "workforce development strategy",
+      "workforce development",
+      "accessibility compliance"
+    ]
+  },
+  {
+    "term": "DEIJ",
+    "suggestions": [
+      "organizational strategy for fairness"
+    ]
+  },
+  {
+    "term": "desegregate",
+    "suggestions": []
+  },
+  {
+    "term": "desegregated",
+    "suggestions": []
+  },
+  {
+    "term": "desegregates",
+    "suggestions": []
+  },
+  {
+    "term": "desegregation",
+    "suggestions": []
+  },
+  {
+    "term": "disabilities",
+    "suggestions": []
+  },
+  {
+    "term": "disability",
+    "suggestions": []
+  },
+  {
+    "term": "discriminate",
+    "suggestions": []
+  },
+  {
+    "term": "discriminated",
+    "suggestions": []
+  },
+  {
+    "term": "discrimination",
+    "suggestions": []
+  },
+  {
+    "term": "discriminatory",
+    "suggestions": []
+  },
+  {
+    "term": "discriminatory equity ideology",
+    "suggestions": []
+  },
+  {
+    "term": "diverse background",
+    "suggestions": []
+  },
+  {
+    "term": "diverse backgrounds",
+    "suggestions": [
+      "varied experiences"
+    ]
+  },
+  {
+    "term": "diverse communities",
+    "suggestions": [
+      "varied groups"
+    ]
+  },
+  {
+    "term": "diverse community",
+    "suggestions": [
+      "varied group"
+    ]
+  },
+  {
+    "term": "diverse group",
+    "suggestions": [
+      "mixed group"
+    ]
+  },
+  {
+    "term": "diverse groups",
+    "suggestions": [
+      "mixed groups"
+    ]
+  },
+  {
+    "term": "diverse individual",
+    "suggestions": []
+  },
+  {
+    "term": "diverse individuals",
+    "suggestions": []
+  },
+  {
+    "term": "diverse slate",
+    "suggestions": []
+  },
+  {
+    "term": "diverse status",
+    "suggestions": []
+  },
+  {
+    "term": "diverse statuses",
+    "suggestions": []
+  },
+  {
+    "term": "diverse voices",
+    "suggestions": []
+  },
+  {
+    "term": "diversified",
+    "suggestions": [
+      "varied",
+      "expanded"
+    ]
+  },
+  {
+    "term": "diversify",
+    "suggestions": [
+      "broaden",
+      "expand"
+    ]
+  },
+  {
+    "term": "diversifying",
+    "suggestions": [
+      "broadening",
+      "expanding"
+    ]
+  },
+  {
+    "term": "diversity",
+    "suggestions": [
+      "variety",
+      "range of perspectives",
+      "talent",
+      "excellence"
+    ]
+  },
+  {
+    "term": "diversity and equity",
+    "suggestions": []
+  },
+  {
+    "term": "diversity and inclusion",
+    "suggestions": []
+  },
+  {
+    "term": "diversity and inclusivity",
+    "suggestions": []
+  },
+  {
+    "term": "diversity awareness",
+    "suggestions": []
+  },
+  {
+    "term": "diversity equity",
+    "suggestions": []
+  },
+  {
+    "term": "diversity requirements",
+    "suggestions": []
+  },
+  {
+    "term": "diversity, equity, and inclusion",
+    "suggestions": [
+      "talent and excellence",
+      "broad participation"
+    ]
+  },
+  {
+    "term": "diversity, equity, inclusion, and accessibility",
+    "suggestions": []
+  },
+  {
+    "term": "diversity, equity, or inclusion",
+    "suggestions": []
+  },
+  {
+    "term": "divisiveness",
+    "suggestions": []
+  },
+  {
+    "term": "eco cultural",
+    "suggestions": []
+  },
+  {
+    "term": "ecocultural",
+    "suggestions": []
+  },
+  {
+    "term": "emphasis on diversity",
+    "suggestions": []
+  },
+  {
+    "term": "emphasize diversity",
+    "suggestions": []
+  },
+  {
+    "term": "emphasizing diversity",
+    "suggestions": []
+  },
+  {
+    "term": "Employee Resource Groups",
+    "suggestions": []
+  },
+  {
+    "term": "encourage diversity",
+    "suggestions": []
+  },
+  {
+    "term": "encouraging diversity",
+    "suggestions": []
+  },
+  {
+    "term": "enhance diversity",
+    "suggestions": []
+  },
+  {
+    "term": "enhance the diversity",
+    "suggestions": [
+      "increase variety"
+    ]
+  },
+  {
+    "term": "enhancing diversity",
+    "suggestions": [
+      "expanding variety"
+    ]
+  },
+  {
+    "term": "environment conscious",
+    "suggestions": []
+  },
+  {
+    "term": "environment consciousness",
+    "suggestions": []
+  },
+  {
+    "term": "environmental conscious",
+    "suggestions": []
+  },
+  {
+    "term": "environmental consciousness",
+    "suggestions": []
+  },
+  {
+    "term": "environmental equality",
+    "suggestions": []
+  },
+  {
+    "term": "environmental equity",
+    "suggestions": []
+  },
+  {
+    "term": "environmental governance",
+    "suggestions": []
+  },
+  {
+    "term": "environmental justice",
+    "suggestions": []
+  },
+  {
+    "term": "environmental social",
+    "suggestions": []
+  },
+  {
+    "term": "environmentalgovernance",
+    "suggestions": []
+  },
+  {
+    "term": "environmentally conscious",
+    "suggestions": []
+  },
+  {
+    "term": "environmentalsocial",
+    "suggestions": []
+  },
+  {
+    "term": "equal opportunities",
+    "suggestions": []
+  },
+  {
+    "term": "equal opportunity",
+    "suggestions": []
+  },
+  {
+    "term": "equalities",
+    "suggestions": []
+  },
+  {
+    "term": "equality",
+    "suggestions": [
+      "fairness",
+      "even treatment"
+    ]
+  },
+  {
+    "term": "equitable",
+    "suggestions": [
+      "fair",
+      "balanced"
+    ]
+  },
+  {
+    "term": "equitable and inclusive",
+    "suggestions": []
+  },
+  {
+    "term": "equitable decision-making",
+    "suggestions": []
+  },
+  {
+    "term": "equitable deployment of financial and technical assistance",
+    "suggestions": []
+  },
+  {
+    "term": "equities",
+    "suggestions": []
+  },
+  {
+    "term": "equity",
+    "suggestions": [
+      "fairness",
+      "access",
+      "opportunity"
+    ]
+  },
+  {
+    "term": "equity action plans",
+    "suggestions": []
+  },
+  {
+    "term": "equity plans",
+    "suggestions": []
+  },
+  {
+    "term": "equity-related",
+    "suggestions": []
+  },
+  {
+    "term": "ESG",
+    "suggestions": []
+  },
+  {
+    "term": "ESG effort",
+    "suggestions": []
+  },
+  {
+    "term": "ESG efforts",
+    "suggestions": []
+  },
+  {
+    "term": "ESG initiative",
+    "suggestions": []
+  },
+  {
+    "term": "ESG initiatives",
+    "suggestions": []
+  },
+  {
+    "term": "ethnic and cultural",
+    "suggestions": []
+  },
+  {
+    "term": "ethnic and racial",
+    "suggestions": []
+  },
+  {
+    "term": "ethnic bias",
+    "suggestions": []
+  },
+  {
+    "term": "ethnic communities",
+    "suggestions": []
+  },
+  {
+    "term": "ethnic community",
+    "suggestions": []
+  },
+  {
+    "term": "ethnic cultural",
+    "suggestions": []
+  },
+  {
+    "term": "ethnic culture",
+    "suggestions": []
+  },
+  {
+    "term": "ethnic cultures",
+    "suggestions": []
+  },
+  {
+    "term": "ethnic diversity",
+    "suggestions": []
+  },
+  {
+    "term": "ethnic equity",
+    "suggestions": []
+  },
+  {
+    "term": "ethnic identities",
+    "suggestions": []
+  },
+  {
+    "term": "ethnic identity",
+    "suggestions": []
+  },
+  {
+    "term": "ethnic individual",
+    "suggestions": []
+  },
+  {
+    "term": "ethnic individuals",
+    "suggestions": []
+  },
+  {
+    "term": "ethnic minorities",
+    "suggestions": []
+  },
+  {
+    "term": "ethnic minority",
+    "suggestions": []
+  },
+  {
+    "term": "ethnic people",
+    "suggestions": []
+  },
+  {
+    "term": "ethnic person",
+    "suggestions": []
+  },
+  {
+    "term": "ethnic racism",
+    "suggestions": []
+  },
+  {
+    "term": "ethnic segregation",
+    "suggestions": []
+  },
+  {
+    "term": "ethnic voices",
+    "suggestions": []
+  },
+  {
+    "term": "ethnical racism",
+    "suggestions": []
+  },
+  {
+    "term": "ethnicities and cultures",
+    "suggestions": []
+  },
+  {
+    "term": "ethnicities and races",
+    "suggestions": []
+  },
+  {
+    "term": "ethnicity",
+    "suggestions": []
+  },
+  {
+    "term": "ethnicity and culture",
+    "suggestions": []
+  },
+  {
+    "term": "ethnicity and race",
+    "suggestions": []
+  },
+  {
+    "term": "excluded",
+    "suggestions": [
+      "left out",
+      "omitted"
+    ]
+  },
+  {
+    "term": "exclusion",
+    "suggestions": [
+      "omission",
+      "removal"
+    ]
+  },
+  {
+    "term": "exclusive",
+    "suggestions": []
+  },
+  {
+    "term": "feel seen and heard",
+    "suggestions": []
+  },
+  {
+    "term": "female voices",
+    "suggestions": []
+  },
+  {
+    "term": "females",
+    "suggestions": []
+  },
+  {
+    "term": "femininity",
+    "suggestions": []
+  },
+  {
+    "term": "feminism",
+    "suggestions": []
+  },
+  {
+    "term": "feminist",
+    "suggestions": []
+  },
+  {
+    "term": "feministic",
+    "suggestions": []
+  },
+  {
+    "term": "fluid identity",
+    "suggestions": []
+  },
+  {
+    "term": "foster diversity",
+    "suggestions": []
+  },
+  {
+    "term": "fostering diversity",
+    "suggestions": []
+  },
+  {
+    "term": "fostering inclusive",
+    "suggestions": []
+  },
+  {
+    "term": "fostering inclusivity",
+    "suggestions": []
+  },
+  {
+    "term": "fostering the diversity",
+    "suggestions": []
+  },
+  {
+    "term": "gender",
+    "suggestions": []
+  },
+  {
+    "term": "gender acceptance",
+    "suggestions": []
+  },
+  {
+    "term": "gender affirmation",
+    "suggestions": []
+  },
+  {
+    "term": "gender affirming",
+    "suggestions": []
+  },
+  {
+    "term": "gender and sexual",
+    "suggestions": []
+  },
+  {
+    "term": "gender appreciation",
+    "suggestions": []
+  },
+  {
+    "term": "gender based",
+    "suggestions": []
+  },
+  {
+    "term": "gender binary",
+    "suggestions": []
+  },
+  {
+    "term": "gender discrimination",
+    "suggestions": []
+  },
+  {
+    "term": "gender disparities",
+    "suggestions": []
+  },
+  {
+    "term": "gender disparity",
+    "suggestions": []
+  },
+  {
+    "term": "gender diversity",
+    "suggestions": []
+  },
+  {
+    "term": "gender dysmorphia",
+    "suggestions": []
+  },
+  {
+    "term": "gender dysphoria",
+    "suggestions": []
+  },
+  {
+    "term": "gender fluid",
+    "suggestions": []
+  },
+  {
+    "term": "gender fluidity",
+    "suggestions": []
+  },
+  {
+    "term": "gender identity",
+    "suggestions": []
+  },
+  {
+    "term": "gender ideology",
+    "suggestions": []
+  },
+  {
+    "term": "gender inclusive",
+    "suggestions": []
+  },
+  {
+    "term": "gender inclusivity",
+    "suggestions": []
+  },
+  {
+    "term": "gender marginalized",
+    "suggestions": []
+  },
+  {
+    "term": "gender minorities",
+    "suggestions": []
+  },
+  {
+    "term": "gender minority",
+    "suggestions": []
+  },
+  {
+    "term": "gender neural",
+    "suggestions": []
+  },
+  {
+    "term": "gender non binary",
+    "suggestions": []
+  },
+  {
+    "term": "gender non conforming",
+    "suggestions": []
+  },
+  {
+    "term": "gender nonbinary",
+    "suggestions": []
+  },
+  {
+    "term": "gender nonconforming",
+    "suggestions": []
+  },
+  {
+    "term": "gender oppression",
+    "suggestions": []
+  },
+  {
+    "term": "gender preference",
+    "suggestions": []
+  },
+  {
+    "term": "gender preferences",
+    "suggestions": []
+  },
+  {
+    "term": "gender spectrum",
+    "suggestions": []
+  },
+  {
+    "term": "gender stereotypes",
+    "suggestions": []
+  },
+  {
+    "term": "gender transition",
+    "suggestions": []
+  },
+  {
+    "term": "gender transitioning",
+    "suggestions": []
+  },
+  {
+    "term": "gender typical",
+    "suggestions": []
+  },
+  {
+    "term": "genders",
+    "suggestions": []
+  },
+  {
+    "term": "green infrastructure",
+    "suggestions": []
+  },
+  {
+    "term": "green new deal",
+    "suggestions": []
+  },
+  {
+    "term": "green society",
+    "suggestions": []
+  },
+  {
+    "term": "group equity",
+    "suggestions": []
+  },
+  {
+    "term": "group inclusivity",
+    "suggestions": []
+  },
+  {
+    "term": "hate speech",
+    "suggestions": []
+  },
+  {
+    "term": "health equity",
+    "suggestions": []
+  },
+  {
+    "term": "heterosexual",
+    "suggestions": []
+  },
+  {
+    "term": "hispanic communities",
+    "suggestions": []
+  },
+  {
+    "term": "hispanic community",
+    "suggestions": []
+  },
+  {
+    "term": "hispanic cultural",
+    "suggestions": []
+  },
+  {
+    "term": "hispanic culture",
+    "suggestions": []
+  },
+  {
+    "term": "hispanic cultures",
+    "suggestions": []
+  },
+  {
+    "term": "hispanic female",
+    "suggestions": []
+  },
+  {
+    "term": "hispanic females",
+    "suggestions": []
+  },
+  {
+    "term": "hispanic individual",
+    "suggestions": []
+  },
+  {
+    "term": "hispanic individuals",
+    "suggestions": []
+  },
+  {
+    "term": "hispanic male",
+    "suggestions": []
+  },
+  {
+    "term": "hispanic males",
+    "suggestions": []
+  },
+  {
+    "term": "hispanic men",
+    "suggestions": []
+  },
+  {
+    "term": "hispanic minorities",
+    "suggestions": []
+  },
+  {
+    "term": "hispanic minority",
+    "suggestions": []
+  },
+  {
+    "term": "hispanic people",
+    "suggestions": []
+  },
+  {
+    "term": "hispanic person",
+    "suggestions": []
+  },
+  {
+    "term": "hispanic voices",
+    "suggestions": []
+  },
+  {
+    "term": "hispanic women",
+    "suggestions": []
+  },
+  {
+    "term": "historical racism",
+    "suggestions": []
+  },
+  {
+    "term": "historically",
+    "suggestions": []
+  },
+  {
+    "term": "historically male",
+    "suggestions": []
+  },
+  {
+    "term": "historically racist",
+    "suggestions": []
+  },
+  {
+    "term": "historically white",
+    "suggestions": []
+  },
+  {
+    "term": "identity",
+    "suggestions": []
+  },
+  {
+    "term": "identity-based programs",
+    "suggestions": []
+  },
+  {
+    "term": "identity-based spoils system",
+    "suggestions": []
+  },
+  {
+    "term": "implicit bias",
+    "suggestions": [
+      "unconscious preference"
+    ]
+  },
+  {
+    "term": "implicit biases",
+    "suggestions": [
+      "unconscious preferences"
+    ]
+  },
+  {
+    "term": "inclusion",
+    "suggestions": [
+      "participation",
+      "broad participation",
+      "open competition"
+    ]
+  },
+  {
+    "term": "inclusive",
+    "suggestions": [
+      "welcoming"
+    ]
+  },
+  {
+    "term": "inclusive language",
+    "suggestions": []
+  },
+  {
+    "term": "inclusiveness",
+    "suggestions": [
+      "openness"
+    ]
+  },
+  {
+    "term": "inclusivity",
+    "suggestions": [
+      "acceptance"
+    ]
+  },
+  {
+    "term": "inclusivity and diversity",
+    "suggestions": []
+  },
+  {
+    "term": "increase diversity",
+    "suggestions": [
+      "broaden variety"
+    ]
+  },
+  {
+    "term": "increase the diversity",
+    "suggestions": [
+      "expand variety"
+    ]
+  },
+  {
+    "term": "increases diversity",
+    "suggestions": []
+  },
+  {
+    "term": "increases the diversity",
+    "suggestions": []
+  },
+  {
+    "term": "increasing diversity",
+    "suggestions": []
+  },
+  {
+    "term": "increasing the diversity",
+    "suggestions": []
+  },
+  {
+    "term": "indigenous communities",
+    "suggestions": []
+  },
+  {
+    "term": "indigenous community",
+    "suggestions": []
+  },
+  {
+    "term": "indigenous cultural",
+    "suggestions": []
+  },
+  {
+    "term": "indigenous culture",
+    "suggestions": []
+  },
+  {
+    "term": "indigenous cultures",
+    "suggestions": []
+  },
+  {
+    "term": "indigenous female",
+    "suggestions": []
+  },
+  {
+    "term": "indigenous females",
+    "suggestions": []
+  },
+  {
+    "term": "indigenous individual",
+    "suggestions": []
+  },
+  {
+    "term": "indigenous individuals",
+    "suggestions": []
+  },
+  {
+    "term": "indigenous male",
+    "suggestions": []
+  },
+  {
+    "term": "indigenous males",
+    "suggestions": []
+  },
+  {
+    "term": "indigenous men",
+    "suggestions": []
+  },
+  {
+    "term": "indigenous minorities",
+    "suggestions": []
+  },
+  {
+    "term": "indigenous minority",
+    "suggestions": []
+  },
+  {
+    "term": "indigenous people",
+    "suggestions": []
+  },
+  {
+    "term": "indigenous person",
+    "suggestions": []
+  },
+  {
+    "term": "indigenous voices",
+    "suggestions": []
+  },
+  {
+    "term": "indigenous women",
+    "suggestions": []
+  },
+  {
+    "term": "inequalities",
+    "suggestions": []
+  },
+  {
+    "term": "inequality",
+    "suggestions": []
+  },
+  {
+    "term": "inequitable",
+    "suggestions": []
+  },
+  {
+    "term": "inequities",
+    "suggestions": []
+  },
+  {
+    "term": "inequity",
+    "suggestions": []
+  },
+  {
+    "term": "injustice",
+    "suggestions": []
+  },
+  {
+    "term": "injustices",
+    "suggestions": []
+  },
+  {
+    "term": "institutional",
+    "suggestions": []
+  },
+  {
+    "term": "institutional racism",
+    "suggestions": []
+  },
+  {
+    "term": "institutionalize",
+    "suggestions": []
+  },
+  {
+    "term": "institutionalized",
+    "suggestions": []
+  },
+  {
+    "term": "institutionalized racism",
+    "suggestions": []
+  },
+  {
+    "term": "institutionally",
+    "suggestions": []
+  },
+  {
+    "term": "institutionally racist",
+    "suggestions": []
+  },
+  {
+    "term": "inter cultural",
+    "suggestions": []
+  },
+  {
+    "term": "inter culturally",
+    "suggestions": []
+  },
+  {
+    "term": "inter racial",
+    "suggestions": []
+  },
+  {
+    "term": "inter racially",
+    "suggestions": []
+  },
+  {
+    "term": "intercultural",
+    "suggestions": []
+  },
+  {
+    "term": "interculturally",
+    "suggestions": []
+  },
+  {
+    "term": "intergenerational trauma",
+    "suggestions": []
+  },
+  {
+    "term": "interracial",
+    "suggestions": []
+  },
+  {
+    "term": "interracially",
+    "suggestions": []
+  },
+  {
+    "term": "intersectional",
+    "suggestions": []
+  },
+  {
+    "term": "intersectional feminism",
+    "suggestions": []
+  },
+  {
+    "term": "intersectionality",
+    "suggestions": []
+  },
+  {
+    "term": "lack of diversity",
+    "suggestions": []
+  },
+  {
+    "term": "latina communities",
+    "suggestions": []
+  },
+  {
+    "term": "latina community",
+    "suggestions": []
+  },
+  {
+    "term": "latina female",
+    "suggestions": []
+  },
+  {
+    "term": "latina females",
+    "suggestions": []
+  },
+  {
+    "term": "latina individual",
+    "suggestions": []
+  },
+  {
+    "term": "latina individuals",
+    "suggestions": []
+  },
+  {
+    "term": "latina male",
+    "suggestions": []
+  },
+  {
+    "term": "latina males",
+    "suggestions": []
+  },
+  {
+    "term": "latina men",
+    "suggestions": []
+  },
+  {
+    "term": "latina minorities",
+    "suggestions": []
+  },
+  {
+    "term": "latina minority",
+    "suggestions": []
+  },
+  {
+    "term": "latina people",
+    "suggestions": []
+  },
+  {
+    "term": "latina person",
+    "suggestions": []
+  },
+  {
+    "term": "latina voices",
+    "suggestions": []
+  },
+  {
+    "term": "latina women",
+    "suggestions": []
+  },
+  {
+    "term": "LatinX",
+    "suggestions": []
+  },
+  {
+    "term": "latinx communities",
+    "suggestions": []
+  },
+  {
+    "term": "latinx community",
+    "suggestions": []
+  },
+  {
+    "term": "latinx cultural",
+    "suggestions": []
+  },
+  {
+    "term": "latinx culture",
+    "suggestions": []
+  },
+  {
+    "term": "latinx cultures",
+    "suggestions": []
+  },
+  {
+    "term": "latinx female",
+    "suggestions": []
+  },
+  {
+    "term": "latinx females",
+    "suggestions": []
+  },
+  {
+    "term": "latinx individual",
+    "suggestions": []
+  },
+  {
+    "term": "latinx individuals",
+    "suggestions": []
+  },
+  {
+    "term": "latinx male",
+    "suggestions": []
+  },
+  {
+    "term": "latinx males",
+    "suggestions": []
+  },
+  {
+    "term": "latinx men",
+    "suggestions": []
+  },
+  {
+    "term": "latinx minorities",
+    "suggestions": []
+  },
+  {
+    "term": "latinx minority",
+    "suggestions": []
+  },
+  {
+    "term": "latinx people",
+    "suggestions": []
+  },
+  {
+    "term": "latinx person",
+    "suggestions": []
+  },
+  {
+    "term": "latinx voices",
+    "suggestions": []
+  },
+  {
+    "term": "latinx women",
+    "suggestions": []
+  },
+  {
+    "term": "LGBT",
+    "suggestions": []
+  },
+  {
+    "term": "LGBTQ",
+    "suggestions": []
+  },
+  {
+    "term": "LGBTQ+",
+    "suggestions": []
+  },
+  {
+    "term": "LGBTQIA",
+    "suggestions": []
+  },
+  {
+    "term": "male dominant",
+    "suggestions": []
+  },
+  {
+    "term": "male dominated",
+    "suggestions": []
+  },
+  {
+    "term": "marginalization",
+    "suggestions": []
+  },
+  {
+    "term": "marginalize",
+    "suggestions": []
+  },
+  {
+    "term": "marginalized",
+    "suggestions": []
+  },
+  {
+    "term": "Marxist equity",
+    "suggestions": []
+  },
+  {
+    "term": "masculine",
+    "suggestions": []
+  },
+  {
+    "term": "masculinity",
+    "suggestions": []
+  },
+  {
+    "term": "micro aggression",
+    "suggestions": []
+  },
+  {
+    "term": "micro aggressions",
+    "suggestions": []
+  },
+  {
+    "term": "micro aggressive",
+    "suggestions": []
+  },
+  {
+    "term": "micro aggressiveness",
+    "suggestions": []
+  },
+  {
+    "term": "microaggression",
+    "suggestions": []
+  },
+  {
+    "term": "microaggressions",
+    "suggestions": []
+  },
+  {
+    "term": "microaggressive",
+    "suggestions": []
+  },
+  {
+    "term": "microaggressiveness",
+    "suggestions": []
+  },
+  {
+    "term": "minorities",
+    "suggestions": []
+  },
+  {
+    "term": "minority",
+    "suggestions": []
+  },
+  {
+    "term": "mis gender",
+    "suggestions": []
+  },
+  {
+    "term": "misgender",
+    "suggestions": []
+  },
+  {
+    "term": "misogynistic",
+    "suggestions": []
+  },
+  {
+    "term": "misogyny",
+    "suggestions": []
+  },
+  {
+    "term": "multi cultural",
+    "suggestions": []
+  },
+  {
+    "term": "multi culturally",
+    "suggestions": []
+  },
+  {
+    "term": "multi ethnic",
+    "suggestions": []
+  },
+  {
+    "term": "multi ethnically",
+    "suggestions": []
+  },
+  {
+    "term": "multicultural",
+    "suggestions": [
+      "cross-cultural"
+    ]
+  },
+  {
+    "term": "multiculturally",
+    "suggestions": []
+  },
+  {
+    "term": "multiethnic",
+    "suggestions": []
+  },
+  {
+    "term": "multiethnically",
+    "suggestions": []
+  },
+  {
+    "term": "net zero",
+    "suggestions": []
+  },
+  {
+    "term": "netzero",
+    "suggestions": []
+  },
+  {
+    "term": "non binary",
+    "suggestions": []
+  },
+  {
+    "term": "non binary gender",
+    "suggestions": []
+  },
+  {
+    "term": "non black",
+    "suggestions": []
+  },
+  {
+    "term": "non conforming gender",
+    "suggestions": []
+  },
+  {
+    "term": "non white",
+    "suggestions": []
+  },
+  {
+    "term": "non-binary",
+    "suggestions": []
+  },
+  {
+    "term": "nonbinary",
+    "suggestions": []
+  },
+  {
+    "term": "nonbinary gender",
+    "suggestions": []
+  },
+  {
+    "term": "nonblack",
+    "suggestions": []
+  },
+  {
+    "term": "nonconforming gender",
+    "suggestions": []
+  },
+  {
+    "term": "nonwhite",
+    "suggestions": []
+  },
+  {
+    "term": "oppressed",
+    "suggestions": []
+  },
+  {
+    "term": "oppressed gender",
+    "suggestions": []
+  },
+  {
+    "term": "oppressed genders",
+    "suggestions": []
+  },
+  {
+    "term": "oppressed sexualities",
+    "suggestions": []
+  },
+  {
+    "term": "oppression",
+    "suggestions": []
+  },
+  {
+    "term": "oppressive",
+    "suggestions": []
+  },
+  {
+    "term": "oppressiveness",
+    "suggestions": []
+  },
+  {
+    "term": "pansexual",
+    "suggestions": []
+  },
+  {
+    "term": "people of color",
+    "suggestions": []
+  },
+  {
+    "term": "POC",
+    "suggestions": []
+  },
+  {
+    "term": "POCX",
+    "suggestions": []
+  },
+  {
+    "term": "polarization",
+    "suggestions": [
+      "division",
+      "partisan split"
+    ]
+  },
+  {
+    "term": "polarize",
+    "suggestions": []
+  },
+  {
+    "term": "political",
+    "suggestions": []
+  },
+  {
+    "term": "politicization",
+    "suggestions": []
+  },
+  {
+    "term": "politicize",
+    "suggestions": []
+  },
+  {
+    "term": "predominately male",
+    "suggestions": []
+  },
+  {
+    "term": "predominately white",
+    "suggestions": []
+  },
+  {
+    "term": "preferred gender",
+    "suggestions": []
+  },
+  {
+    "term": "preferred identity",
+    "suggestions": []
+  },
+  {
+    "term": "preferred sex",
+    "suggestions": []
+  },
+  {
+    "term": "pregnant people",
+    "suggestions": []
+  },
+  {
+    "term": "pregnant person",
+    "suggestions": []
+  },
+  {
+    "term": "prejudice",
+    "suggestions": [
+      "bias",
+      "preconception"
+    ]
+  },
+  {
+    "term": "prejudices",
+    "suggestions": []
+  },
+  {
+    "term": "primarily male",
+    "suggestions": []
+  },
+  {
+    "term": "primarily white",
+    "suggestions": []
+  },
+  {
+    "term": "privilege",
+    "suggestions": [
+      "advantage"
+    ]
+  },
+  {
+    "term": "privileged",
+    "suggestions": []
+  },
+  {
+    "term": "privileged white",
+    "suggestions": []
+  },
+  {
+    "term": "privileges",
+    "suggestions": [
+      "advantages"
+    ]
+  },
+  {
+    "term": "pro black",
+    "suggestions": []
+  },
+  {
+    "term": "pro white",
+    "suggestions": []
+  },
+  {
+    "term": "problack",
+    "suggestions": []
+  },
+  {
+    "term": "promote diversity",
+    "suggestions": [
+      "encourage variety"
+    ]
+  },
+  {
+    "term": "promoting diversity",
+    "suggestions": [
+      "expanding variety"
+    ]
+  },
+  {
+    "term": "pronoun",
+    "suggestions": []
+  },
+  {
+    "term": "pronouns",
+    "suggestions": []
+  },
+  {
+    "term": "prowhite",
+    "suggestions": []
+  },
+  {
+    "term": "queer theory",
+    "suggestions": []
+  },
+  {
+    "term": "race and culture",
+    "suggestions": []
+  },
+  {
+    "term": "race and ethnicity",
+    "suggestions": []
+  },
+  {
+    "term": "race based",
+    "suggestions": []
+  },
+  {
+    "term": "racebased",
+    "suggestions": []
+  },
+  {
+    "term": "races and cultures",
+    "suggestions": []
+  },
+  {
+    "term": "races and ethnicities",
+    "suggestions": []
+  },
+  {
+    "term": "racial",
+    "suggestions": []
+  },
+  {
+    "term": "racial and cultural",
+    "suggestions": []
+  },
+  {
+    "term": "racial and ethnic",
+    "suggestions": []
+  },
+  {
+    "term": "racial bias",
+    "suggestions": []
+  },
+  {
+    "term": "racial biases",
+    "suggestions": []
+  },
+  {
+    "term": "racial disparities",
+    "suggestions": []
+  },
+  {
+    "term": "racial disparity",
+    "suggestions": []
+  },
+  {
+    "term": "racial diversity",
+    "suggestions": []
+  },
+  {
+    "term": "racial identity",
+    "suggestions": []
+  },
+  {
+    "term": "racial inequalities",
+    "suggestions": []
+  },
+  {
+    "term": "racial inequality",
+    "suggestions": []
+  },
+  {
+    "term": "racial inequities",
+    "suggestions": []
+  },
+  {
+    "term": "racial inequity",
+    "suggestions": []
+  },
+  {
+    "term": "racial injustice",
+    "suggestions": []
+  },
+  {
+    "term": "racial injustices",
+    "suggestions": []
+  },
+  {
+    "term": "racial justice",
+    "suggestions": []
+  },
+  {
+    "term": "racial minorities",
+    "suggestions": []
+  },
+  {
+    "term": "racial minority",
+    "suggestions": []
+  },
+  {
+    "term": "racial oppression",
+    "suggestions": []
+  },
+  {
+    "term": "racial prejudice",
+    "suggestions": []
+  },
+  {
+    "term": "racial prejudices",
+    "suggestions": []
+  },
+  {
+    "term": "racial segregation",
+    "suggestions": []
+  },
+  {
+    "term": "racial socialization",
+    "suggestions": []
+  },
+  {
+    "term": "racial solidarity",
+    "suggestions": []
+  },
+  {
+    "term": "racial stereotypes",
+    "suggestions": []
+  },
+  {
+    "term": "racial violence",
+    "suggestions": []
+  },
+  {
+    "term": "racially",
+    "suggestions": []
+  },
+  {
+    "term": "racially and culturally",
+    "suggestions": []
+  },
+  {
+    "term": "racially bias",
+    "suggestions": []
+  },
+  {
+    "term": "racially biased",
+    "suggestions": []
+  },
+  {
+    "term": "racially oppressed",
+    "suggestions": []
+  },
+  {
+    "term": "racism",
+    "suggestions": []
+  },
+  {
+    "term": "racist",
+    "suggestions": []
+  },
+  {
+    "term": "radical, anti-American ideologies",
+    "suggestions": []
+  },
+  {
+    "term": "reparation",
+    "suggestions": []
+  },
+  {
+    "term": "reparations",
+    "suggestions": []
+  },
+  {
+    "term": "safe space",
+    "suggestions": []
+  },
+  {
+    "term": "safe spaces",
+    "suggestions": []
+  },
+  {
+    "term": "segregated",
+    "suggestions": []
+  },
+  {
+    "term": "segregated cultures",
+    "suggestions": []
+  },
+  {
+    "term": "segregated ethnicities",
+    "suggestions": []
+  },
+  {
+    "term": "segregated ethnicity",
+    "suggestions": []
+  },
+  {
+    "term": "segregated race",
+    "suggestions": []
+  },
+  {
+    "term": "segregated races",
+    "suggestions": []
+  },
+  {
+    "term": "segregation",
+    "suggestions": [
+      "separation"
+    ]
+  },
+  {
+    "term": "self identify",
+    "suggestions": []
+  },
+  {
+    "term": "sense of belonging",
+    "suggestions": []
+  },
+  {
+    "term": "sense of belongingness",
+    "suggestions": []
+  },
+  {
+    "term": "sex change",
+    "suggestions": []
+  },
+  {
+    "term": "sex preference",
+    "suggestions": []
+  },
+  {
+    "term": "sex transition",
+    "suggestions": []
+  },
+  {
+    "term": "sexism",
+    "suggestions": []
+  },
+  {
+    "term": "sexist",
+    "suggestions": []
+  },
+  {
+    "term": "sexual discrimination",
+    "suggestions": []
+  },
+  {
+    "term": "sexual disparities",
+    "suggestions": []
+  },
+  {
+    "term": "sexual disparity",
+    "suggestions": []
+  },
+  {
+    "term": "sexual identity",
+    "suggestions": []
+  },
+  {
+    "term": "sexual minorities",
+    "suggestions": []
+  },
+  {
+    "term": "sexual minority",
+    "suggestions": []
+  },
+  {
+    "term": "sexual preference",
+    "suggestions": []
+  },
+  {
+    "term": "sexual preferences",
+    "suggestions": [
+      "sexual orientation"
+    ]
+  },
+  {
+    "term": "sexualities",
+    "suggestions": []
+  },
+  {
+    "term": "sexuality",
+    "suggestions": [
+      "sexual orientation"
+    ]
+  },
+  {
+    "term": "social activism",
+    "suggestions": []
+  },
+  {
+    "term": "social activist",
+    "suggestions": []
+  },
+  {
+    "term": "social activists",
+    "suggestions": []
+  },
+  {
+    "term": "social advocacy",
+    "suggestions": []
+  },
+  {
+    "term": "social advocate",
+    "suggestions": []
+  },
+  {
+    "term": "social bias",
+    "suggestions": []
+  },
+  {
+    "term": "social biases",
+    "suggestions": []
+  },
+  {
+    "term": "social environmental",
+    "suggestions": []
+  },
+  {
+    "term": "social inequalities",
+    "suggestions": []
+  },
+  {
+    "term": "social inequality",
+    "suggestions": []
+  },
+  {
+    "term": "social inequities",
+    "suggestions": []
+  },
+  {
+    "term": "social inequity",
+    "suggestions": []
+  },
+  {
+    "term": "social injustice",
+    "suggestions": []
+  },
+  {
+    "term": "social injustices",
+    "suggestions": []
+  },
+  {
+    "term": "social justice",
+    "suggestions": []
+  },
+  {
+    "term": "social justice activism",
+    "suggestions": []
+  },
+  {
+    "term": "social justice advocacy",
+    "suggestions": []
+  },
+  {
+    "term": "social justice advocate",
+    "suggestions": []
+  },
+  {
+    "term": "social transition",
+    "suggestions": []
+  },
+  {
+    "term": "socialenvironmental",
+    "suggestions": []
+  },
+  {
+    "term": "socially biased",
+    "suggestions": []
+  },
+  {
+    "term": "socially relevant",
+    "suggestions": []
+  },
+  {
+    "term": "socio cultural",
+    "suggestions": []
+  },
+  {
+    "term": "socio culturally",
+    "suggestions": []
+  },
+  {
+    "term": "socio economic",
+    "suggestions": []
+  },
+  {
+    "term": "sociocultural",
+    "suggestions": [
+      "social and cultural"
+    ]
+  },
+  {
+    "term": "socioculturally",
+    "suggestions": []
+  },
+  {
+    "term": "socioeconomic",
+    "suggestions": [
+      "economic and social"
+    ]
+  },
+  {
+    "term": "Special Emphasis Programs",
+    "suggestions": []
+  },
+  {
+    "term": "status",
+    "suggestions": [
+      "position",
+      "standing"
+    ]
+  },
+  {
+    "term": "statuses",
+    "suggestions": []
+  },
+  {
+    "term": "stereotype",
+    "suggestions": [
+      "generalization"
+    ]
+  },
+  {
+    "term": "stereotypes",
+    "suggestions": [
+      "generalizations"
+    ]
+  },
+  {
+    "term": "stereotypical",
+    "suggestions": []
+  },
+  {
+    "term": "stereotyping",
+    "suggestions": []
+  },
+  {
+    "term": "straight white",
+    "suggestions": []
+  },
+  {
+    "term": "structural inequality",
+    "suggestions": []
+  },
+  {
+    "term": "structural inequity",
+    "suggestions": []
+  },
+  {
+    "term": "structural racism",
+    "suggestions": []
+  },
+  {
+    "term": "structurally racist",
+    "suggestions": []
+  },
+  {
+    "term": "support diversity",
+    "suggestions": []
+  },
+  {
+    "term": "supporting diversity",
+    "suggestions": []
+  },
+  {
+    "term": "system of oppression",
+    "suggestions": []
+  },
+  {
+    "term": "systematic oppression",
+    "suggestions": []
+  },
+  {
+    "term": "systematically oppressed",
+    "suggestions": []
+  },
+  {
+    "term": "systemic",
+    "suggestions": [
+      "structural"
+    ]
+  },
+  {
+    "term": "systemic oppression",
+    "suggestions": []
+  },
+  {
+    "term": "systemic racism",
+    "suggestions": []
+  },
+  {
+    "term": "systemical",
+    "suggestions": []
+  },
+  {
+    "term": "systemically",
+    "suggestions": [
+      "structurally"
+    ]
+  },
+  {
+    "term": "systemically oppressed",
+    "suggestions": []
+  },
+  {
+    "term": "systemically racist",
+    "suggestions": []
+  },
+  {
+    "term": "systems of oppression",
+    "suggestions": []
+  },
+  {
+    "term": "systems of power",
+    "suggestions": []
+  },
+  {
+    "term": "tokenistic",
+    "suggestions": []
+  },
+  {
+    "term": "tokensim",
+    "suggestions": []
+  },
+  {
+    "term": "toxic masculinity",
+    "suggestions": []
+  },
+  {
+    "term": "trans cultural",
+    "suggestions": []
+  },
+  {
+    "term": "trans ethnic",
+    "suggestions": []
+  },
+  {
+    "term": "transcultural",
+    "suggestions": []
+  },
+  {
+    "term": "transethnic",
+    "suggestions": []
+  },
+  {
+    "term": "transgender",
+    "suggestions": []
+  },
+  {
+    "term": "transgenderism",
+    "suggestions": []
+  },
+  {
+    "term": "transitioning gender",
+    "suggestions": []
+  },
+  {
+    "term": "transitioning sex",
+    "suggestions": []
+  },
+  {
+    "term": "transjustice",
+    "suggestions": []
+  },
+  {
+    "term": "transphobia",
+    "suggestions": []
+  },
+  {
+    "term": "transphobic",
+    "suggestions": []
+  },
+  {
+    "term": "transsexual",
+    "suggestions": []
+  },
+  {
+    "term": "trauma",
+    "suggestions": [
+      "emotional injury",
+      "shock"
+    ]
+  },
+  {
+    "term": "traumatic",
+    "suggestions": [
+      "distressing",
+      "shocking"
+    ]
+  },
+  {
+    "term": "unconscious bias",
+    "suggestions": [
+      "implicit preference"
+    ]
+  },
+  {
+    "term": "under appreciated",
+    "suggestions": []
+  },
+  {
+    "term": "under appreciation",
+    "suggestions": []
+  },
+  {
+    "term": "under privilege",
+    "suggestions": []
+  },
+  {
+    "term": "under privileged",
+    "suggestions": []
+  },
+  {
+    "term": "under representation",
+    "suggestions": []
+  },
+  {
+    "term": "under represented",
+    "suggestions": []
+  },
+  {
+    "term": "under served",
+    "suggestions": []
+  },
+  {
+    "term": "under serving",
+    "suggestions": []
+  },
+  {
+    "term": "under valued",
+    "suggestions": []
+  },
+  {
+    "term": "under valuing",
+    "suggestions": []
+  },
+  {
+    "term": "underappreciated",
+    "suggestions": [
+      "overlooked"
+    ]
+  },
+  {
+    "term": "underappreciation",
+    "suggestions": []
+  },
+  {
+    "term": "underprivilege",
+    "suggestions": []
+  },
+  {
+    "term": "underprivileged",
+    "suggestions": [
+      "disadvantaged"
+    ]
+  },
+  {
+    "term": "underrepresentation",
+    "suggestions": [
+      "low participation"
+    ]
+  },
+  {
+    "term": "underrepresented",
+    "suggestions": []
+  },
+  {
+    "term": "underrepresented gender",
+    "suggestions": []
+  },
+  {
+    "term": "underserved",
+    "suggestions": [
+      "limited-access"
+    ]
+  },
+  {
+    "term": "underserving",
+    "suggestions": []
+  },
+  {
+    "term": "undervalued",
+    "suggestions": [
+      "underrecognized"
+    ]
+  },
+  {
+    "term": "undervaluing",
+    "suggestions": []
+  },
+  {
+    "term": "unequal opportunities",
+    "suggestions": []
+  },
+  {
+    "term": "unequal opportunity",
+    "suggestions": []
+  },
+  {
+    "term": "unjust",
+    "suggestions": []
+  },
+  {
+    "term": "victim",
+    "suggestions": [
+      "affected person"
+    ]
+  },
+  {
+    "term": "victimhood",
+    "suggestions": []
+  },
+  {
+    "term": "victimized",
+    "suggestions": []
+  },
+  {
+    "term": "victims",
+    "suggestions": [
+      "affected people"
+    ]
+  },
+  {
+    "term": "voices are acknowledged",
+    "suggestions": []
+  },
+  {
+    "term": "voices heard",
+    "suggestions": []
+  },
+  {
+    "term": "voices matter",
+    "suggestions": []
+  },
+  {
+    "term": "voices of women",
+    "suggestions": []
+  },
+  {
+    "term": "welcoming environment",
+    "suggestions": []
+  },
+  {
+    "term": "white colonialism",
+    "suggestions": []
+  },
+  {
+    "term": "white colonization",
+    "suggestions": []
+  },
+  {
+    "term": "white colonizer",
+    "suggestions": []
+  },
+  {
+    "term": "white colonizers",
+    "suggestions": []
+  },
+  {
+    "term": "white female",
+    "suggestions": []
+  },
+  {
+    "term": "white females",
+    "suggestions": []
+  },
+  {
+    "term": "white fragility",
+    "suggestions": []
+  },
+  {
+    "term": "white historically",
+    "suggestions": []
+  },
+  {
+    "term": "white male",
+    "suggestions": []
+  },
+  {
+    "term": "white males",
+    "suggestions": []
+  },
+  {
+    "term": "white men",
+    "suggestions": []
+  },
+  {
+    "term": "white nationalism",
+    "suggestions": []
+  },
+  {
+    "term": "white nationalist",
+    "suggestions": []
+  },
+  {
+    "term": "white people",
+    "suggestions": []
+  },
+  {
+    "term": "white person",
+    "suggestions": []
+  },
+  {
+    "term": "White Privilege",
+    "suggestions": []
+  },
+  {
+    "term": "white serving",
+    "suggestions": []
+  },
+  {
+    "term": "white supremacy",
+    "suggestions": []
+  },
+  {
+    "term": "white women",
+    "suggestions": []
+  },
+  {
+    "term": "whiteness",
+    "suggestions": []
+  },
+  {
+    "term": "woke gender ideology",
+    "suggestions": []
+  },
+  {
+    "term": "wokeness",
+    "suggestions": []
+  },
+  {
+    "term": "women and gender",
+    "suggestions": []
+  },
+  {
+    "term": "women and underrepresented",
+    "suggestions": []
+  },
+  {
+    "term": "womenunderrepresented",
+    "suggestions": []
+  },
+  {
+    "term": "workforce balancing",
+    "suggestions": []
+  },
+  {
+    "term": "disparate impact",
+    "suggestions": []
+  },
+  {
+    "term": "disparate-impact liability",
+    "suggestions": []
+  },
+  {
+    "term": "racial preferences",
+    "suggestions": []
+  },
+  {
+    "term": "historically received",
+    "suggestions": []
+  },
+  {
+    "term": "prestige",
+    "suggestions": [
+      "rigorous, reproducible scholarship",
+      "demonstrated success"
+    ]
+  },
+  {
+    "term": "llc notice",
+    "suggestions": []
+  },
+  {
+    "term": "notice intent",
+    "suggestions": []
+  },
+  {
+    "term": "notice announces",
+    "suggestions": []
+  },
+  {
+    "term": "patent patent",
+    "suggestions": []
+  },
+  {
+    "term": "advisory council",
+    "suggestions": []
+  },
+  {
+    "term": "environmental impact",
+    "suggestions": []
+  },
+  {
+    "term": "environmental assessment",
+    "suggestions": []
+  },
+  {
+    "term": "protection act",
+    "suggestions": []
+  },
+  {
+    "term": "data collection",
+    "suggestions": []
+  },
+  {
+    "term": "sunshine act",
+    "suggestions": []
+  },
+  {
+    "term": "department interior",
+    "suggestions": []
+  },
+  {
+    "term": "department energy",
+    "suggestions": []
+  },
+  {
+    "term": "preliminary determination",
+    "suggestions": []
+  },
+  {
+    "term": "impact statement",
+    "suggestions": []
+  },
+  {
+    "term": "comment period",
+    "suggestions": []
+  },
+  {
+    "term": "notice filing",
+    "suggestions": []
+  },
+  {
+    "term": "life sciences",
+    "suggestions": [
+      "biological sciences"
+    ]
+  },
+  {
+    "term": "basic research",
+    "suggestions": [
+      "foundational research",
+      "use-inspired inquiry"
+    ]
+  }
 ]

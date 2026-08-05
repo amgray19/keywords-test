@@ -1,0 +1,264 @@
+[
+  {
+    "term": "advance market commitments",
+    "why": "Pay-for-results mechanism in the memo's diversified funding menu; proposals can position against it.",
+    "cluster": "Funding mechanisms",
+    "agencies": [
+      "FED"
+    ],
+    "mentions": null
+  },
+  {
+    "term": "fast grants",
+    "why": "Named funding mechanism agencies are told to establish or expand: simplified applications, sub-month review.",
+    "cluster": "Funding mechanisms",
+    "agencies": [
+      "FED"
+    ],
+    "mentions": null
+  },
+  {
+    "term": "golden tickets",
+    "why": "Named review mechanism empowering individual reviewers to champion unconventional proposals past consensus panels.",
+    "cluster": "Funding mechanisms",
+    "agencies": [
+      "FED"
+    ],
+    "mentions": null
+  },
+  {
+    "term": "long-horizon grants",
+    "why": "Named flexible grant type for work that does not fit annual cycles.",
+    "cluster": "Funding mechanisms (FY 2028)",
+    "agencies": [
+      "FED"
+    ],
+    "mentions": null
+  },
+  {
+    "term": "prize challenges",
+    "why": "Pay-for-results mechanism in the memo's menu; proposals can position for prizes rather than NOFOs.",
+    "cluster": "Funding mechanisms (FY 2028)",
+    "agencies": [
+      "FED"
+    ],
+    "mentions": null
+  },
+  {
+    "term": "regranting",
+    "why": "Named mechanism delegating funding authority to scientists; part of the diversified selection menu.",
+    "cluster": "Funding mechanisms (FY 2028)",
+    "agencies": [
+      "FED"
+    ],
+    "mentions": null
+  },
+  {
+    "term": "foundational research",
+    "why": "The FY 2028 memo's first priority: rebalance R&D portfolios toward it; agencies must justify later-stage expansion against it.",
+    "cluster": "FY 2028 priorities",
+    "agencies": [
+      "FED"
+    ],
+    "mentions": null
+  },
+  {
+    "term": "mission-driven research organizations",
+    "why": "Named new performer class agencies should fund beyond legacy institutions.",
+    "cluster": "FY 2028 priorities",
+    "agencies": [
+      "FED"
+    ],
+    "mentions": null
+  },
+  {
+    "term": "time-to-science",
+    "why": "The memo's agility metric for infrastructure and compute procurement.",
+    "cluster": "FY 2028 priorities",
+    "agencies": [
+      "FED"
+    ],
+    "mentions": null
+  },
+  {
+    "term": "experimental development",
+    "why": "Federal research agencies must categorize scientific awards as basic research, applied research, and/or experimental development per OMB Circular A-11, and report that categorization.",
+    "cluster": "Gold Standard Science & rigor",
+    "agencies": [
+      "FED"
+    ],
+    "mentions": 0
+  },
+  {
+    "term": "Gold Standard Science",
+    "why": "Named four times as a required commitment for discretionary and scientific awards in the proposed OMB Uniform Guidance.",
+    "cluster": "Gold Standard Science & rigor",
+    "agencies": [
+      "FED"
+    ],
+    "mentions": 0
+  },
+  {
+    "term": "reproducible",
+    "why": "Reproducibility is the merit bar that replaces reputation; tied to the Gold Standard Science commitment.",
+    "cluster": "Gold Standard Science & rigor",
+    "agencies": [
+      "FED"
+    ],
+    "mentions": 0
+  },
+  {
+    "term": "benchmarks",
+    "why": "Awards should include benchmarks for measuring success and progress toward goals: accountability framing carried from the grantmaking-oversight EO.",
+    "cluster": "Grantmaking accountability & oversight",
+    "agencies": [
+      "FED"
+    ],
+    "mentions": 1
+  },
+  {
+    "term": "demonstrable results",
+    "why": "Discretionary awards favor a mix of recipients likely to produce immediately demonstrable results; the grantmaking-oversight EO makes measurable outcomes a selection factor.",
+    "cluster": "Grantmaking accountability & oversight",
+    "agencies": [
+      "FED"
+    ],
+    "mentions": 0
+  },
+  {
+    "term": "lower indirect cost rates",
+    "why": "All else equal, discretionary awards should prefer institutions with lower indirect cost rates: directly from the grantmaking-oversight EO.",
+    "cluster": "Grantmaking accountability & oversight",
+    "agencies": [
+      "FED"
+    ],
+    "mentions": 0
+  },
+  {
+    "term": "biological sex",
+    "why": "Federal agencies are directed to recognize sex as binary; the proposed rule bars awards that deny the sex binary in humans. Documents the mandated terminology, not an endorsement.",
+    "cluster": "Mandated terminology",
+    "agencies": [
+      "FED"
+    ],
+    "mentions": 0
+  },
+  {
+    "term": "domestic-first framework",
+    "why": "R&D awards must apply a domestic-first framework; international partnerships require justification against U.S. national interests.",
+    "cluster": "National interest & domestic-first",
+    "agencies": [
+      "FED"
+    ],
+    "mentions": 0
+  },
+  {
+    "term": "national interest",
+    "why": "Proposals must be consistent with law, agency priorities, and the national interest; recurs across merit-review and prohibition sections.",
+    "cluster": "National interest & domestic-first",
+    "agencies": [
+      "FED"
+    ],
+    "mentions": 5
+  },
+  {
+    "term": "President's policy priorities",
+    "why": "Discretionary awards must demonstrably advance the President's policy priorities in pre-issuance review.",
+    "cluster": "National interest & domestic-first",
+    "agencies": [
+      "FED"
+    ],
+    "mentions": 0
+  },
+  {
+    "term": "Genesis Mission",
+    "why": "Named national AI mission (EO 14363); memo instructs agencies to treat support for it as a central R&D priority.",
+    "cluster": "National missions",
+    "agencies": [
+      "FED",
+      "DOE"
+    ],
+    "mentions": null
+  },
+  {
+    "term": "AI as an instrument of scientific discovery",
+    "why": "A named funding priority: AI as the discovery instrument itself, not a productivity tool.",
+    "cluster": "National missions (FY 2028)",
+    "agencies": [
+      "FED"
+    ],
+    "mentions": null
+  },
+  {
+    "term": "artificial intelligence",
+    "why": "The report's core mission frame: US as unrivaled AI leader; agencies budget FY 2028 against it.",
+    "cluster": "National missions (FY 2028)",
+    "agencies": [
+      "FED"
+    ],
+    "mentions": null
+  },
+  {
+    "term": "closed-loop autonomous laboratories",
+    "why": "The report's autonomous-experimentation push: industrial-scale science, collapsed discovery timelines.",
+    "cluster": "National missions (FY 2028)",
+    "agencies": [
+      "FED"
+    ],
+    "mentions": null
+  },
+  {
+    "term": "physical AI",
+    "why": "The robotics national mission's frame: autonomous systems for real-world science and reindustrialization.",
+    "cluster": "National missions (FY 2028)",
+    "agencies": [
+      "FED"
+    ],
+    "mentions": null
+  },
+  {
+    "term": "quantum information science",
+    "why": "Named critical and emerging technology alongside AI; the QC-ADDS national mission (EO 14413).",
+    "cluster": "National missions (FY 2028)",
+    "agencies": [
+      "FED"
+    ],
+    "mentions": null
+  },
+  {
+    "term": "scientific foundation models",
+    "why": "Named investment class under the Genesis Mission challenge areas.",
+    "cluster": "National missions (FY 2028)",
+    "agencies": [
+      "FED"
+    ],
+    "mentions": null
+  },
+  {
+    "term": "demonstrated technical ability",
+    "why": "The memo's explicit selection standard, stated as a replacement framing: ability, not background or identity.",
+    "cluster": "Talent & merit",
+    "agencies": [
+      "FED"
+    ],
+    "mentions": null
+  },
+  {
+    "term": "industry-integrated",
+    "why": "NSF operationalized the report's workforce chapter within days: $47M UIDP I-PhD pilot; the frame for graduate-training proposals at NSF.",
+    "cluster": "Talent & merit",
+    "agencies": [
+      "NSF"
+    ],
+    "mentions": null
+  },
+  {
+    "term": "skilled technical workforce",
+    "why": "Recurring workforce framing across the report and memo (reindustrialization, hands-on technical learning, skilled trades).",
+    "cluster": "Talent & merit",
+    "agencies": [
+      "FED"
+    ],
+    "mentions": null
+  }
+]

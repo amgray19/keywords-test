@@ -1,21 +1,24 @@
 # Keyword Search Tool
 
-This web application scans `.docx` files for specified keywords and generates a summary report with visual charts of keyword frequencies.  
-A default keyword list is pre-loaded, but you can upload your own or paste a custom list.
+Scans documents for contested vocabulary and reports every sentence a term appears in, with
+suggested alternatives and a frequency chart. A default list drawn from federal funding language is
+pre-loaded; upload or paste your own to scan for anything else.
+
+Nothing is uploaded. Files are parsed in the browser and every result is rendered from memory.
 
 ---
 
 ## ✨ Features
 
 - Fully client-side processing (no files ever leave your computer)
-- Supports multiple Word documents
-- Pre-loaded keyword list with alternative suggestions
-- Upload or paste your own keyword list
+- Reads Word (`.docx`), PDF, and plain text
+- Scans several documents as one submission, so vocabulary repeating across a package is visible
+- 734-term default list, or upload/paste your own
 - Download a sample [keywords.txt](./keywords.txt) for testing
 - Bar and pie chart visualization with Chart.js
+- A **Terms to Use** tab of vocabulary federal agencies are currently rewarding
 - Dark/light mode toggle
-- Offline support with Service Worker caching
-- Strict Content Security Policy for security
+- Strict Content Security Policy, and document text is escaped before display
 
 ---
 
@@ -25,8 +28,9 @@ A default keyword list is pre-loaded, but you can upload your own or paste a cus
 
 - Uploaded files are processed in your browser.
 - No file content is sent to any server.
+- Text extracted from a document is escaped before it reaches the page, so a file carrying markup
+  cannot execute anything.
 - Strict Content Security Policy prevents injection.
-- Offline capability via Service Workers.
 
 ---
 
@@ -34,19 +38,44 @@ A default keyword list is pre-loaded, but you can upload your own or paste a cus
 
 1. Upload a `.txt` file of keywords (or paste keywords into the textarea).
 2. If you don't have a list, [download the sample keywords.txt](./keywords.txt).
-3. Upload one or more `.docx` files. (Legacy `.doc` files are not supported — re-save as `.docx` in Word via File → Save As → Word Document.)
+3. Upload one or more `.docx`, `.pdf`, or `.txt` files. (Legacy `.doc` is not supported — re-save as
+   `.docx` in Word via File → Save As → Word Document.)
 4. Click **Generate Summary**.
 5. Review results, view charts, and see alternative keyword suggestions.
 6. Use **Print or Save Summary** to export a report.
 
 ---
 
-## 🛠️ Development
+## 📊 Data
 
-Clone the repository:
+Three files drive the tool, all regenerable:
+
+| File | What it is |
+|---|---|
+| `keywords.txt` | The default scan list, one term per line. |
+| `keywords.json` | `[{term, suggestions[]}]` — the alternatives offered when a term is found. |
+| `terms-to-use.json` | The **Terms to Use** tab: curated vocabulary agencies are rewarding. |
+
+`terms-to-use.json` is built from [FedInt](https://fedint.leftwardlabs.com)'s curated artifacts:
 
 ```bash
-git clone https://github.com/yourusername/keyword-search-tool.git
+python3 build-terms.py ../FedInt/dashboard
 ```
 
-Then open `index.html` in your browser or use a local server.
+Not every flagged term has an alternative, and that is deliberate. A suggestion is only offered when
+a writer can accept it without changing what they meant. `audit-suggestions.py` enforces that line
+and writes [`suggestions-audit.md`](./suggestions-audit.md), which records every alternative that
+was removed and why.
+
+---
+
+## 🛠️ Development
+
+```bash
+git clone https://github.com/amgray19/keywords-test.git
+cd keywords-test
+node test.js          # scanning core: escaping, word matching, sentence splitting, shipped data
+python3 -m http.server 8912
+```
+
+Then open <http://localhost:8912/>. There is no build step.

@@ -192,6 +192,115 @@
       margin-top: 1em;
     }
 
+    /* Tabs */
+    .tabbar {
+      display: flex;
+      gap: 0.5em;
+      padding: 0 2em;
+      border-bottom: 1px solid var(--field-border);
+    }
+
+    .tabbar button {
+      background: none;
+      border: none;
+      border-bottom: 3px solid transparent;
+      color: var(--text-color);
+      font-size: 1em;
+      font-weight: bold;
+      padding: 0.6em 1em;
+      cursor: pointer;
+    }
+
+    .tabbar button[aria-selected="true"] {
+      border-bottom-color: #2196f3;
+    }
+
+    .view[hidden] { display: none; }
+
+    /* Scan messages */
+    .scan-problem,
+    .scan-clean {
+      margin: 1em 2em;
+      padding: 0.75em 1em;
+      border-radius: 6px;
+      border: 1px solid var(--field-border);
+      background: var(--field-bg);
+    }
+
+    .scan-problem { border-left: 4px solid #c0392b; }
+    .scan-clean   { border-left: 4px solid #1c7c46; }
+
+    .sentence-doc {
+      font-size: 0.85em;
+      color: #666;
+      margin-left: 0.5em;
+    }
+
+    body.dark-mode .sentence-doc { color: #aaa; }
+
+    /* Terms to Use */
+    #view-terms { padding: 1em 2em 3em; }
+
+    .terms-lede { max-width: 60em; line-height: 1.5; }
+
+    .terms-controls {
+      display: flex;
+      gap: 1em;
+      align-items: center;
+      flex-wrap: wrap;
+      margin: 1em 0;
+    }
+
+    .terms-controls input,
+    .terms-controls select { padding: 0.4em; }
+
+    .term-card {
+      border: 1px solid var(--field-border);
+      background: var(--field-bg);
+      border-radius: 6px;
+      padding: 0.75em 1em;
+      margin-bottom: 0.75em;
+      max-width: 60em;
+    }
+
+    .term-card h3 {
+      margin: 0 0 0.25em;
+      font-size: 1.05em;
+      display: flex;
+      align-items: baseline;
+      gap: 0.75em;
+      flex-wrap: wrap;
+    }
+
+    .term-mentions {
+      font-size: 0.8em;
+      font-weight: normal;
+      color: #555;
+      white-space: nowrap;
+    }
+
+    body.dark-mode .term-mentions { color: #bbb; }
+
+    .term-cluster {
+      font-size: 0.8em;
+      font-weight: normal;
+      background: #2196f3;
+      color: #fff;
+      border-radius: 999px;
+      padding: 0.1em 0.7em;
+    }
+
+    .term-why { margin: 0; line-height: 1.45; }
+
+    .terms-note {
+      font-size: 0.9em;
+      color: #555;
+      max-width: 60em;
+      line-height: 1.45;
+    }
+
+    body.dark-mode .terms-note { color: #bbb; }
+
     @media (max-width: 900px) {
       .container {
         grid-template-columns: 1fr;
@@ -255,12 +364,20 @@
   </style>
 </head>
 <body>
-  <div class="version">Version: v2.0</div>
+  <div class="version">Version: v3.0</div>
+  <div class="tabbar" role="tablist">
+    <button id="tab-scan" role="tab" aria-selected="true" aria-controls="view-scan">Scan Documents</button>
+    <button id="tab-terms" role="tab" aria-selected="false" aria-controls="view-terms">Terms to Use</button>
+  </div>
+  <div class="view" id="view-scan" role="tabpanel" aria-labelledby="tab-scan">
   <div class="container">
     <!-- Left Column: Form -->
     <div class="section">
         <h1>Keyword Search Tool</h1>
-        <p>This web application scans <code>.docx</code> files for specified keywords and generates a summary report with visual charts of keyword frequencies. A default keyword list is pre-loaded, but you can upload your own or paste a custom list.</p>
+        <p>Scans <code>.docx</code>, <code>.pdf</code>, and plain-text documents for contested
+          vocabulary and reports every sentence a term appears in, with suggested alternatives and a
+          frequency chart. A default list of 734 terms drawn from federal funding language is
+          pre-loaded; upload or paste your own to scan for anything else.</p>
       <section id="readme-section">
         <details>
           <summary>📘 About This Tool (Click to Expand)</summary>
@@ -268,12 +385,13 @@
             <h2>✨ Features</h2>
             <ul>
               <li>Fully client-side processing (no files ever leave your computer)</li>
-              <li>Supports multiple Word documents</li>
-              <li>Upload or paste your own keyword list</li>
+              <li>Reads Word (.docx), PDF, and plain text</li>
+              <li>Scans several documents as one submission</li>
+              <li>734-term default list, or upload/paste your own</li>
               <li>Download a sample <a href="./keywords.txt">keywords.txt</a> for testing</li>
               <li>Bar and pie chart visualization</li>
+              <li>A <strong>Terms to Use</strong> tab of vocabulary agencies are rewarding</li>
               <li>Dark/light mode toggle</li>
-              <li>Offline support with Service Worker caching</li>
               <li>Strict Content Security Policy for security</li>
             </ul>
 
@@ -283,14 +401,14 @@
               <li>Uploaded files are processed in your browser.</li>
               <li>No file content is sent to any server.</li>
               <li>Strict Content Security Policy prevents injection.</li>
-              <li>Offline capability via Service Workers.</li>
+              <li>Document text is escaped before display, so a booby-trapped file cannot run code.</li>
             </ul>
 
             <h2>🚀 Usage</h2>
             <ol>
               <li>Upload a <code>.txt</code> file of keywords (or paste keywords into the textarea).</li>
               <li>If you don't have a list, <a href="./keywords.txt">download the sample keywords.txt</a>.</li>
-              <li>Upload one or more <code>.docx</code> files.</li>
+              <li>Upload one or more <code>.docx</code>, <code>.pdf</code>, or <code>.txt</code> files.</li>
               <li>Click <strong>Generate Summary</strong>.</li>
               <li>Review results and charts.</li>
               <li>Use <strong>Print or Save Summary</strong> to export a report.</li>
@@ -313,8 +431,10 @@
 
         <fieldset class="controls">
           <legend><strong>2. Document Upload</strong></legend>
-          <label for="upload">Upload Word (.docx) File(s)</label>
-          <input type="file" id="upload" accept=".docx" multiple />
+          <label for="upload">Upload document(s) — .docx, .pdf, or .txt</label>
+          <input type="file" id="upload" accept=".docx,.pdf,.txt,.md" multiple />
+          <p class="keyword-indicator">Several files scan as one submission: the chart totals every
+            document together, so vocabulary repeating across a package is visible.</p>
         </fieldset>
 
         <fieldset class="controls" style="grid-column: span 2;">
@@ -398,10 +518,42 @@
 </style>
 
 <div id="output" style="margin-top: 2em;"></div>
+  </div><!-- /view-scan -->
 
-  <script src="main.js"></script>
+  <div class="view" id="view-terms" role="tabpanel" aria-labelledby="tab-terms" hidden>
+    <h1>Terms to Use</h1>
+    <p class="terms-lede">Vocabulary federal agencies are actively rewarding, compiled from
+      executive orders, OMB guidance, and agency program language. These are the words that make a
+      proposal read as aligned with what the government is funding now. Ranked by how often each
+      term appears in the harvested federal corpus, so the most established language sits at the
+      top.</p>
+
+    <div class="terms-controls">
+      <label for="termsFilter">Filter</label>
+      <input type="search" id="termsFilter" placeholder="Search terms…" />
+      <label for="termsCluster">Theme</label>
+      <select id="termsCluster"><option value="">(All themes)</option></select>
+      <label for="termsSort">Sort</label>
+      <select id="termsSort">
+        <option value="theme">By theme</option>
+        <option value="mentions">Most mentions first</option>
+        <option value="alpha">A to Z</option>
+      </select>
+      <span id="termsCount" class="term-mentions"></span>
+    </div>
+
+    <div id="termsList"></div>
+
+    <p class="terms-note">Mention counts come from the most recent harvest of federal documents and
+      indicate how established a term already is, not how fast it is growing. A term with few
+      mentions is newer language, not weaker language. Verify against the primary source before
+      building an argument on any single term.</p>
+  </div><!-- /view-terms -->
+
   <script src="./lib/chart.js"></script>
   <script src="./lib/chartjs-plugin-datalabels.js"></script>
   <script src="./lib/mammoth.browser.min.js"></script>
+  <script src="./lib/pdf.min.js"></script>
+  <script src="main.js"></script>
 </body>
 </html>
