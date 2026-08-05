@@ -276,6 +276,18 @@ window.addEventListener("DOMContentLoaded", () => {
     wireSeg("data-view", v => { $("viewMode").value = v; renderOutput(); });
     wireSeg("data-chart", t => { currentChartType = t; renderChart(); });
 
+    // Load state for the Documents card. A file input reports what it holds
+    // only in tiny grey type the browser draws, and with several files it says
+    // "3 files" and nothing about which. This says how many are staged and
+    // lights up when any are.
+    function refreshDocStatus() {
+        const chip = $("docStatus");
+        const n = docUploadInput.files.length;
+        chip.dataset.state = n ? "loaded" : "empty";
+        chip.textContent = n ? `${n} file${n === 1 ? "" : "s"} loaded` : "No files";
+        chip.title = n ? [...docUploadInput.files].map(f => f.name).join(", ") : "";
+    }
+
     // Warn immediately when a legacy .doc is selected. .docx, .pdf and plain
     // text all work; the pre-2007 binary .doc format does not.
     docUploadInput.addEventListener("change", () => {
@@ -289,7 +301,9 @@ window.addEventListener("DOMContentLoaded", () => {
             );
             docUploadInput.value = "";
         }
+        refreshDocStatus();
     });
+    refreshDocStatus();
 
     loadDefaultKeywordList();
     $("reloadKeywords").addEventListener("click", loadDefaultKeywordList);
@@ -331,6 +345,7 @@ window.addEventListener("DOMContentLoaded", () => {
         docUploadInput.value = "";
         keywordUploadInput.value = "";
         keywordTextarea.value = "";
+        refreshDocStatus();
         $("output").innerHTML = "";
         $("chartCard").hidden = true;
         $("scrollPrompt").style.display = "none";

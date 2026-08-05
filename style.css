@@ -289,8 +289,45 @@ input[type="file"]::file-selector-button:hover { border-color: var(--accent); co
   opacity: 0.55;
 }
 
-.card h2 { display: flex; align-items: baseline; gap: 9px; }
+.card h2 { display: flex; align-items: baseline; gap: 9px; flex-wrap: wrap; }
 .card-index { color: var(--accent); }
+
+/* Load state for a card. Idle is a dim outline; loaded lights the accent, the
+   same cyan as the header LED and the active controls, so "on" reads the same
+   way everywhere. Green stays reserved for a clean scan result. */
+.status-chip {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  text-transform: uppercase;
+  letter-spacing: 0.11em;
+  padding: 3px 9px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  color: var(--ink-faint);
+  background: var(--bg-inset);
+  transition: color 160ms ease, border-color 160ms ease, background 160ms ease;
+}
+.status-chip::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.55;
+}
+.status-chip[data-state="loaded"] {
+  color: var(--accent);
+  border-color: color-mix(in srgb, var(--accent) 50%, transparent);
+  background: var(--accent-glow);
+}
+.status-chip[data-state="loaded"]::before {
+  opacity: 1;
+  box-shadow: 0 0 0 3px var(--accent-glow);
+}
 
 .setup-grid {
   display: grid;

@@ -1,8 +1,11 @@
-# Keyword Search Tool
+# keyword/scan
 
-Scans documents for contested vocabulary and reports every sentence a term appears in, with
-suggested alternatives and a frequency chart. A default list drawn from federal funding language is
-pre-loaded; upload or paste your own to scan for anything else.
+Checks a document against a keyword list. Reads Word, PDF, and plain text, reports every sentence
+each term appears in, offers alternatives where the list supplies them, and charts match frequency.
+
+The list is the variable. It works for compliance language, style-guide bans, contract terms, or a
+client's forbidden words. A federal funding vocabulary ships as the default because that is the
+list the tool was built around; upload or paste your own to scan for anything else.
 
 Nothing is uploaded. Files are parsed in the browser and every result is rendered from memory.
 
@@ -12,7 +15,7 @@ Nothing is uploaded. Files are parsed in the browser and every result is rendere
 
 - Fully client-side processing (no files ever leave your computer)
 - Reads Word (`.docx`), PDF, and plain text
-- Scans several documents as one submission, so vocabulary repeating across a package is visible
+- Scans several documents as one set, so a term repeating across a batch is visible
 - 734-term default list, or upload/paste your own
 - Download a sample [keywords.txt](./keywords.txt) for testing
 - Bar and pie chart of match frequency (Apache ECharts)
@@ -53,9 +56,9 @@ Three files drive the tool, all regenerable:
 
 | File | What it is |
 |---|---|
-| `keywords.txt` | The default scan list, one term per line. |
+| `keywords.txt` | The default scan list, one term per line. Replace it with anything. |
 | `keywords.json` | `[{term, suggestions[]}]`, the alternatives offered when a term is found. |
-| `terms-to-use.json` | The **Terms to use** tab: curated vocabulary agencies are rewarding. |
+| `terms-to-use.json` | The **Terms to use** tab. Specific to the bundled federal list. |
 
 `terms-to-use.json` is built from the upstream curated artifacts:
 

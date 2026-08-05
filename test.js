@@ -83,9 +83,9 @@ const unknown = [...listed].filter(t => !known.has(t));
 assert.deepStrictEqual(unscanned, [], "terms in keywords.json that the default scan never looks for");
 assert.deepStrictEqual(unknown, [], "terms in keywords.txt with no keywords.json entry");
 
-// Federal Register boilerplate leaks out of the statistics engine and reads as
-// contested vocabulary when it reaches a scan. Flagging "data collection" in a
-// grant proposal is noise that costs the tool its credibility.
+// Federal Register boilerplate leaks out of the upstream statistics engine and
+// reads as a real term when it reaches a scan. Flagging "data collection" in a
+// document is noise that costs the tool its credibility.
 const BOILERPLATE = ["comment period", "data collection", "notice intent", "sunshine act",
                      "impact statement", "patent patent", "advisory council", "notice filing"];
 const leaked = BOILERPLATE.filter(t => known.has(t));

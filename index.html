@@ -15,7 +15,7 @@
           form-action 'self';
         ">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Keyword Search Tool</title>
+  <title>keyword/scan</title>
   <link rel="stylesheet" href="style.css" />
   <script src="theme-init.js"></script>
 </head>
@@ -39,11 +39,13 @@
 <section class="panel" id="view-scan" role="tabpanel" aria-labelledby="tab-scan">
   <div class="panel-head">
     <p class="eyebrow">Document scan</p>
-    <h1>Find the words that put funding at risk</h1>
-    <p class="lede">Scans Word, PDF, and plain-text documents for contested vocabulary and reports
-      every sentence a term appears in, with alternatives where a sensible one exists. A default
-      list drawn from federal funding language is loaded. Paste your own to scan for anything else.
-      Nothing is uploaded: every file is read in this browser.</p>
+    <h1>Check a document against a keyword list</h1>
+    <p class="lede">Scans Word, PDF, and plain-text documents for the terms on your list and reports
+      every sentence each one appears in, with alternatives where the list supplies them. Works with
+      any list: compliance language, style-guide bans, contract terms, a client's forbidden words.
+      A federal funding vocabulary is loaded by default because that is the list this tool was built
+      around. Paste or upload your own to scan for anything else. No file leaves your computer:
+      every document is read in this browser.</p>
   </div>
 
   <details class="about">
@@ -53,10 +55,10 @@
       <ul>
         <li>Fully client-side processing. No file ever leaves your computer.</li>
         <li>Reads Word (<code>.docx</code>), PDF, and plain text</li>
-        <li>Scans several documents as one submission, so vocabulary repeating across a package is visible</li>
-        <li>Download a sample <a href="./keywords.txt">keywords.txt</a> for testing</li>
+        <li>Scans several documents as one set, so a term repeating across a batch is visible</li>
+        <li>Download the bundled <a href="./keywords.txt">keywords.txt</a> to edit or replace</li>
         <li>Bar and pie chart of match frequency</li>
-        <li>A <strong>Terms to use</strong> tab of vocabulary federal agencies are rewarding</li>
+        <li>A separate <strong>Terms to use</strong> tab, specific to the bundled federal list</li>
         <li>Export a report as PDF or Word</li>
       </ul>
 
@@ -92,11 +94,12 @@
     </div>
 
     <div class="card">
-      <h2><span class="card-index">02</span> Documents</h2>
+      <h2><span class="card-index">02</span> Documents
+        <span class="status-chip" id="docStatus" data-state="empty" role="status" aria-live="polite">No files</span></h2>
       <label class="field-label" for="upload">Upload one or more documents</label>
       <input type="file" id="upload" accept=".docx,.pdf,.txt,.md" multiple />
-      <p class="hint">Several files scan as one submission: the chart totals every document
-        together, so vocabulary repeating across a package is visible.</p>
+      <p class="hint">Several files scan as one set: the chart totals every document together, so a
+        term repeating across the whole set is visible.</p>
     </div>
 
     <div class="card card-actions">
