@@ -3,9 +3,7 @@
 Checks a document against a keyword list. Reads Word, PDF, and plain text, reports every sentence
 each term appears in, offers alternatives where the list supplies them, and charts match frequency.
 
-The list is the variable. It works for compliance language, style-guide bans, contract terms, or a
-client's forbidden words. A federal funding vocabulary ships as the default because that is the
-list the tool was built around; upload or paste your own to scan for anything else.
+Works with any list. Upload or paste your own to scan for anything else.
 
 Nothing is uploaded. Files are parsed in the browser and every result is rendered from memory.
 
