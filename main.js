@@ -128,18 +128,65 @@ function keywordTotals(parsed) {
 const tok = name => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
 const isDark = () => document.documentElement.getAttribute("data-theme") === "dark";
 
-// Bars are one measure, so they are one colour. Colouring each bar differently
-// implies a distinction that is not in the data, and interpolating navy → amber
-// for the ramp ran the middle of the series through desaturated brown. The most
-// frequent term takes the accent; everything else is navy.
-const BAR = { leadLight: "#0891B2", restLight: "#94A3B8",
-              leadDark:  "#22D3EE", restDark:  "#475569" };
+// One colour per term, bars and slices alike. A single-colour bar chart with the
+// leader highlighted was the earlier choice, on the theory that colour should
+// only encode a distinction that exists in the data. It read as a chart that had
+// failed to load the rest of its colours, which is the more important fact.
+// Chosen for distinguishability rather than generated: interpolating between two
+// brand colours ran the middle of the series through desaturated brown.
+// Hues step by the golden angle, which spreads any number of series as far
+// apart as they can get: neighbours in the list never land next to each other on
+// the wheel, and the sequence never repeats until it has been all the way round.
+// A fixed twelve-colour list ran out and started reusing colours on a long scan.
+// Lightness alternates slightly so two hues that read alike still separate.
+function hslToRgb(h, s, l) {
+  s /= 100; l /= 100;
+  const k = n => (n + h / 30) % 12;
+  const a = s * Math.min(l, 1 - l);
+  const f = n => l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1)));
+  return [f(0), f(8), f(4)].map(v => Math.round(v * 255));
+}
 
-// A pie genuinely needs categorical colour, since the slice IS the category.
-// Chosen for distinguishability rather than generated, led by the two brand
-// colours, and checked to stay legible on both themes.
-const CATEGORICAL = ["#0891B2", "#7C3AED", "#059669", "#D97706", "#DB2777", "#0284C7",
-                     "#65A30D", "#DC2626", "#4F46E5", "#0D9488", "#C026D3", "#EA580C"];
+const relLum = ([r, g, b]) => {
+  const v = [r, g, b].map(c => { c /= 255; return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4); });
+  return 0.2126 * v[0] + 0.7152 * v[1] + 0.0722 * v[2];
+};
+const contrast = (a, b) => {
+  const [x, y] = [relLum(a), relLum(b)].sort((p, q) => q - p);
+  return (x + 0.05) / (y + 0.05);
+};
+
+// HSL lightness is not perceptual: yellow at 47% is far brighter than blue at
+// 47%, so a fixed lightness produced bars ranging from 1.9:1 to 10:1 against the
+// same background. Each hue's lightness is solved for a contrast target instead,
+// which keeps every bar distinguishable from the card behind it. WCAG asks 3:1
+// of a graphical object; the target is 3.6 for margin.
+function solveLightness(hue, sat, bg, target, dark) {
+  let lo = dark ? 40 : 8, hi = dark ? 92 : 60, best = dark ? hi : lo;
+  for (let i = 0; i < 18; i++) {
+    const mid = (lo + hi) / 2;
+    const c = contrast(hslToRgb(hue, sat, mid), bg);
+    if (c >= target) { best = mid; if (dark) hi = mid; else lo = mid; }
+    else if (dark) lo = mid; else hi = mid;
+  }
+  return best;
+}
+
+// Hues step by the golden angle, which spreads any number of series as far apart
+// as they can get: neighbours in the list never land next to each other on the
+// wheel, and the sequence does not repeat until it has been all the way round. A
+// fixed twelve-colour list ran out and started reusing colours on a long scan.
+function palette(n, dark) {
+  const bg = dark ? [20, 25, 32] : [255, 255, 255];
+  return Array.from({ length: n }, (_, i) => {
+    const hue = (i * 137.508 + 196) % 360;          // start on the cyan of the UI
+    const sat = 62 + (i % 3) * 9;                    // vary saturation, not lightness
+    // A brighter target on dark: the minimum that merely passes reads muddy
+    // against a charcoal card, while on white the same margin is plenty.
+    const light = solveLightness(hue, sat, bg, dark ? 5.4 : 3.6, dark);
+    return `hsl(${hue.toFixed(1)} ${sat}% ${light.toFixed(1)}%)`;
+  });
+}
 
 function chartOption(counts, type, forPrint = false) {
   const entries = Object.entries(counts).sort((x, y) => y[1] - x[1] || x[0].localeCompare(y[0]));
@@ -169,6 +216,7 @@ function chartOption(counts, type, forPrint = false) {
   };
 
   if (type === "pie") {
+    const pieColors = palette(labels.length, forPrint ? false : isDark());
     return {
       ...base,
       legend: { bottom: 0, textStyle: { color: dim, fontFamily: font }, type: "scroll" },
@@ -179,7 +227,7 @@ function chartOption(counts, type, forPrint = false) {
         itemStyle: { borderColor: forPrint ? "#FFFFFF" : tok("--bg-card"), borderWidth: 2 },
         label: { color: ink, fontFamily: font, formatter: "{b}\n{c}" },
         data: labels.map((name, i) => ({ name, value: values[i],
-                                         itemStyle: { color: CATEGORICAL[i % CATEGORICAL.length] } })),
+                                         itemStyle: { color: pieColors[i] } })),
       }],
     };
   }
@@ -193,16 +241,15 @@ function chartOption(counts, type, forPrint = false) {
                 axisLine: { lineStyle: { color: line } }, axisTick: { show: false } };
   const val = { type: "value", axisLabel: { color: dim, fontFamily: font },
                 splitLine: { lineStyle: { color: line } }, minInterval: 1 };
-  // The leader is whichever bar carries the highest count, which after the sort
-  // is the first entry, the last one once the horizontal axis is reversed.
+  // Colours follow the term, not the bar position, so reversing the axis for a
+  // horizontal layout must carry them along or a term changes colour with the
+  // chart type.
+  const paint = palette(labels.length, forPrint ? false : isDark());
   const ordered = horizontal ? values.slice().reverse() : values;
-  const leadAt = horizontal ? ordered.length - 1 : 0;
-  const dark = forPrint ? false : isDark();
-  const lead = dark ? BAR.leadDark : BAR.leadLight;
-  const rest = dark ? BAR.restDark : BAR.restLight;
+  const orderedPaint = horizontal ? paint.slice().reverse() : paint;
   const data = ordered.map((v, i) => ({
     value: v,
-    itemStyle: { color: i === leadAt ? lead : rest,
+    itemStyle: { color: orderedPaint[i],
                  borderRadius: horizontal ? [0, 4, 4, 0] : [4, 4, 0, 0] },
   }));
 
@@ -223,7 +270,7 @@ function chartOption(counts, type, forPrint = false) {
 
 // Height grows with the number of bars so labels never collide, capped so the
 // card stays a card.
-const chartHeight = n => (n > 6 ? Math.min(760, Math.max(260, n * 26 + 60)) : 340);
+const chartHeight = n => (n > 6 ? Math.min(420, Math.max(200, n * 22 + 56)) : 260);
 
 // ECharts to a PNG data URI, for the PDF and Word reports. Rendered off-screen
 // in print colours. `animation: false` is not optional, with it on, the export
