@@ -10,7 +10,7 @@
 // themed from the same CSS tokens as the page.
 
 let keywordSuggestions = {};
-let keywordSuggestionsLoaded = fetch('keywords.json')
+let keywordSuggestionsLoaded = fetch('keywords.json?v=5f77060ca8')
   .then(response => response.json())
   .then(data => {
     data.forEach(entry => {
@@ -76,7 +76,7 @@ async function readDocx(file) {
 
 // PDF text extraction, fully client-side (vendored pdf.js, same-origin worker).
 async function readPdf(file) {
-  pdfjsLib.GlobalWorkerOptions.workerSrc = "lib/pdf.worker.min.js";
+  pdfjsLib.GlobalWorkerOptions.workerSrc = "lib/pdf.worker.min.js?v=feabdf3097";
   const doc = await pdfjsLib.getDocument({ data: await file.arrayBuffer() }).promise;
   const pages = [];
   for (let i = 1; i <= doc.numPages; i++) {
@@ -368,7 +368,7 @@ window.addEventListener("DOMContentLoaded", () => {
     $("reloadKeywords").addEventListener("click", loadDefaultKeywordList);
 
     function loadDefaultKeywordList() {
-        fetch('keywords.txt')
+        fetch('keywords.txt?v=e0a7873b89')
         .then(response => response.text())
         .then(text => {
             keywordTextarea.value = text.trim();
@@ -722,7 +722,7 @@ window.addEventListener("DOMContentLoaded", () => {
         if (termsData) return;
         const list = $("termsList");
         try {
-            termsData = await (await fetch("terms-to-use.json")).json();
+            termsData = await (await fetch("terms-to-use.json?v=fcfecd6078")).json();
         } catch (err) {
             console.error("terms-to-use.json failed to load:", err);
             list.innerHTML = `<div class="scan-problem">Could not load the terms list.</div>`;

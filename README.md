@@ -76,8 +76,32 @@ was removed and why.
 ```bash
 git clone https://github.com/amgray19/keywords-test.git
 cd keywords-test
-node test.js          # scanning core: escaping, matching, sentence splitting, shipped data
+node test.js          # scanning core, shipped data, and asset-stamp freshness
 python3 -m http.server 8912
 ```
 
 Then open <http://localhost:8912/>. There is no build step.
+
+---
+
+## 🚀 Deploying
+
+GitHub Pages builds from `main` at the repository root. Merging to `main` and pushing is the whole
+deploy.
+
+Pages does not allow response headers, so it serves every asset with its own `max-age` and an ETag.
+A visitor who already has `style.css` keeps using it after a deploy, and the page looks unchanged
+while the file on disk is correct. The fix is in the URLs: every reference carries a hash of that
+file's contents, so changed bytes mean a changed URL and the cached copy stops matching. Files that
+did not change keep their URL and stay cached.
+
+Run this before committing a deploy:
+
+```bash
+python3 stamp-assets.py     # rewrites the ?v= stamps
+node test.js                # fails if any stamp is stale
+```
+
+`index.html` itself is still subject to Pages' own cache for up to ten minutes, which is the one
+part that cannot be controlled from here. Hard-reload once (Cmd+Shift+R) if you are checking a
+deploy in the first few minutes.

@@ -91,4 +91,14 @@ const BOILERPLATE = ["comment period", "data collection", "notice intent", "suns
 const leaked = BOILERPLATE.filter(t => known.has(t));
 assert.deepStrictEqual(leaked, [], "Federal Register boilerplate is back in the keyword list");
 
-console.log(`ok, scanning core, ${terms.length} terms to use, ${kw.length} keywords`);
+// --- deploy gate --------------------------------------------------------------
+// GitHub Pages serves assets with its own max-age and no way to override it, so
+// a stale ?v= stamp means a visitor keeps yesterday's CSS and JS after a deploy
+// and the page looks unchanged. Failing here is cheaper than debugging that.
+const { spawnSync } = require("child_process");
+const stamps = spawnSync("python3", [`${__dirname}/stamp-assets.py`, "--check"], { encoding: "utf8" });
+assert.strictEqual(stamps.status, 0,
+  `asset stamps are stale, run: python3 stamp-assets.py\n${stamps.stdout}${stamps.stderr}`);
+
+console.log(`ok, scanning core, ${terms.length} terms to use, ${kw.length} keywords, ` +
+            stamps.stdout.trim());
