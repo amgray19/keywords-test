@@ -39,59 +39,56 @@ REPORT = HERE / "suggestions-audit.md"
 # term -> (category, why). Everything not listed keeps its alternatives.
 DROP = {
     # --- wrong: the replacement changes the legal or factual meaning ---------
-    "disparate impact": ("wrong", "Disparate impact is liability WITHOUT intent. Offering "
-                                  "'intentional discrimination' as a substitute inverts the standard."),
-    "disparate-impact liability": ("wrong", "Same inversion as 'disparate impact'."),
-    "racism": ("wrong", "'Ethnic prejudice' redefines the term rather than rephrasing it."),
-    "gender": ("wrong", "Sex and gender are not synonyms; the substitution is a category error."),
-    "gender identity": ("wrong", "'Biological sex' is not a rewording of gender identity."),
-    "identity": ("wrong", "'Identity -> sex' is incoherent outside the specific EO context."),
-    "historically": ("wrong", "Ordinary English word. 'Traditionally' means something else, and "
-                              "the term should not be flagged at all."),
-    "institutional": ("wrong", "Ordinary English word with a different sense in most contexts."),
-    "political": ("wrong", "Ordinary English word; 'government-related' is not a synonym."),
+        "disparate impact": ("wrong", "Disparate impact is liability WITHOUT intent. Offering "                                   "'intentional discrimination' as a substitute inverts the standard.", ["intentional discrimination", "equal protection"]),
+        "disparate-impact liability": ("wrong", "Same inversion as 'disparate impact'.", ["intentional discrimination", "equal protection"]),
+        "racism": ("wrong", "'Ethnic prejudice' redefines the term rather than rephrasing it.", ["ethnic prejudice", "bias based on heritage"]),
+        "gender": ("wrong", "Sex and gender are not synonyms; the substitution is a category error.", ["sex"]),
+        "gender identity": ("wrong", "'Biological sex' is not a rewording of gender identity.", ["biological sex"]),
+        "identity": ("wrong", "'Identity -> sex' is incoherent outside the specific EO context.", ["sex"]),
+        "historically": ("wrong", "Ordinary English word. 'Traditionally' means something else, and "                               "the term should not be flagged at all.", ["traditionally"]),
+        "institutional": ("wrong", "Ordinary English word with a different sense in most contexts.", ["organizational", "system-level"]),
+        "political": ("wrong", "Ordinary English word; 'government-related' is not a synonym.", ["government-related", "policy-related"]),
 
     # --- erasure: a concept swapped for a euphemism, no source behind it -----
-    "antiracist": ("erasure", "'Fair-minded' does not carry the claim."),
-    "allyship": ("erasure", "'Partnership' drops the meaning entirely."),
-    "hate speech": ("erasure", "'Offensive language' understates a defined category."),
-    "ethnicity": ("erasure", "'Heritage' is not interchangeable with ethnicity."),
-    "race and ethnicity": ("erasure", "Same substitution, compounded."),
-    "racial": ("erasure", "'Ethnic' is a different category, not a synonym."),
-    "racially": ("erasure", "Same as 'racial'."),
-    "racial diversity": ("erasure", "Recasts race as ethnic background."),
-    "racial identity": ("erasure", "Recasts race as ethnic background."),
-    "racial inequality": ("erasure", "'Ethnic gaps' drops both the race and the inequality."),
-    "racial justice": ("erasure", "'Fair treatment' is not the same claim."),
-    "social justice": ("erasure", "'Fairness in society' is a paraphrase that loses the term."),
-    "injustice": ("erasure", "'Unfairness' is weaker and not equivalent."),
-    "oppression": ("erasure", "'Control, domination' describes a mechanism, not the concept."),
-    "oppressive": ("erasure", "Same as 'oppression'."),
-    "marginalize": ("erasure", "'Push aside' is a paraphrase, not a usable replacement."),
-    "marginalized": ("erasure", "'Overlooked' understates it."),
-    "discrimination": ("erasure", "A legal term of art; 'unfair treatment' is not equivalent."),
-    "discriminated": ("erasure", "Same as 'discrimination'."),
-    "discriminatory": ("erasure", "Same as 'discrimination'."),
-    "intersectional": ("erasure", "'Overlapping factors' drops the analytic meaning."),
-    "intersectionality": ("erasure", "Same as 'intersectional'."),
-    "sense of belonging": ("erasure", "'Connection' is not the same construct."),
-    "fostering inclusivity": ("erasure", "'Building connection' means something else."),
-    "feminism": ("erasure", "Substituting a description for the name of the movement."),
-    "inequality": ("erasure", "'Imbalance, gap' softens a measured claim."),
-    "inequalities": ("erasure", "Same as 'inequality'."),
-    "inequity": ("erasure", "Same family."),
-    "inequities": ("erasure", "Same family."),
-    "inequitable": ("erasure", "Same family."),
-    "equal opportunity": ("erasure", "'Fair consideration' is a weaker, different claim."),
-    "health equity": ("erasure", "Defined term in public health; the paraphrase loses it."),
-    "biases": ("erasure", "'Preferences, tendencies' removes the criticism the word carries."),
-    "biases towards": ("erasure", "Same as 'biases'."),
+        "antiracist": ("erasure", "'Fair-minded' does not carry the claim.", ["fair-minded", "equitable approach"]),
+        "allyship": ("erasure", "'Partnership' drops the meaning entirely.", ["partnership", "mutual support"]),
+        "hate speech": ("erasure", "'Offensive language' understates a defined category.", ["offensive language"]),
+        "ethnicity": ("erasure", "'Heritage' is not interchangeable with ethnicity.", ["heritage", "background"]),
+        "race and ethnicity": ("erasure", "Same substitution, compounded.", ["background and heritage"]),
+        "racial": ("erasure", "'Ethnic' is a different category, not a synonym.", ["ethnic", "heritage-based"]),
+        "racially": ("erasure", "Same as 'racial'.", ["ethnically"]),
+        "racial diversity": ("erasure", "Recasts race as ethnic background.", ["variety of ethnic backgrounds"]),
+        "racial identity": ("erasure", "Recasts race as ethnic background.", ["ethnic background"]),
+        "racial inequality": ("erasure", "'Ethnic gaps' drops both the race and the inequality.", ["ethnic gaps"]),
+        "racial justice": ("erasure", "'Fair treatment' is not the same claim.", ["fair treatment"]),
+        "social justice": ("erasure", "'Fairness in society' is a paraphrase that loses the term.", ["fairness in society"]),
+        "injustice": ("erasure", "'Unfairness' is weaker and not equivalent.", ["unfairness"]),
+        "oppression": ("erasure", "'Control, domination' describes a mechanism, not the concept.", ["control", "domination"]),
+        "oppressive": ("erasure", "Same as 'oppression'.", ["controlling", "harsh"]),
+        "marginalize": ("erasure", "'Push aside' is a paraphrase, not a usable replacement.", ["push aside", "overlook"]),
+        "marginalized": ("erasure", "'Overlooked' understates it.", ["overlooked", "disregarded"]),
+        "discrimination": ("erasure", "A legal term of art; 'unfair treatment' is not equivalent.", ["unfair treatment"]),
+        "discriminated": ("erasure", "Same as 'discrimination'.", ["treated unfairly"]),
+        "discriminatory": ("erasure", "Same as 'discrimination'.", ["unjust", "biased"]),
+        "intersectional": ("erasure", "'Overlapping factors' drops the analytic meaning.", ["overlapping factors"]),
+        "intersectionality": ("erasure", "Same as 'intersectional'.", ["overlapping challenges"]),
+        "sense of belonging": ("erasure", "'Connection' is not the same construct.", ["connection", "acceptance"]),
+        "fostering inclusivity": ("erasure", "'Building connection' means something else.", ["building connection"]),
+        "feminism": ("erasure", "Substituting a description for the name of the movement.", ["women's rights advocacy"]),
+        "inequality": ("erasure", "'Imbalance, gap' softens a measured claim.", ["imbalance", "gap"]),
+        "inequalities": ("erasure", "Same as 'inequality'.", ["imbalances", "gaps"]),
+        "inequity": ("erasure", "Same family.", ["unfairness", "imbalance"]),
+        "inequities": ("erasure", "Same family.", ["unfairness", "gaps"]),
+        "inequitable": ("erasure", "Same family.", ["unfair"]),
+        "equal opportunity": ("erasure", "'Fair consideration' is a weaker, different claim.", ["fair consideration"]),
+        "health equity": ("erasure", "Defined term in public health; the paraphrase loses it.", ["fair access to healthcare"]),
+        "biases": ("erasure", "'Preferences, tendencies' removes the criticism the word carries.", ["preferences", "tendencies"]),
+        "biases towards": ("erasure", "Same as 'biases'.", ["preferences", "inclinations"]),
 
     # --- uncited: real federal policy, but only defensible WITH the citation -
-    "racial preferences": ("uncited", "Drawn from executive-order language; needs the citation "
-                                      "to read as reporting rather than advocacy."),
-    "historically received": ("uncited", "Same; the replacement is an argument, not a synonym."),
-    "underrepresented": ("uncited", "'Merit-based' as a replacement is a policy position."),
+        "racial preferences": ("uncited", "Drawn from executive-order language; needs the citation "                                       "to read as reporting rather than advocacy.", ["merit-based selection", "individual qualifications"]),
+        "historically received": ("uncited", "Same; the replacement is an argument, not a synonym.", ["open to new applicants", "competitive on merit"]),
+        "underrepresented": ("uncited", "'Merit-based' as a replacement is a policy position.", ["broad range of applicants", "merit-based"]),
 }
 
 # Kept deliberately despite being political, because they ARE the tool's
@@ -111,13 +108,18 @@ def main() -> int:
     missing = [t for t in DROP if t not in by_term]
     assert not missing, f"DROP names terms that are not in keywords.json: {missing}"
 
-    dropped = []
-    for term, (category, why) in DROP.items():
+    # Report on the DROP list itself, not on what this particular run changed.
+    # Reporting only the newly-blanked meant a second run found nothing to do and
+    # rewrote the document with an empty Blanked section, discarding every reason
+    # recorded in the first.
+    dropped, newly = [], 0
+    for term, (category, why, was) in DROP.items():
         entry = by_term[term]
         if entry.get("suggestions"):
-            dropped.append((term, entry["suggestions"], category, why))
+            newly += 1
             if not dry:
                 entry["suggestions"] = []
+        dropped.append((term, was, category, why))
 
     kept = [k for k in data if k.get("suggestions")]
 
@@ -138,7 +140,7 @@ def main() -> int:
         if not rows:
             continue
         lines += [f"### {category} ({len(rows)})", ""]
-        lines += [f"- **{t}**, was `{', '.join(s)}`. {why}" for t, s, _, why in sorted(rows)]
+        lines += [f"- **{t}**, was `{', '.join(w)}`. {why}" for t, w, _, why in sorted(rows)]
         lines.append("")
 
     lines += ["## Kept as a deliberate call", "",
@@ -160,8 +162,13 @@ def main() -> int:
 
     KEYWORDS.write_text(json.dumps(data, indent=2) + "\n")
     REPORT.write_text("\n".join(lines))
+    # The machine-readable half, so the test suite can hold the line without
+    # parsing prose.
+    (HERE / "blanked-terms.json").write_text(
+        json.dumps(sorted(DROP), indent=2) + "\n")
     remaining = [k for k in data if k.get("suggestions")]
-    print(f"blanked {len(dropped)}; {len(remaining)} terms keep alternatives; wrote {REPORT.name}")
+    print(f"{len(dropped)} terms held blank ({newly} changed this run); "
+          f"{len(remaining)} keep alternatives; wrote {REPORT.name}")
 
     assert not any(by_term[t]["suggestions"] for t in DROP), "a dropped term kept its alternatives"
     assert all(isinstance(k["suggestions"], list) for k in data), "shape must stay [{term, suggestions[]}]"

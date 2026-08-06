@@ -1,5 +1,7 @@
 # Suggested-alternatives audit
 
+_Reviewed and ratified by the owner, 2026-08-05: "I don't think there are good alternatives to the ones cut." A test asserts these 46 stay blank, because keywords.json originates upstream and a data refresh would otherwise restore them._
+
 741 terms. 73 carry alternatives after this pass, 46 were blanked, 622 had none to begin with.
 
 A term with no alternative still gets flagged in a scan. It just does not put words in the writer's mouth.

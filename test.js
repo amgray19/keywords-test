@@ -91,6 +91,19 @@ const BOILERPLATE = ["comment period", "data collection", "notice intent", "suns
 const leaked = BOILERPLATE.filter(t => known.has(t));
 assert.deepStrictEqual(leaked, [], "Federal Register boilerplate is back in the keyword list");
 
+// The 46 blanked alternatives, reviewed and ratified 2026-08-05. keywords.json
+// originates upstream, so the next refresh of that data would quietly restore
+// every one of them: "disparate impact -> intentional discrimination" inverts a
+// legal standard, "racism -> ethnic prejudice" is a redefinition. Blanking them
+// once was an edit; this is what makes it a decision.
+const blanked = JSON.parse(fs.readFileSync(`${__dirname}/blanked-terms.json`, "utf8"));
+const byTerm = new Map(kw.map(k => [k.term, k]));
+const resurrected = blanked.filter(t => (byTerm.get(t)?.suggestions || []).length);
+assert.deepStrictEqual(resurrected, [],
+  "alternatives came back for terms the audit blanked; see suggestions-audit.md");
+const missing = blanked.filter(t => !byTerm.has(t));
+assert.deepStrictEqual(missing, [], "a blanked term vanished from keywords.json entirely");
+
 // --- deploy gate --------------------------------------------------------------
 // GitHub Pages serves assets with its own max-age and no way to override it, so
 // a stale ?v= stamp means a visitor keeps yesterday's CSS and JS after a deploy
@@ -101,4 +114,5 @@ assert.strictEqual(stamps.status, 0,
   `asset stamps are stale, run: python3 stamp-assets.py\n${stamps.stdout}${stamps.stderr}`);
 
 console.log(`ok, scanning core, ${terms.length} terms to use, ${kw.length} keywords, ` +
+            `${blanked.length} held blank, ` +
             stamps.stdout.trim());
