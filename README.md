@@ -75,6 +75,27 @@ return, Federal Register boilerplate leaks back in so a scan flags "comment peri
 keyword files from one list, re-applies the audit, rebuilds the terms tab, and re-stamps the asset
 URLs. Running it against unchanged upstream data is a no-op.
 
+### Knowing when to refresh
+
+`check-upstream.py` compares a hash of the upstream file against `.upstream-sync.json`, the marker
+written at sync time. It is silent when nothing changed, which is most days, because a reminder
+that fires whether or not there is anything to do stops being read.
+
+```bash
+python3 check-upstream.py              # exits 1 if the upstream data moved
+```
+
+To be told rather than having to ask, install the daily agent:
+
+```bash
+cp com.keywordscan.upstream-check.plist ~/Library/LaunchAgents/
+launchctl bootstrap gui/$UID ~/Library/LaunchAgents/com.keywordscan.upstream-check.plist
+```
+
+On drift it posts a macOS notification and adds one line to FedInt's `.claude/reminders.md`, which
+the session bootstrap already reads, so the reminder shows up where work starts. One line per day
+at most.
+
 Not every flagged term has an alternative, and that is deliberate. A suggestion is only offered when
 a writer can accept it without changing what they meant. `audit-suggestions.py` enforces that line
 and writes [`suggestions-audit.md`](./suggestions-audit.md), which records every alternative that

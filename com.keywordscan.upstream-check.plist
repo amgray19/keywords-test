@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Daily check for upstream term-data drift.
+
+  Silent when nothing changed. On drift it posts a macOS notification and adds a
+  single line to FedInt's .claude/reminders.md, which the /gm session bootstrap
+  already reads, so the reminder arrives in the place work actually starts.
+
+  Install:
+    cp com.keywordscan.upstream-check.plist ~/Library/LaunchAgents/
+    launchctl bootstrap gui/$UID ~/Library/LaunchAgents/com.keywordscan.upstream-check.plist
+
+  Remove:
+    launchctl bootout gui/$UID/com.keywordscan.upstream-check
+    rm ~/Library/LaunchAgents/com.keywordscan.upstream-check.plist
+
+  Check it is loaded and actually ran:
+    launchctl list | grep keywordscan
+    cat /tmp/keywordscan-upstream.log
+-->
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.keywordscan.upstream-check</string>
+  <key>ProgramArguments</key>
+  <array>
+    <!-- Absolute path: a launchd process gets a bare PATH with no Homebrew. -->
+    <string>/usr/bin/python3</string>
+    <string>/Users/amgray19/keywords-test/check-upstream.py</string>
+    <string>--notify</string>
+    <string>--reminder</string>
+  </array>
+  <key>StartCalendarInterval</key>
+  <dict>
+    <key>Hour</key><integer>9</integer>
+    <key>Minute</key><integer>30</integer>
+  </dict>
+  <key>StandardOutPath</key>
+  <string>/tmp/keywordscan-upstream.log</string>
+  <key>StandardErrorPath</key>
+  <string>/tmp/keywordscan-upstream.log</string>
+</dict>
+</plist>

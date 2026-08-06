@@ -103,6 +103,11 @@ def main() -> int:
     print("asset stamps:")
     run("stamp-assets.py")
 
+    # Record what was synced, so check-upstream.py can tell later whether the
+    # upstream data has moved without depending on file timestamps.
+    print("marker:")
+    run("check-upstream.py", "--record")
+
     print("\nRefreshed. Now:")
     print("  node test.js")
     print("  git add -A && git commit -m 'Refresh keyword data from upstream'")
