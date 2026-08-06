@@ -176,14 +176,26 @@ function solveLightness(hue, sat, bg, target, dark) {
 // as they can get: neighbours in the list never land next to each other on the
 // wheel, and the sequence does not repeat until it has been all the way round. A
 // fixed twelve-colour list ran out and started reusing colours on a long scan.
+//
+// Hue alone is not enough. Solving every colour to one contrast target pinned
+// the whole set to the same lightness, an L* range of 8 across fourteen series,
+// and the eye reads lightness far more strongly than hue: sixteen different
+// hues at one brightness look like one family. Saturation and contrast target
+// both cycle as well, so the set spans pale to deep and muted to vivid while
+// every member still clears the 3:1 a graphical object needs.
+const SAT_CYCLE = [58, 92, 72, 100, 66, 84];
+const CONTRAST_CYCLE_DARK  = [4.2, 8.5, 5.6, 11.5, 6.8, 3.6];
+const CONTRAST_CYCLE_LIGHT = [3.3, 6.5, 4.4, 9.5, 5.2, 3.8];
+
 function palette(n, dark) {
   const bg = dark ? [20, 25, 32] : [255, 255, 255];
+  const targets = dark ? CONTRAST_CYCLE_DARK : CONTRAST_CYCLE_LIGHT;
   return Array.from({ length: n }, (_, i) => {
     const hue = (i * 137.508 + 196) % 360;          // start on the cyan of the UI
-    const sat = 62 + (i % 3) * 9;                    // vary saturation, not lightness
-    // A brighter target on dark: the minimum that merely passes reads muddy
-    // against a charcoal card, while on white the same margin is plenty.
-    const light = solveLightness(hue, sat, bg, dark ? 5.4 : 3.6, dark);
+    const sat = SAT_CYCLE[i % SAT_CYCLE.length];
+    // The cycles are different lengths from each other and from the hue step, so
+    // saturation and lightness do not fall back into step with the hue.
+    const light = solveLightness(hue, sat, bg, targets[i % targets.length], dark);
     return `hsl(${hue.toFixed(1)} ${sat}% ${light.toFixed(1)}%)`;
   });
 }
