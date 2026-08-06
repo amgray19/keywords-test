@@ -58,11 +58,22 @@ Three files drive the tool, all regenerable:
 | `keywords.json` | `[{term, suggestions[]}]`, the alternatives offered when a term is found. |
 | `terms-to-use.json` | The **Terms to use** tab. Specific to the bundled federal list. |
 
-`terms-to-use.json` is built from the upstream curated artifacts:
+### Refreshing from upstream
+
+The term data originates in an upstream FedInt dashboard build. One command pulls a refresh
+through the filters that keep this tool's decisions intact:
 
 ```bash
-python3 build-terms.py ../FedInt/dashboard
+python3 sync-from-fedint.py --dry-run     # see what would change
+python3 sync-from-fedint.py               # do it
+node test.js                              # then commit and push
 ```
+
+It is not a copy. A straight copy would undo three decisions at once: the 46 blanked alternatives
+return, Federal Register boilerplate leaks back in so a scan flags "comment period", and
+`keywords.txt` drifts from `keywords.json`. The pipeline excludes the boilerplate, writes both
+keyword files from one list, re-applies the audit, rebuilds the terms tab, and re-stamps the asset
+URLs. Running it against unchanged upstream data is a no-op.
 
 Not every flagged term has an alternative, and that is deliberate. A suggestion is only offered when
 a writer can accept it without changing what they meant. `audit-suggestions.py` enforces that line
