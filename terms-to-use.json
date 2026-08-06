@@ -36,6 +36,33 @@
     "mentions": null
   },
   {
+    "term": "novel performers",
+    "why": "The report's term for the middle ground between single investigators and mega-projects, which it argues is structurally underserved. A proposal positioning itself there can name the gap in the government's own words.",
+    "cluster": "Funding mechanisms (FY 2028)",
+    "agencies": [
+      "FED"
+    ],
+    "mentions": null
+  },
+  {
+    "term": "portfolio-based approach",
+    "why": "The framing for judging a funding programme on aggregate returns rather than per-award success, borrowed explicitly from private capital allocation.",
+    "cluster": "Funding mechanisms (FY 2028)",
+    "agencies": [
+      "FED"
+    ],
+    "mentions": null
+  },
+  {
+    "term": "pre-competitive consortia",
+    "why": "The report's named model for federal coordination of shared engineering problems, cited alongside Apollo and the Human Genome Project as the scale argument.",
+    "cluster": "Funding mechanisms (FY 2028)",
+    "agencies": [
+      "FED"
+    ],
+    "mentions": null
+  },
+  {
     "term": "prize challenges",
     "why": "Pay-for-results mechanism in the memo's menu; proposals can position for prizes rather than NOFOs.",
     "cluster": "Funding mechanisms (FY 2028)",
@@ -63,8 +90,26 @@
     "mentions": null
   },
   {
+    "term": "mid-scale instrumentation",
+    "why": "Named as historically underfunded relative to its scientific importance, with an explicit instruction that agencies propose investments in it.",
+    "cluster": "FY 2028 priorities",
+    "agencies": [
+      "FED"
+    ],
+    "mentions": null
+  },
+  {
     "term": "mission-driven research organizations",
     "why": "Named new performer class agencies should fund beyond legacy institutions.",
+    "cluster": "FY 2028 priorities",
+    "agencies": [
+      "FED"
+    ],
+    "mentions": null
+  },
+  {
+    "term": "physical sciences and engineering",
+    "why": "The named beneficiary of the rebalance away from later-stage development, paired with manufacturing and skilled crafts.",
     "cluster": "FY 2028 priorities",
     "agencies": [
       "FED"
@@ -97,6 +142,15 @@
       "FED"
     ],
     "mentions": 0
+  },
+  {
+    "term": "reproducibility crisis",
+    "why": "Named as a chapter-level diagnosis, tied to an instruction that the enterprise incentivize reproducibility studies. Pairs with the Gold Standard Science commitment already tracked.",
+    "cluster": "Gold Standard Science & rigor",
+    "agencies": [
+      "FED"
+    ],
+    "mentions": null
   },
   {
     "term": "reproducible",
@@ -208,6 +262,24 @@
     "mentions": null
   },
   {
+    "term": "commercial fusion power",
+    "why": "One of the six national missions, with a dated target. Neither fusion mission language nor its deadline had an entry.",
+    "cluster": "National missions (FY 2028)",
+    "agencies": [
+      "FED"
+    ],
+    "mentions": null
+  },
+  {
+    "term": "next-generation semiconductor technologies",
+    "why": "The sixth national mission, and the one the earlier sweep missed entirely.",
+    "cluster": "National missions (FY 2028)",
+    "agencies": [
+      "FED"
+    ],
+    "mentions": null
+  },
+  {
     "term": "physical AI",
     "why": "The robotics national mission's frame: autonomous systems for real-world science and reindustrialization.",
     "cluster": "National missions (FY 2028)",
@@ -219,6 +291,15 @@
   {
     "term": "quantum information science",
     "why": "Named critical and emerging technology alongside AI; the QC-ADDS national mission (EO 14413).",
+    "cluster": "National missions (FY 2028)",
+    "agencies": [
+      "FED"
+    ],
+    "mentions": null
+  },
+  {
+    "term": "reindustrialization",
+    "why": "The stated end state of the robotics mission, tying physical AI to domestic manufacturing.",
     "cluster": "National missions (FY 2028)",
     "agencies": [
       "FED"
@@ -256,6 +337,15 @@
     "term": "skilled technical workforce",
     "why": "Recurring workforce framing across the report and memo (reindustrialization, hands-on technical learning, skilled trades).",
     "cluster": "Talent & merit",
+    "agencies": [
+      "FED"
+    ],
+    "mentions": null
+  },
+  {
+    "term": "incumbency tax",
+    "why": "The report's coinage for the cost the current system imposes on early-career researchers. Critique vocabulary a proposal can adopt to signal alignment with the diagnosis.",
+    "cluster": "Talent & merit (FY 2028)",
     "agencies": [
       "FED"
     ],

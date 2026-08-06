@@ -722,7 +722,7 @@ window.addEventListener("DOMContentLoaded", () => {
         if (termsData) return;
         const list = $("termsList");
         try {
-            termsData = await (await fetch("terms-to-use.json?v=fcfecd6078")).json();
+            termsData = await (await fetch("terms-to-use.json?v=724d4e7c00")).json();
         } catch (err) {
             console.error("terms-to-use.json failed to load:", err);
             list.innerHTML = `<div class="scan-problem">Could not load the terms list.</div>`;
